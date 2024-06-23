@@ -28,6 +28,8 @@ public class Person extends BaseEntity<Long> {
     @NotNull(message = "LastName must not be null")
     @Pattern(regexp = "^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$")
     String lastName;
+    @Pattern(regexp = "[0-9]{10}")
+    String nationalCode;
     @NotNull
     @Column(unique = true)
     @Email(message = "Email must be valid")
