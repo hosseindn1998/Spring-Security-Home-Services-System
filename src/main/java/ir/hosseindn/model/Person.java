@@ -29,6 +29,7 @@ public class Person extends BaseEntity<Long> {
     @Pattern(regexp = "^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$")
     String lastName;
     @Pattern(regexp = "[0-9]{10}")
+    @Column(unique = true)
     String nationalCode;
     @NotNull
     @Column(unique = true)
