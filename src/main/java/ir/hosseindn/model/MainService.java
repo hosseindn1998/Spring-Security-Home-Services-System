@@ -17,12 +17,11 @@ import java.util.List;
 @SuperBuilder
 @ToString(callSuper = true)
 @Table(name = "service")
-public class Service extends BaseEntity<Long> {
+public class MainService extends BaseEntity<Long> {
     @Column(unique = true)
     @NotNull
     String name;
     @OneToMany(mappedBy = "service", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @ElementCollection()
     @ToString.Exclude
     List<SubService> subServices;
 
