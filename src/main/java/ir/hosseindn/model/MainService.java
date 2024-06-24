@@ -21,7 +21,7 @@ public class MainService extends BaseEntity<Long> {
     @Column(unique = true)
     @NotNull
     String name;
-    @OneToMany(mappedBy = "service", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "mainService", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
     List<SubService> subServices;
 
