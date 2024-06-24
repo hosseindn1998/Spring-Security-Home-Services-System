@@ -1,5 +1,7 @@
 package ir.hosseindn.mapper.customer;
 
+import ir.hosseindn.dto.customer.CustomerChangePasswordRequest;
+import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
 import ir.hosseindn.dto.customer.CustomerSaveRequest;
 import ir.hosseindn.dto.customer.CustomerSaveResponse;
 import ir.hosseindn.model.Customer;
@@ -12,4 +14,6 @@ public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
     Customer customerSaveRequestToModel(CustomerSaveRequest request);
     CustomerSaveResponse modelToUserSaveResponse(Customer customer);
+    Customer customerChangePasswordRequestToModel(CustomerChangePasswordRequest request);
+    CustomerChangePasswordResponse modelToCustomerChangePasswordResponse(Customer customer);
 }

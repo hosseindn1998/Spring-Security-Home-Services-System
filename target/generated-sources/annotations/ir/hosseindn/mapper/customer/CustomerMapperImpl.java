@@ -1,5 +1,7 @@
 package ir.hosseindn.mapper.customer;
 
+import ir.hosseindn.dto.customer.CustomerChangePasswordRequest;
+import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
 import ir.hosseindn.dto.customer.CustomerSaveRequest;
 import ir.hosseindn.dto.customer.CustomerSaveResponse;
 import ir.hosseindn.dto.wallet.WalletSaveRequest;
@@ -10,7 +12,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-24T19:11:06+0330",
+    date = "2024-06-24T22:26:35+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CustomerMapperImpl implements CustomerMapper {
@@ -57,6 +59,35 @@ public class CustomerMapperImpl implements CustomerMapper {
         CustomerSaveResponse customerSaveResponse = new CustomerSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate );
 
         return customerSaveResponse;
+    }
+
+    @Override
+    public Customer customerChangePasswordRequestToModel(CustomerChangePasswordRequest request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Customer.CustomerBuilder<?, ?> customer = Customer.builder();
+
+        customer.email( request.email() );
+        customer.password( request.password() );
+
+        return customer.build();
+    }
+
+    @Override
+    public CustomerChangePasswordResponse modelToCustomerChangePasswordResponse(Customer customer) {
+        if ( customer == null ) {
+            return null;
+        }
+
+        String email = null;
+
+        email = customer.getEmail();
+
+        CustomerChangePasswordResponse customerChangePasswordResponse = new CustomerChangePasswordResponse( email );
+
+        return customerChangePasswordResponse;
     }
 
     protected Wallet walletSaveRequestToWallet(WalletSaveRequest walletSaveRequest) {
