@@ -24,5 +24,10 @@ public class GlobalExceptionHandler {
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
-
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionDto>NotFoundExceptionHandler(NotFoundException e){
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
+    }
 }
