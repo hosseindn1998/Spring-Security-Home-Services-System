@@ -1,9 +1,6 @@
 package ir.hosseindn.controller.customer;
 
-import ir.hosseindn.dto.customer.CustomerChangePasswordRequest;
-import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
-import ir.hosseindn.dto.customer.CustomerSaveRequest;
-import ir.hosseindn.dto.customer.CustomerSaveResponse;
+import ir.hosseindn.dto.customer.*;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.model.Customer;
@@ -27,19 +24,27 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/customer-register")
-    public ResponseEntity<CustomerSaveResponse> register(@Validated @RequestBody CustomerSaveRequest request) {
-        if(!CustomValidations.isValidIranianNationalCode(request.nationalCode()))
+    public ResponseEntity<CustomerSaveResponse> customerRegister(@Validated @RequestBody CustomerSaveRequest request) {
+        if (!CustomValidations.isValidIranianNationalCode(request.nationalCode()))
             throw new NotValidInformation("National Code is Not valid");
         Customer mappedCustomer = CustomerMapper.INSTANCE.customerSaveRequestToModel(request);
         Customer savedCustomer = customerService.register(mappedCustomer);
         return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToUserSaveResponse(savedCustomer), HttpStatus.CREATED);
     }
+
     @PatchMapping("/customer-changePassword")
-    public ResponseEntity<CustomerChangePasswordResponse> changePassword(@Validated @RequestBody CustomerChangePasswordRequest request) {
-        if(!request.password().equals(request.confirmPassword()))
+    public ResponseEntity<CustomerChangePasswordResponse> customerChangePassword(@Validated @RequestBody CustomerChangePasswordRequest request) {
+        if (!request.newPassword().equals(request.confirmPassword()))
             throw new NotValidInformation("new password must be match by confirm");
         Customer mappedCustomer = CustomerMapper.INSTANCE.INSTANCE.customerChangePasswordRequestToModel(request);
-        Customer savedCustomer = customerService.changePassword(mappedCustomer.getEmail(),mappedCustomer.getPassword());
+        Customer savedCustomer = customerService.changePassword(mappedCustomer.getEmail(), mappedCustomer.getPassword());
         return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerChangePasswordResponse(savedCustomer), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/customer-login")
+    public ResponseEntity<CustomerLoginResponse> customerLogin(@Validated @RequestBody CustomerLoginRequest request) {
+        Customer mappedCustomer = CustomerMapper.INSTANCE.INSTANCE.customerLoginRequestToModel(request);
+        Customer savedCustomer = customerService.login(mappedCustomer.getEmail(), mappedCustomer.getPassword());
+        return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerLoginResponse(savedCustomer), HttpStatus.CREATED);
     }
 }
