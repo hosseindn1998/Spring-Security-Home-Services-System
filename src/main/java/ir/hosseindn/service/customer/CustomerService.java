@@ -1,5 +1,6 @@
 package ir.hosseindn.service.customer;
 
+import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
 import ir.hosseindn.exception.DuplicateInformationException;
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.model.Customer;
@@ -16,9 +17,11 @@ public class CustomerService {
             throw new DuplicateInformationException("A Customer with this Email/National Code exist.");
         return customerRepository.save(customer);
     }
-    public Customer changePassword(String email,String password){
-        return customerRepository.findByEmailAndPassword(email, password).orElseThrow(
+    public Customer changePassword(String email,String newPassword){
+       Customer customer= customerRepository.findByEmail(email).orElseThrow(
                 ()->new NotFoundException("Customer with email :"+ email+ " Not found.")
         );
+       customerRepository.updatePassword(email, newPassword);
+       return customer;
     }
 }
