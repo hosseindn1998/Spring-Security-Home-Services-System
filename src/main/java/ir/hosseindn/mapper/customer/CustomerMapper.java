@@ -1,9 +1,6 @@
 package ir.hosseindn.mapper.customer;
 
-import ir.hosseindn.dto.customer.CustomerChangePasswordRequest;
-import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
-import ir.hosseindn.dto.customer.CustomerSaveRequest;
-import ir.hosseindn.dto.customer.CustomerSaveResponse;
+import ir.hosseindn.dto.customer.*;
 import ir.hosseindn.model.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -16,4 +13,6 @@ public interface CustomerMapper {
     CustomerSaveResponse modelToUserSaveResponse(Customer customer);
     Customer customerChangePasswordRequestToModel(CustomerChangePasswordRequest request);
     CustomerChangePasswordResponse modelToCustomerChangePasswordResponse(Customer customer);
+    Customer customerLoginRequestToModel(CustomerLoginRequest request);
+    CustomerLoginResponse modelToCustomerLoginResponse(Customer customer);
 }
