@@ -4,6 +4,7 @@ import ir.hosseindn.exception.DuplicateInformationException;
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Technician;
+import ir.hosseindn.model.TechnicianStatus;
 import ir.hosseindn.repository.technician.TechnicianRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class TechnicianService {
         if (technicianRepository.findByEmailOrNationalCode(technician.getEmail(), technician.getNationalCode()).isPresent())
             throw new DuplicateInformationException("A Technician with this Email/National Code exist.");
         technician.setRegisteredDate(LocalDate.now());
+        technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
         return technicianRepository.save(technician);
     }
 
@@ -34,5 +36,11 @@ public class TechnicianService {
         return technicianRepository.findByEmailAndPassword(email, Password).orElseThrow(
                 () -> new NotValidInformation("Email or Password is Incorrect")
         );
+    }
+    public Technician changeStatusToVerify(Technician technician){
+        if(technicianRepository.findByEmail(technician.getEmail()).isEmpty())
+            throw new NotFoundException("Technician with email :" + technician.getEmail() + " Not found.");
+        technicianRepository.updateTechnicianStatus(TechnicianStatus.VERIFIED,technician.getEmail());
+        return technician;
     }
 }
