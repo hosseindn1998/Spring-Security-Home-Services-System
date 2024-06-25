@@ -34,6 +34,15 @@ public class TechnicianController {
         Technician savedTechnician = technicianService.register(mappedTechnician);
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToUserSaveResponse(savedTechnician), HttpStatus.CREATED);
     }
+    @PatchMapping("/technician-changePassword")
+    public ResponseEntity<TechnicianChangePasswordResponse> technicianChangePassword(@Validated @RequestBody TechnicianChangePasswordRequest request) {
+        if (!request.newPassword().equals(request.confirmPassword()))
+            throw new NotValidInformation("new password must be match by confirm");
+        Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianChangePasswordRequestToModel(request);
+        Technician savedTechnician = technicianService.changePassword(mappedTechnician.getEmail(), mappedTechnician.getPassword());
+        return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.CREATED);
+    }
+
 
 
 }
