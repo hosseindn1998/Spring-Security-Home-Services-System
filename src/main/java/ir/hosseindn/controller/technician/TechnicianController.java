@@ -45,6 +45,11 @@ public class TechnicianController {
         Technician LoggedInTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(LoggedInTechnician), HttpStatus.FOUND);
     }
-
+    @PatchMapping ("/technician-verify")
+    public ResponseEntity<TechnicianVerifyResponse>technicianVerify(TechnicianVerifyRequest request){
+        Technician mappedTechnician=TechnicianMapper.INSTANCE.technicianVerifyRequestToModel(request);
+        Technician changedStatusToVerify = technicianService.changeStatusToVerify(mappedTechnician);
+        return new ResponseEntity<>(TechnicianMapper.INSTANCE.INSTANCE.modelToTechnicianVerifyResponse(changedStatusToVerify),HttpStatus.OK );
+    }
 
 }
