@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,13 +35,13 @@ public class CustomerController {
             throw new NotValidInformation("new password must be match by confirm");
         Customer mappedCustomer = CustomerMapper.INSTANCE.INSTANCE.customerChangePasswordRequestToModel(request);
         Customer savedCustomer = customerService.changePassword(mappedCustomer.getEmail(), mappedCustomer.getPassword());
-        return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerChangePasswordResponse(savedCustomer), HttpStatus.CREATED);
+        return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerChangePasswordResponse(savedCustomer), HttpStatus.OK);
     }
 
-    @PatchMapping("/customer-login")
+    @GetMapping("/customer-login")
     public ResponseEntity<CustomerLoginResponse> customerLogin(@Validated @RequestBody CustomerLoginRequest request) {
-        Customer mappedCustomer = CustomerMapper.INSTANCE.INSTANCE.customerLoginRequestToModel(request);
-        Customer savedCustomer = customerService.login(mappedCustomer.getEmail(), mappedCustomer.getPassword());
-        return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerLoginResponse(savedCustomer), HttpStatus.CREATED);
+        Customer mappedCustomer = CustomerMapper.INSTANCE.customerLoginRequestToModel(request);
+        Customer loggedInCustomer = customerService.login(mappedCustomer.getEmail(), mappedCustomer.getPassword());
+        return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerLoginResponse(loggedInCustomer), HttpStatus.FOUND);
     }
 }
