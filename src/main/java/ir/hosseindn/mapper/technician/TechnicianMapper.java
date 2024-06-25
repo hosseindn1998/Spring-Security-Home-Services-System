@@ -3,9 +3,7 @@ package ir.hosseindn.mapper.technician;
 import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
 import ir.hosseindn.dto.customer.CustomerLoginResponse;
 import ir.hosseindn.dto.customer.CustomerSaveResponse;
-import ir.hosseindn.dto.technician.TechnicianChangePasswordRequest;
-import ir.hosseindn.dto.technician.TechnicianLoginRequest;
-import ir.hosseindn.dto.technician.TechnicianSaveRequest;
+import ir.hosseindn.dto.technician.*;
 import ir.hosseindn.model.Technician;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -17,13 +15,13 @@ public interface TechnicianMapper {
 
     Technician technicianSaveRequestToModel(TechnicianSaveRequest request);
 
-    CustomerSaveResponse modelToUserSaveResponse(Technician technician);
+    TechnicianSaveResponse modelToUserSaveResponse(Technician technician);
 
     Technician technicianChangePasswordRequestToModel(TechnicianChangePasswordRequest request);
 
-    CustomerChangePasswordResponse modelToTechnicianChangePasswordResponse(Technician technician);
+    TechnicianChangePasswordResponse modelToTechnicianChangePasswordResponse(Technician technician);
 
     Technician technicianLoginRequestToModel(TechnicianLoginRequest request);
 
-    CustomerLoginResponse modelToTechnicianLoginResponse(Technician technician);
+    TechnicianLoginResponse modelToTechnicianLoginResponse(Technician technician);
 }
