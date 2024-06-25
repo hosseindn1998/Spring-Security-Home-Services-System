@@ -42,7 +42,12 @@ public class TechnicianController {
         Technician savedTechnician = technicianService.changePassword(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.CREATED);
     }
-
+    @PatchMapping("/technician-login")
+    public ResponseEntity<TechnicianLoginResponse> customerLogin(@Validated @RequestBody TechnicianLoginRequest request) {
+        Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianLoginRequestToModel(request);
+        Technician savedTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
+        return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(savedTechnician), HttpStatus.CREATED);
+    }
 
 
 }
