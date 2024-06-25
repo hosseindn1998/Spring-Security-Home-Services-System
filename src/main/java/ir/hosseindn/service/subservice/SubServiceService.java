@@ -26,5 +26,10 @@ public class SubServiceService {
         Optional.ofNullable(subService.getDescription()).ifPresent(foundedSubService::setDescription);
         return subServiceRepository.save(foundedSubService);
     }
+    public SubService findByName(SubService subService) {
+        return subServiceRepository.findByName(subService.getName()).orElseThrow(
+                () -> new NotFoundException("Sub-Service with this name Not found!")
+        );
+    }
 }
 
