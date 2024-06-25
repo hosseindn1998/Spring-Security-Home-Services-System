@@ -2,6 +2,8 @@ package ir.hosseindn.controller.subservice;
 
 import ir.hosseindn.dto.subservice.SubServiceSaveRequest;
 import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
+import ir.hosseindn.dto.subservice.SubServiceUpdateRequest;
+import ir.hosseindn.dto.subservice.SubServiceUpdateResponse;
 import ir.hosseindn.mapper.subservice.SubServiceMapper;
 import ir.hosseindn.model.MainService;
 import ir.hosseindn.model.SubService;
@@ -26,5 +28,11 @@ public class SubServiceController {
         SubService mappedSubService= SubServiceMapper.INSTANCE.subServiceSaveRequestToModel(request);
         SubService savedSubService=subServiceService.save(mappedSubService);
         return new ResponseEntity<>(SubServiceMapper.INSTANCE.modelToSubServiceSaveResponse(savedSubService), HttpStatus.CREATED);
+    }
+    @PostMapping("/update-SubService")
+    public ResponseEntity<SubServiceUpdateResponse>updateSubService(@Validated @RequestBody SubServiceUpdateRequest request){
+        SubService mappedSubService= SubServiceMapper.INSTANCE.subServiceUpdateRequestToModel(request);
+        SubService savedSubService=subServiceService.save(mappedSubService);
+        return new ResponseEntity<>(SubServiceMapper.INSTANCE.modelToSubServiceUpdateResponse(savedSubService), HttpStatus.OK);
     }
 }
