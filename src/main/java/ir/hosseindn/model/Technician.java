@@ -31,9 +31,6 @@ public class Technician extends Person {
     @ToString.Exclude
     @Lazy
     byte[] avatar;
-    @ManyToMany( mappedBy = "technicians", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @ToString.Exclude
-    List<SubService> subServices;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
     List<Comment> comments;

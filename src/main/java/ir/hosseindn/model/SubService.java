@@ -27,9 +27,6 @@ public class SubService extends BaseEntity<Long> {
     String description;
     @ManyToOne
     MainService mainService;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
-    @ToString.Exclude
-    List<Technician> technicians;
     @ToString.Exclude
     @OneToMany(mappedBy = "subservice", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     List<Order> orders;
