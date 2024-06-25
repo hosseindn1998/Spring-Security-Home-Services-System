@@ -18,7 +18,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-25T19:19:54+0330",
+    date = "2024-06-25T19:55:58+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
@@ -59,6 +59,9 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         }
 
         TechnicianSubService.TechnicianSubServiceBuilder<?, ?> technicianSubService = TechnicianSubService.builder();
+
+        technicianSubService.technician( technicianSaveRequestToTechnician( request.technician() ) );
+        technicianSubService.subService( subServiceSaveRequestToSubService( request.subService() ) );
 
         return technicianSubService.build();
     }
