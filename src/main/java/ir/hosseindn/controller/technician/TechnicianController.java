@@ -14,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,13 +37,13 @@ public class TechnicianController {
             throw new NotValidInformation("new password must be match by confirm");
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianChangePasswordRequestToModel(request);
         Technician savedTechnician = technicianService.changePassword(mappedTechnician.getEmail(), mappedTechnician.getPassword());
-        return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.CREATED);
+        return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.OK);
     }
-    @PatchMapping("/technician-login")
+    @GetMapping("/technician-login")
     public ResponseEntity<TechnicianLoginResponse> customerLogin(@Validated @RequestBody TechnicianLoginRequest request) {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianLoginRequestToModel(request);
-        Technician savedTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
-        return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(savedTechnician), HttpStatus.CREATED);
+        Technician LoggedInTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
+        return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(LoggedInTechnician), HttpStatus.FOUND);
     }
 
 
