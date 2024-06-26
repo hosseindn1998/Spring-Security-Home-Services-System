@@ -1,9 +1,6 @@
 package ir.hosseindn.controller.order;
 
-import ir.hosseindn.dto.order.OrderChooseOfferRequest;
-import ir.hosseindn.dto.order.OrderChooseOfferResponse;
-import ir.hosseindn.dto.order.OrderSaveRequest;
-import ir.hosseindn.dto.order.OrderSaveResponse;
+import ir.hosseindn.dto.order.*;
 import ir.hosseindn.mapper.order.OrderMapper;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.service.order.OrderService;
@@ -34,5 +31,11 @@ public class OrderController {
         Order mappedOrder=OrderMapper.INSTANCE.orderChooseOfferToModel(request);
         Order updatedOrder=orderService.chooseOffer(mappedOrder.getId(),mappedOrder.getChoosedOffer());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChooseOffer(updatedOrder),HttpStatus.OK);
+    }
+    @PatchMapping("/order-status-to-started")
+    public ResponseEntity<OrderChangeStatusResponse>chooseOffer(@Validated @RequestBody OrderChangeStatusRequest request){
+        Order mappedOrder=OrderMapper.INSTANCE.orderChangeStatusRequestToModel(request);
+        Order updatedOrder=orderService.changeOrderStatusToStarted(mappedOrder.getId(),mappedOrder.getChoosedOffer());
+        return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder),HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package ir.hosseindn.service.order;
 
 import ir.hosseindn.exception.NotFoundException;
+import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Offer;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.model.OrderStatus;
@@ -11,6 +12,7 @@ import ir.hosseindn.service.subservice.SubServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -44,8 +46,10 @@ public class OrderService {
         orderRepository.chooseOffer(id,offer);
         return order;
     }
-    public Order changeOrderStatusToWaitCome(Long id){
-        orderRepository.changeOrderStatus(id,OrderStatus.WAIT_FOR_COME_TECHNICIAN);
+    public Order changeOrderStatusToStarted(Long id,Offer offer){
+        if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
+            throw new NotValidInformation("start time can't be before in offer's start ");
+        orderRepository.changeOrderStatus(id,OrderStatus.STARTED);
         return orderRepository.findById(id).orElseThrow(
                 ()->new NotFoundException("Order Not found")
         );
