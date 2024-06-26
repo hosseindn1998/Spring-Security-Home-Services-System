@@ -25,4 +25,10 @@ public class OrderService {
         order.setSubservice(foundedSubService);
         return orderRepository.save(order);
     }
+
+    public Order findById(Long id) {
+        return orderRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(String.format("Order with id %s not found", id)
+                ));
+    }
 }
