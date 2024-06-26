@@ -38,7 +38,8 @@ public class OfferService {
         }
         return offerRepository.save(offer);
     }
-    public List<Offer>findAllByOrder(Order order){
+    public List<Offer>findAllByOrder(Offer offer){
+        Order order = offer.getOdrer();
         List<Offer> offerList = offerRepository.findAllByOdrer(order);
         if(offerList.isEmpty())
             throw new NotFoundException(String.format("No offers for order id=%s found",order.getId()));
