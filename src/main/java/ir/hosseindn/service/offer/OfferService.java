@@ -36,6 +36,7 @@ public class OfferService {
             offer.setOdrer(foundedOrder);
             orderService.save(foundedOrder);
         }
+        offer.setIsAccepted(false);
         return offerRepository.save(offer);
     }
     public List<Offer>findAllByOrder(Offer offer){
@@ -44,5 +45,8 @@ public class OfferService {
         if(offerList.isEmpty())
             throw new NotFoundException(String.format("No offers for order id=%s found",order.getId()));
         return offerList;
+    }
+    public void changeOfferStatus(Long id){
+        offerRepository.changeOfferStatus(id);
     }
 }
