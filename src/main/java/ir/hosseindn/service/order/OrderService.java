@@ -35,7 +35,11 @@ public class OrderService {
     public Boolean isOpenToGetOffer(Long id){
         return orderRepository.isOpenToGetOffer(id).isPresent();
     }
-    public void chooseOffer(Long id, Offer offer){
+    public Order chooseOffer(Long id, Offer offer){
+        Order order=orderRepository.findById(id).orElseThrow(
+                ()->new NotFoundException(String.format("Not found order id %s",id))
+        );
         orderRepository.chooseOffer(id,offer);
+        return order;
     }
 }
