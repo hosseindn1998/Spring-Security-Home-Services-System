@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 @ControllerAdvice
 @Slf4j
@@ -33,10 +35,10 @@ public class GlobalExceptionHandler {
         ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
     }
-
-    public ResponseEntity<ExceptionDto>N(NotFoundException e){
-        log.warn(e.getMessage());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionDto>MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e){
+        log.warn(Arrays.toString(e.getDetailMessageArguments()));
         ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
-        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exceptionDto,HttpStatus.CONFLICT);
     }
 }
