@@ -6,6 +6,7 @@ import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.model.Customer;
 import ir.hosseindn.service.customer.CustomerService;
 import ir.hosseindn.utility.CustomValidations;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/customer-register")
-    public ResponseEntity<CustomerSaveResponse> customerRegister(@Validated @RequestBody CustomerSaveRequest request) {
+    public ResponseEntity<CustomerSaveResponse> customerRegister(@Valid @RequestBody CustomerSaveRequest request) {
         if (!CustomValidations.isValidIranianNationalCode(request.nationalCode()))
             throw new NotValidInformation("National Code is Not valid");
         Customer mappedCustomer = CustomerMapper.INSTANCE.customerSaveRequestToModel(request);
@@ -30,7 +31,7 @@ public class CustomerController {
     }
 
     @PatchMapping("/customer-changePassword")
-    public ResponseEntity<CustomerChangePasswordResponse> customerChangePassword(@Validated @RequestBody CustomerChangePasswordRequest request) {
+    public ResponseEntity<CustomerChangePasswordResponse> customerChangePassword(@Valid @RequestBody CustomerChangePasswordRequest request) {
         if (!request.newPassword().equals(request.confirmPassword()))
             throw new NotValidInformation("new password must be match by confirm");
         Customer mappedCustomer = CustomerMapper.INSTANCE.INSTANCE.customerChangePasswordRequestToModel(request);
@@ -39,7 +40,7 @@ public class CustomerController {
     }
 
     @GetMapping("/customer-login")
-    public ResponseEntity<CustomerLoginResponse> customerLogin(@Validated @RequestBody CustomerLoginRequest request) {
+    public ResponseEntity<CustomerLoginResponse> customerLogin(@Valid @RequestBody CustomerLoginRequest request) {
         Customer mappedCustomer = CustomerMapper.INSTANCE.customerLoginRequestToModel(request);
         Customer loggedInCustomer = customerService.login(mappedCustomer.getEmail(), mappedCustomer.getPassword());
         return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerLoginResponse(loggedInCustomer), HttpStatus.FOUND);

@@ -6,6 +6,7 @@ import ir.hosseindn.dto.offer.OfferSaveResponse;
 import ir.hosseindn.mapper.offer.OfferMapper;
 import ir.hosseindn.model.Offer;
 import ir.hosseindn.service.offer.OfferService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,13 @@ import java.util.List;
 public class OfferController {
     private final OfferService offerService;
     @PostMapping("/add-offer")
-    public ResponseEntity<OfferSaveResponse>addOffer(@Validated @RequestBody OfferSaveRequest request){
+    public ResponseEntity<OfferSaveResponse>addOffer(@Valid @RequestBody OfferSaveRequest request){
         Offer mappedOffer= OfferMapper.INSTANCE.offerSaveRequestToModel(request);
         Offer savedOffer=offerService.save(mappedOffer);
         return new ResponseEntity<>(OfferMapper.INSTANCE.modelToOfferSaveResponse(savedOffer), HttpStatus.CREATED);
     }
     @GetMapping("/getofferoforder")
-    public ResponseEntity<List<Offer>>getOfferOfOrder(@Validated @RequestBody OfferFindByOrderRequest request){
+    public ResponseEntity<List<Offer>>getOfferOfOrder(@Valid @RequestBody OfferFindByOrderRequest request){
         Offer mappedOffer=OfferMapper.INSTANCE.offerFindByOrderRequestToModel(request);
         List<Offer> offerList=offerService.findAllByOrder(mappedOffer);
         return new ResponseEntity<>(offerList,HttpStatus.FOUND);

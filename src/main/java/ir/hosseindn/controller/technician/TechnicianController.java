@@ -9,6 +9,7 @@ import ir.hosseindn.mapper.technician.TechnicianMapper;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.service.technician.TechnicianService;
 import ir.hosseindn.utility.CustomValidations;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class TechnicianController {
     private final TechnicianService technicianService;
 
     @PostMapping("/technician-register")
-    public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Validated @RequestBody TechnicianSaveRequest request) {
+    public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Valid @RequestBody TechnicianSaveRequest request) {
         if (!CustomValidations.isValidIranianNationalCode(request.nationalCode()))
             throw new NotValidInformation("National Code is Not valid");
         Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianSaveRequestToModel(request);
@@ -32,7 +33,7 @@ public class TechnicianController {
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToUserSaveResponse(savedTechnician), HttpStatus.CREATED);
     }
     @PatchMapping("/technician-changePassword")
-    public ResponseEntity<TechnicianChangePasswordResponse> technicianChangePassword(@Validated @RequestBody TechnicianChangePasswordRequest request) {
+    public ResponseEntity<TechnicianChangePasswordResponse> technicianChangePassword(@Valid @RequestBody TechnicianChangePasswordRequest request) {
         if (!request.newPassword().equals(request.confirmPassword()))
             throw new NotValidInformation("new password must be match by confirm");
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianChangePasswordRequestToModel(request);
@@ -40,13 +41,13 @@ public class TechnicianController {
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.OK);
     }
     @GetMapping("/technician-login")
-    public ResponseEntity<TechnicianLoginResponse> customerLogin(@Validated @RequestBody TechnicianLoginRequest request) {
+    public ResponseEntity<TechnicianLoginResponse> customerLogin(@Valid @RequestBody TechnicianLoginRequest request) {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianLoginRequestToModel(request);
         Technician LoggedInTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(LoggedInTechnician), HttpStatus.FOUND);
     }
     @PatchMapping ("/technician-verify")
-    public ResponseEntity<TechnicianVerifyResponse>technicianVerify(TechnicianVerifyRequest request){
+    public ResponseEntity<TechnicianVerifyResponse>technicianVerify(@Valid @RequestBody TechnicianVerifyRequest request){
         Technician mappedTechnician=TechnicianMapper.INSTANCE.technicianVerifyRequestToModel(request);
         Technician changedStatusToVerify = technicianService.changeStatusToVerify(mappedTechnician);
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.INSTANCE.modelToTechnicianVerifyResponse(changedStatusToVerify),HttpStatus.OK );

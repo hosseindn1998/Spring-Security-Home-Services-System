@@ -4,6 +4,7 @@ import ir.hosseindn.dto.order.*;
 import ir.hosseindn.mapper.order.OrderMapper;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.service.order.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,25 +22,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final OrderService orderService;
     @PostMapping("/add-order")
-    public ResponseEntity<OrderSaveResponse> addOrder (@Validated @RequestBody OrderSaveRequest request){
+    public ResponseEntity<OrderSaveResponse> addOrder (@Valid @RequestBody OrderSaveRequest request){
         Order mappedOrder= OrderMapper.INSTANCE.orderSaveRequestToModel(request);
         Order savedOrder=orderService.save(mappedOrder);
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderSaveResponse(savedOrder), HttpStatus.CREATED);
     }
     @PatchMapping("/chooseoffer")
-    public ResponseEntity<OrderChooseOfferResponse>chooseOffer(@Validated @RequestBody OrderChooseOfferRequest request){
+    public ResponseEntity<OrderChooseOfferResponse>chooseOffer(@Valid @RequestBody OrderChooseOfferRequest request){
         Order mappedOrder=OrderMapper.INSTANCE.orderChooseOfferToModel(request);
         Order updatedOrder=orderService.chooseOffer(mappedOrder.getId(),mappedOrder.getChoosedOffer());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChooseOffer(updatedOrder),HttpStatus.OK);
     }
     @PatchMapping("/order-status-to-started")
-    public ResponseEntity<OrderChangeStatusResponse>orderStatusToStarted(@Validated @RequestBody OrderChangeStatusRequest request){
+    public ResponseEntity<OrderChangeStatusResponse>orderStatusToStarted(@Valid @RequestBody OrderChangeStatusRequest request){
         Order mappedOrder=OrderMapper.INSTANCE.orderChangeStatusRequestToModel(request);
         Order updatedOrder=orderService.changeOrderStatusToStarted(mappedOrder.getId(),mappedOrder.getChoosedOffer());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder),HttpStatus.OK);
     }
     @PatchMapping("/order-status-to-done")
-    public ResponseEntity<OrderChangeStatusResponse>orderStatusToDone(@Validated @RequestBody OrderChangeStatusRequest request){
+    public ResponseEntity<OrderChangeStatusResponse>orderStatusToDone(@Valid @RequestBody OrderChangeStatusRequest request){
         Order mappedOrder=OrderMapper.INSTANCE.orderChangeStatusRequestToModel(request);
         Order updatedOrder=orderService.changeOrderStatusToDone(mappedOrder.getId(),mappedOrder.getChoosedOffer());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder),HttpStatus.OK);

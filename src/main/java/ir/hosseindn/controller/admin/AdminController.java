@@ -11,6 +11,7 @@ import ir.hosseindn.model.Customer;
 import ir.hosseindn.service.admin.AdminService;
 import ir.hosseindn.service.customer.CustomerService;
 import ir.hosseindn.utility.CustomValidations;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AdminService adminService;
     @GetMapping("/admin-login")
-    public ResponseEntity<AdminLoginResponse> adminLogin(@Validated @RequestBody AdminLoginRequest request){
+    public ResponseEntity<AdminLoginResponse> adminLogin(@Valid @RequestBody AdminLoginRequest request){
         Admin mappedAdmin = AdminMapper.INSTANCE.adminLoginRequestToModel(request);
         Admin loggedInAdmin=adminService.login(mappedAdmin.getEmail(),mappedAdmin.getPassword());
         return new ResponseEntity<>(AdminMapper.INSTANCE.modelToAdminLoginResponse(loggedInAdmin),HttpStatus.FOUND);

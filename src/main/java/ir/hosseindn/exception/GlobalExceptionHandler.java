@@ -3,6 +3,7 @@ package ir.hosseindn.exception;
 import ir.hosseindn.dto.ExceptionDto;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +29,12 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionDto>NotFoundExceptionHandler(NotFoundException e){
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<ExceptionDto>N(NotFoundException e){
         log.warn(e.getMessage());
         ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);

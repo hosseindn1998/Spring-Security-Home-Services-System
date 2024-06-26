@@ -7,6 +7,7 @@ import ir.hosseindn.dto.mainservice.MainServiceSaveResponse;
 import ir.hosseindn.mapper.mainservice.MainServiceMapper;
 import ir.hosseindn.model.MainService;
 import ir.hosseindn.service.mainservice.MainServiceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class MainServiceController {
     private final MainServiceService mainServiceService;
 
     @PostMapping("/add-MainService")
-    public ResponseEntity<MainServiceSaveResponse> addMainService(@Validated @RequestBody MainServiceSaveRequest request) {
+    public ResponseEntity<MainServiceSaveResponse> addMainService(@Valid @RequestBody MainServiceSaveRequest request) {
         MainService mappedMainService = MainServiceMapper.INSTANCE.mainServiceSaveRequestToModel(request);
         MainService saveMainService = mainServiceService.save(mappedMainService);
         return new ResponseEntity<>(MainServiceMapper.INSTANCE.modelToMainServiceSaveResponse(saveMainService), HttpStatus.CREATED);

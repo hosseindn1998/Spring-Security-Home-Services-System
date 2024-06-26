@@ -7,6 +7,7 @@ import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveResponse;
 import ir.hosseindn.mapper.techniciansubservice.TechnicianSubServiceMapper;
 import ir.hosseindn.model.TechnicianSubService;
 import ir.hosseindn.service.techniciansubservice.TechnicianSubServiceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class TechnicianSubServiceController {
     private final TechnicianSubServiceService technicianSubServiceService;
 
     @PostMapping("/add-technician-to-subservice")
-    public ResponseEntity<TechnicianSubServiceSaveResponse> addTechnicianToSubService(@Validated @RequestBody TechnicianSubServiceSaveRequest request) {
+    public ResponseEntity<TechnicianSubServiceSaveResponse> addTechnicianToSubService(@Valid @RequestBody TechnicianSubServiceSaveRequest request) {
         TechnicianSubService mappedTechnicianSubService = TechnicianSubServiceMapper.INSTANCE.technicianSubServiceSaveRequestToModel(request);
         TechnicianSubService savedTechnicianSubService = technicianSubServiceService.save(mappedTechnicianSubService);
         return new ResponseEntity<>(TechnicianSubServiceMapper.INSTANCE.modelToTechnicianSubServiceSaveResponse(savedTechnicianSubService)
@@ -33,7 +34,7 @@ public class TechnicianSubServiceController {
     }
 
     @PatchMapping("/delete-technician-from-subservice")
-    public ResponseEntity<TechnicianSubServiceDeleteResponse> deleteTechnicianFromSubService(@Validated @RequestBody TechnicianSubServiceDeleteRequest request) {
+    public ResponseEntity<TechnicianSubServiceDeleteResponse> deleteTechnicianFromSubService(@Valid @RequestBody TechnicianSubServiceDeleteRequest request) {
         TechnicianSubService mappedTechnicianSubService = TechnicianSubServiceMapper.INSTANCE.technicianSubServiceDeleteRequestToModel(request);
         technicianSubServiceService.delete(mappedTechnicianSubService);
         return new ResponseEntity<>(TechnicianSubServiceMapper.INSTANCE.modelToTechnicianSubServiceDeleteResponse(mappedTechnicianSubService), HttpStatus.OK);
