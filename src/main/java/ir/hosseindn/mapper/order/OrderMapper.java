@@ -1,9 +1,6 @@
 package ir.hosseindn.mapper.order;
 
-import ir.hosseindn.dto.order.OrderChooseOfferRequest;
-import ir.hosseindn.dto.order.OrderChooseOfferResponse;
-import ir.hosseindn.dto.order.OrderSaveRequest;
-import ir.hosseindn.dto.order.OrderSaveResponse;
+import ir.hosseindn.dto.order.*;
 import ir.hosseindn.mapper.subservice.SubServiceMapper;
 import ir.hosseindn.model.Order;
 import org.mapstruct.Mapper;
@@ -17,4 +14,6 @@ public interface OrderMapper {
     OrderSaveResponse modelToOrderSaveResponse(Order order);
     Order orderChooseOfferToModel(OrderChooseOfferRequest request);
     OrderChooseOfferResponse modelToOrderChooseOffer(Order order);
+    Order orderChangeStatusToWaitForComeRequestToModel(OrderChangeStatusToWaitForComeRequest request);
+    OrderChangeStatusToWaitForComeResponse modelToOrderChangeStatusToWaitForComeResponse(Order oder);
 }
