@@ -18,6 +18,6 @@ import java.util.List;
 public interface OfferRepository extends JpaRepository<Offer,Long> {
     @Query("FROM Offer o where o.odrer=:order ORDER BY o.suggestPrice asc,o.technician.rate desc ")
     List<Offer>findAllByOdrer(@Param("order")Order order);
-    @Query("update from Offer o set o.isAccepted=true where o.id=:id")
+    @Query("update Offer o set o.isAccepted=true where o.id=:id")
     void changeOfferStatus(@Param("id") Long id);
 }

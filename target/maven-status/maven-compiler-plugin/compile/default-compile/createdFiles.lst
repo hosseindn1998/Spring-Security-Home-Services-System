@@ -15,6 +15,7 @@ ir\hosseindn\model\Offer$OfferBuilderImpl.class
 ir\hosseindn\model\MainService.class
 ir\hosseindn\mapper\techniciansubservice\TechnicianSubServiceMapper.class
 ir\hosseindn\dto\techniciansubservice\TechnicianSubServiceSaveResponse.class
+ir\hosseindn\dto\order\OrderChooseOfferRequest.class
 ir\hosseindn\model\Admin$AdminBuilder.class
 ir\hosseindn\service\admin\AdminService.class
 ir\hosseindn\dto\technician\TechnicianLoginRequest.class
@@ -113,6 +114,7 @@ ir\hosseindn\dto\customer\CustomerLoginRequest.class
 ir\hosseindn\dto\admin\AdminLoginResponse.class
 ir\hosseindn\controller\admin\AdminController.class
 ir\hosseindn\dto\customer\CustomerChangePasswordRequest.class
+ir\hosseindn\dto\order\OrderChooseOfferResponse.class
 ir\hosseindn\service\customer\CustomerService.class
 ir\hosseindn\dto\technician\TechnicianSaveResponse.class
 ir\hosseindn\mapper\order\OrderMapper.class

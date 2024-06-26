@@ -23,8 +23,6 @@ import java.util.List;
 public class OfferService {
     private final OfferRepository offerRepository;
     private final OrderService orderService;
-    private final SubServiceService subServiceService;
-    private final EntityManager entityManager;
     public Offer save(Offer offer){
         Order foundedOrder = orderService.findById(offer.getId());
         if(!orderService.isOpenToGetOffer(offer.getOdrer().getId()))
@@ -46,7 +44,5 @@ public class OfferService {
             throw new NotFoundException(String.format("No offers for order id=%s found",order.getId()));
         return offerList;
     }
-    public void changeOfferStatus(Long id){
-        offerRepository.changeOfferStatus(id);
-    }
+
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("from Order o where o.id=:id and (o.orderStatus=0 or o.orderStatus=1)")
     Optional<Order> isOpenToGetOffer(@Param("id") Long id);
-    @Query("update from Order o set o.choosedOffer=:offer where o.id=:id")
+    @Query("update Order o set o.choosedOffer=:offer where o.id=:id")
     void chooseOffer(@Param("id")Long id,@Param("offer") Offer Offer);
 
 }
