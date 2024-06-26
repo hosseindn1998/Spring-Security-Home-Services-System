@@ -1,6 +1,7 @@
 package ir.hosseindn.service.order;
 
 import ir.hosseindn.exception.NotFoundException;
+import ir.hosseindn.model.Offer;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.model.SubService;
@@ -33,5 +34,8 @@ public class OrderService {
     }
     public Boolean isOpenToGetOffer(Long id){
         return orderRepository.isOpenToGetOffer(id).isPresent();
+    }
+    public void chooseOffer(Long id, Offer offer){
+        orderRepository.chooseOffer(id,offer);
     }
 }
