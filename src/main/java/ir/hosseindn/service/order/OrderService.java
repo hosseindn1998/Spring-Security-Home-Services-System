@@ -31,4 +31,7 @@ public class OrderService {
                 () -> new NotFoundException(String.format("Order with id %s not found", id)
                 ));
     }
+    public Boolean isOpenToGetOffer(Long id){
+        return orderRepository.isOpenToGetOffer(id).isPresent();
+    }
 }
