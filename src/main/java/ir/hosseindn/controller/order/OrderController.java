@@ -41,7 +41,7 @@ public class OrderController {
     @PatchMapping("/order-status-to-done")
     public ResponseEntity<OrderChangeStatusResponse>orderStatusToDone(@Validated @RequestBody OrderChangeStatusRequest request){
         Order mappedOrder=OrderMapper.INSTANCE.orderChangeStatusRequestToModel(request);
-        Order updatedOrder=orderService.changeOrderStatusToStarted(mappedOrder.getId(),mappedOrder.getChoosedOffer());
+        Order updatedOrder=orderService.changeOrderStatusToDone(mappedOrder.getId(),mappedOrder.getChoosedOffer());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder),HttpStatus.OK);
     }
 }
