@@ -43,7 +43,10 @@ public class OrderService {
         Order order=orderRepository.findById(id).orElseThrow(
                 ()->new NotFoundException(String.format("Not found order id %s",id))
         );
+        if(order.getChoosedOffer()!=null)
+            throw new NotValidInformation("choose offer already exists for this order");
         orderRepository.chooseOffer(id,offer);
+        orderRepository.changeOrderStatus(id,OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
         return order;
     }
     public Order changeOrderStatusToStarted(Long id,Offer offer){
