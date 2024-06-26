@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public interface TechnicianRepository extends JpaRepository<Technician, Long> {
 
     Optional<Technician> findByEmailAndPassword(String email, String password);
@@ -21,7 +22,6 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
     Optional<Technician> findByEmail(String email);
 
     @Modifying
-    @Transactional
     @Query("update Technician t set t.password=:password where t.email=:email")
     void updatePassword(@Param("email") String email, @Param("password") String password);
     @Query("UPDATE Technician t set t.technicianStatus=:technicianStatus where t.email=:email")
