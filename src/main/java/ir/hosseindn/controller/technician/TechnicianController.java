@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @Validated
@@ -25,11 +27,11 @@ public class TechnicianController {
     private final TechnicianService technicianService;
 
     @PostMapping("/technician-register")
-    public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Valid @RequestBody TechnicianSaveRequest request) {
-        if (!CustomValidations.isValidIranianNationalCode(request.nationalCode()))
+    public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Valid @RequestBody TechnicianSaveRequest request) throws IOException {
+        if (!CustomValidations.isValidIranianNationalCode(request.technician().nationalCode()))
             throw new NotValidInformation("National Code is Not valid");
-        Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianSaveRequestToModel(request);
-        Technician savedTechnician = technicianService.register(mappedTechnician);
+        Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianSaveRequestWithoutPathToModel(request.technician());
+        Technician savedTechnician = technicianService.register(mappedTechnician, request.imagePath());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToUserSaveResponse(savedTechnician), HttpStatus.CREATED);
     }
     @PatchMapping("/technician-changePassword")
