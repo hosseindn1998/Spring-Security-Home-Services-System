@@ -28,8 +28,6 @@ public class TechnicianController {
 
     @PostMapping("/technician-register")
     public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Valid @RequestBody TechnicianSaveRequest request) throws IOException {
-        if (!CustomValidations.isValidIranianNationalCode(request.technician().nationalCode()))
-            throw new NotValidInformation("National Code is Not valid");
         Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianSaveRequestWithoutPathToModel(request.technician());
         Technician savedTechnician = technicianService.register(mappedTechnician, request.imagePath());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToUserSaveResponse(savedTechnician), HttpStatus.CREATED);

@@ -6,6 +6,7 @@ import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianStatus;
 import ir.hosseindn.repository.technician.TechnicianRepository;
+import ir.hosseindn.utility.CustomValidations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ public class TechnicianService {
     private final TechnicianRepository technicianRepository;
 
     public Technician register(Technician technician,String fileAddressAndName) throws IOException {
+        if (!CustomValidations.isValidIranianNationalCode(technician.getNationalCode()))
+            throw new NotValidInformation("National Code is Not valid");
         if (technicianRepository.findByEmailOrNationalCode(technician.getEmail(), technician.getNationalCode()).isPresent()) {
             throw new DuplicateInformationException("A Technician with this Email/National Code exist.");
         }
