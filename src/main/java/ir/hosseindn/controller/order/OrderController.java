@@ -33,7 +33,13 @@ public class OrderController {
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChooseOffer(updatedOrder),HttpStatus.OK);
     }
     @PatchMapping("/order-status-to-started")
-    public ResponseEntity<OrderChangeStatusResponse>chooseOffer(@Validated @RequestBody OrderChangeStatusRequest request){
+    public ResponseEntity<OrderChangeStatusResponse>orderStatusToStarted(@Validated @RequestBody OrderChangeStatusRequest request){
+        Order mappedOrder=OrderMapper.INSTANCE.orderChangeStatusRequestToModel(request);
+        Order updatedOrder=orderService.changeOrderStatusToStarted(mappedOrder.getId(),mappedOrder.getChoosedOffer());
+        return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder),HttpStatus.OK);
+    }
+    @PatchMapping("/order-status-to-done")
+    public ResponseEntity<OrderChangeStatusResponse>orderStatusToDone(@Validated @RequestBody OrderChangeStatusRequest request){
         Order mappedOrder=OrderMapper.INSTANCE.orderChangeStatusRequestToModel(request);
         Order updatedOrder=orderService.changeOrderStatusToStarted(mappedOrder.getId(),mappedOrder.getChoosedOffer());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder),HttpStatus.OK);
