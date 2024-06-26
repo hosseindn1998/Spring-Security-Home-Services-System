@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
@@ -41,4 +42,11 @@ public class GlobalExceptionHandler {
         ExceptionDto exceptionDto=new ExceptionDto(Arrays.toString(e.getDetailMessageArguments()),LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto,HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ExceptionDto>IOExceptionHandler(MethodArgumentNotValidException e){
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+    }
+
 }

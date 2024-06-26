@@ -3,6 +3,7 @@ package ir.hosseindn.mapper.techniciansubservice;
 import ir.hosseindn.dto.mainservice.MainServiceSaveRequest;
 import ir.hosseindn.dto.subservice.SubServiceSaveRequest;
 import ir.hosseindn.dto.technician.TechnicianSaveRequest;
+import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteRequest;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteResponse;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveRequest;
@@ -13,12 +14,11 @@ import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianSubService;
 import ir.hosseindn.model.Wallet;
-import java.util.Arrays;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-26T19:05:54+0330",
+    date = "2024-06-27T03:07:43+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
@@ -77,35 +77,12 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         return technicianSubServiceDeleteResponse;
     }
 
-    protected Wallet walletSaveRequestToWallet(WalletSaveRequest walletSaveRequest) {
-        if ( walletSaveRequest == null ) {
-            return null;
-        }
-
-        Wallet.WalletBuilder<?, ?> wallet = Wallet.builder();
-
-        wallet.amount( walletSaveRequest.amount() );
-
-        return wallet.build();
-    }
-
     protected Technician technicianSaveRequestToTechnician(TechnicianSaveRequest technicianSaveRequest) {
         if ( technicianSaveRequest == null ) {
             return null;
         }
 
         Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
-
-        technician.firstName( technicianSaveRequest.firstName() );
-        technician.lastName( technicianSaveRequest.lastName() );
-        technician.nationalCode( technicianSaveRequest.nationalCode() );
-        technician.email( technicianSaveRequest.email() );
-        technician.password( technicianSaveRequest.password() );
-        technician.wallet( walletSaveRequestToWallet( technicianSaveRequest.wallet() ) );
-        byte[] avatar = technicianSaveRequest.avatar();
-        if ( avatar != null ) {
-            technician.avatar( Arrays.copyOf( avatar, avatar.length ) );
-        }
 
         return technician.build();
     }
@@ -151,7 +128,7 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         return walletSaveRequest;
     }
 
-    protected TechnicianSaveRequest technicianToTechnicianSaveRequest(Technician technician) {
+    protected TechnicianSaveRequestWithoutPath technicianToTechnicianSaveRequestWithoutPath(Technician technician) {
         if ( technician == null ) {
             return null;
         }
@@ -161,7 +138,6 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         String nationalCode = null;
         String email = null;
         String password = null;
-        byte[] avatar = null;
         WalletSaveRequest wallet = null;
 
         firstName = technician.getFirstName();
@@ -169,13 +145,25 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         nationalCode = technician.getNationalCode();
         email = technician.getEmail();
         password = technician.getPassword();
-        byte[] avatar1 = technician.getAvatar();
-        if ( avatar1 != null ) {
-            avatar = Arrays.copyOf( avatar1, avatar1.length );
-        }
         wallet = walletToWalletSaveRequest( technician.getWallet() );
 
-        TechnicianSaveRequest technicianSaveRequest = new TechnicianSaveRequest( firstName, lastName, nationalCode, email, password, avatar, wallet );
+        TechnicianSaveRequestWithoutPath technicianSaveRequestWithoutPath = new TechnicianSaveRequestWithoutPath( firstName, lastName, nationalCode, email, password, wallet );
+
+        return technicianSaveRequestWithoutPath;
+    }
+
+    protected TechnicianSaveRequest technicianToTechnicianSaveRequest(Technician technician) {
+        if ( technician == null ) {
+            return null;
+        }
+
+        TechnicianSaveRequestWithoutPath technician1 = null;
+
+        technician1 = technicianToTechnicianSaveRequestWithoutPath( technician );
+
+        String imagePath = null;
+
+        TechnicianSaveRequest technicianSaveRequest = new TechnicianSaveRequest( technician1, imagePath );
 
         return technicianSaveRequest;
     }

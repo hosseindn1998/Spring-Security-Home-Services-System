@@ -9,6 +9,10 @@ import ir.hosseindn.repository.technician.TechnicianRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 
 @Service
@@ -16,9 +20,14 @@ import java.time.LocalDate;
 public class TechnicianService {
     private final TechnicianRepository technicianRepository;
 
-    public Technician register(Technician technician) {
-        if (technicianRepository.findByEmailOrNationalCode(technician.getEmail(), technician.getNationalCode()).isPresent())
+    public Technician register(Technician technician,String fileAddressAndName) throws IOException {
+        if (technicianRepository.findByEmailOrNationalCode(technician.getEmail(), technician.getNationalCode()).isPresent()) {
             throw new DuplicateInformationException("A Technician with this Email/National Code exist.");
+        }
+        Path path = Paths.get(fileAddressAndName);
+        if (Files.size(path) > (300 * 1024))
+            throw new NotValidInformation("File must be les than 300 KB");
+        technician.setAvatar(Files.readAllBytes(path));
         technician.setRegisteredDate(LocalDate.now());
         technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
         return technicianRepository.save(technician);

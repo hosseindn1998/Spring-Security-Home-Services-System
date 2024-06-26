@@ -40,6 +40,7 @@ ir\hosseindn\dto\techniciansubservice\TechnicianSubServiceSaveRequest.class
 ir\hosseindn\dto\mainservice\MainServiceSaveRequest.class
 ir\hosseindn\model\Comment$CommentBuilderImpl.class
 ir\hosseindn\model\Offer.class
+ir\hosseindn\dto\technician\TechnicianSaveRequestWithoutPath.class
 ir\hosseindn\dto\ExceptionDto.class
 ir\hosseindn\repository\wallet\WalletRepository.class
 ir\hosseindn\model\OrderStatus.class
@@ -74,6 +75,7 @@ ir\hosseindn\repository\customer\CustomerRepository.class
 ir\hosseindn\model\Customer$CustomerBuilderImpl.class
 ir\hosseindn\mapper\techniciansubservice\TechnicianSubServiceMapperImpl.class
 ir\hosseindn\dto\wallet\WalletSaveRequest.class
+ir\hosseindn\dto\order\OrderChangeStatusRequest.class
 ir\hosseindn\model\Customer$CustomerBuilder.class
 ir\hosseindn\repository\order\OrderRepository.class
 ir\hosseindn\dto\customer\CustomerChangePasswordResponse.class
@@ -111,6 +113,7 @@ ir\hosseindn\model\Admin$AdminBuilderImpl.class
 ir\hosseindn\dto\subservice\SubServiceUpdateRequest.class
 ir\hosseindn\repository\admin\AdminRepository.class
 ir\hosseindn\dto\customer\CustomerLoginRequest.class
+ir\hosseindn\dto\order\OrderChangeStatusResponse.class
 ir\hosseindn\dto\admin\AdminLoginResponse.class
 ir\hosseindn\controller\admin\AdminController.class
 ir\hosseindn\dto\customer\CustomerChangePasswordRequest.class

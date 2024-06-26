@@ -4,7 +4,7 @@ import ir.hosseindn.dto.technician.TechnicianChangePasswordRequest;
 import ir.hosseindn.dto.technician.TechnicianChangePasswordResponse;
 import ir.hosseindn.dto.technician.TechnicianLoginRequest;
 import ir.hosseindn.dto.technician.TechnicianLoginResponse;
-import ir.hosseindn.dto.technician.TechnicianSaveRequest;
+import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.technician.TechnicianVerifyRequest;
 import ir.hosseindn.dto.technician.TechnicianVerifyResponse;
@@ -12,18 +12,17 @@ import ir.hosseindn.dto.wallet.WalletSaveRequest;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.Wallet;
 import java.time.LocalDate;
-import java.util.Arrays;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-26T19:05:54+0330",
+    date = "2024-06-27T03:07:43+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
 
     @Override
-    public Technician technicianSaveRequestToModel(TechnicianSaveRequest request) {
+    public Technician technicianSaveRequestWithoutPathToModel(TechnicianSaveRequestWithoutPath request) {
         if ( request == null ) {
             return null;
         }
@@ -36,10 +35,6 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         technician.email( request.email() );
         technician.password( request.password() );
         technician.wallet( walletSaveRequestToWallet( request.wallet() ) );
-        byte[] avatar = request.avatar();
-        if ( avatar != null ) {
-            technician.avatar( Arrays.copyOf( avatar, avatar.length ) );
-        }
 
         return technician.build();
     }

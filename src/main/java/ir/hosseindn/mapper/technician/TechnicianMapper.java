@@ -1,8 +1,5 @@
 package ir.hosseindn.mapper.technician;
 
-import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
-import ir.hosseindn.dto.customer.CustomerLoginResponse;
-import ir.hosseindn.dto.customer.CustomerSaveResponse;
 import ir.hosseindn.dto.technician.*;
 import ir.hosseindn.model.Technician;
 import org.mapstruct.Mapper;
@@ -13,7 +10,7 @@ public interface TechnicianMapper {
 
     TechnicianMapper INSTANCE = Mappers.getMapper(TechnicianMapper.class);
 
-    Technician technicianSaveRequestToModel(TechnicianSaveRequest request);
+    Technician technicianSaveRequestWithoutPathToModel(TechnicianSaveRequestWithoutPath request);
 
     TechnicianSaveResponse modelToUserSaveResponse(Technician technician);
 
