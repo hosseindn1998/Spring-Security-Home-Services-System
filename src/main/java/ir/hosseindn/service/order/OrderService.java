@@ -44,4 +44,10 @@ public class OrderService {
         orderRepository.chooseOffer(id,offer);
         return order;
     }
+    public Order changeOrderStatusToWaitCome(Long id){
+        orderRepository.changeOrderStatus(id,OrderStatus.WAIT_FOR_COME_TECHNICIAN);
+        return orderRepository.findById(id).orElseThrow(
+                ()->new NotFoundException("Order Not found")
+        );
+    }
 }
