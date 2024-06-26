@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDto>MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e){
         log.warn(Arrays.toString(e.getDetailMessageArguments()));
-        ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
-        return new ResponseEntity<>(exceptionDto,HttpStatus.CONFLICT);
+        ExceptionDto exceptionDto=new ExceptionDto(Arrays.toString(e.getDetailMessageArguments()),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
 }
