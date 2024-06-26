@@ -52,9 +52,19 @@ public class OrderService {
     public Order changeOrderStatusToStarted(Long id,Offer offer){
         if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
             throw new NotValidInformation("start time can't be before in offer's start ");
-        orderRepository.changeOrderStatus(id,OrderStatus.STARTED);
-        return orderRepository.findById(id).orElseThrow(
+        Order order= orderRepository.findById(id).orElseThrow(
                 ()->new NotFoundException("Order Not found")
         );
+        orderRepository.changeOrderStatus(id,OrderStatus.STARTED);
+        return order;
+    }
+    public Order changeOrderStatusToDone(Long id,Offer offer){
+        if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
+            throw new NotValidInformation("start time can't be before in offer's start ");
+        Order order= orderRepository.findById(id).orElseThrow(
+                ()->new NotFoundException("Order Not found")
+        );
+        orderRepository.changeOrderStatus(id,OrderStatus.DONE);
+        return order;
     }
 }
