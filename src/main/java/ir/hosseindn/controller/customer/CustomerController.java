@@ -23,7 +23,7 @@ public class CustomerController {
 
     @PostMapping("/customer-register")
     public ResponseEntity<CustomerSaveResponse> customerRegister(@Valid @RequestBody CustomerSaveRequest request) {
-        if (!CustomValidations.isValidIranianNationalCode(request.nationalCode()))
+        if (CustomValidations.isNotValidIranianNationalCode(request.nationalCode()))
             throw new NotValidInformation("National Code is Not valid");
         Customer mappedCustomer = CustomerMapper.INSTANCE.customerSaveRequestToModel(request);
         Customer savedCustomer = customerService.register(mappedCustomer);

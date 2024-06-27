@@ -22,11 +22,13 @@ public class TechnicianService {
     private final TechnicianRepository technicianRepository;
 
     public Technician register(Technician technician,String fileAddressAndName) throws IOException {
-        if (!CustomValidations.isValidIranianNationalCode(technician.getNationalCode()))
+        if (CustomValidations.isNotValidIranianNationalCode(technician.getNationalCode()))
             throw new NotValidInformation("National Code is Not valid");
         if (technicianRepository.findByEmailOrNationalCode(technician.getEmail(), technician.getNationalCode()).isPresent()) {
             throw new DuplicateInformationException("A Technician with this Email/National Code exist.");
         }
+        if(!CustomValidations.isValidPathFile(fileAddressAndName))
+            throw new NotValidInformation("file address not valid ");
         Path path = Paths.get(fileAddressAndName);
         if (Files.size(path) > (300 * 1024))
             throw new NotValidInformation("File must be les than 300 KB");
