@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T03:07:43+0330",
+    date = "2024-06-27T05:25:28+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class MainServiceMapperImpl implements MainServiceMapper {
@@ -61,11 +61,13 @@ public class MainServiceMapperImpl implements MainServiceMapper {
             return null;
         }
 
+        Long id = null;
         String name = null;
 
+        id = mainService.getId();
         name = mainService.getName();
 
-        MainServiceFindAllResponse mainServiceFindAllResponse = new MainServiceFindAllResponse( name );
+        MainServiceFindAllResponse mainServiceFindAllResponse = new MainServiceFindAllResponse( id, name );
 
         return mainServiceFindAllResponse;
     }
