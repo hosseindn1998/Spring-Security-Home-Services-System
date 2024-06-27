@@ -1,6 +1,9 @@
 package ir.hosseindn.dto.subservice;
 
 public record SubServiceUpdateResponse(
-        String name
+        Long id,
+        String name,
+        Long basePrice,
+        String description
 ) {
 }

@@ -10,6 +10,7 @@ ir\hosseindn\model\TechnicianSubService.class
 ir\hosseindn\dto\mainservice\MainServiceSaveResponse.class
 ir\hosseindn\controller\technician\TechnicianController.class
 ir\hosseindn\repository\mainservice\MainServiceRepository.class
+ir\hosseindn\dto\subservice\SubServiceFindAllResponse.class
 ir\hosseindn\service\techniciansubservice\TechnicianSubServiceService.class
 ir\hosseindn\model\Offer$OfferBuilderImpl.class
 ir\hosseindn\model\MainService.class
@@ -101,6 +102,7 @@ ir\hosseindn\dto\subservice\SubServiceSaveRequest.class
 ir\hosseindn\model\BaseEntity$BaseEntityBuilderImpl.class
 ir\hosseindn\model\BaseEntity$BaseEntityBuilder.class
 ir\hosseindn\model\Admin.class
+ir\hosseindn\dto\subservice\SubServiceFindAllRequest.class
 ir\hosseindn\model\Person$PersonBuilderImpl.class
 ir\hosseindn\model\TechnicianSubService$TechnicianSubServiceBuilder.class
 ir\hosseindn\dto\technician\TechnicianSaveRequest.class

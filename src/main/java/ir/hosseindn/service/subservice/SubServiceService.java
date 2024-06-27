@@ -23,12 +23,14 @@ public class SubServiceService {
         return subServiceRepository.save(subService);
     }
     public SubService update(SubService subService){
-        SubService foundedSubService = subServiceRepository.findByName(subService.getName()).orElseThrow(
+        SubService foundedSubService = subServiceRepository.findById(subService.getId()).orElseThrow(
                 () -> new NotFoundException("Sub-Service with this name Not found!")
         );
         Optional.ofNullable(subService.getBasePrice()).ifPresent(foundedSubService::setBasePrice);
         Optional.ofNullable(subService.getDescription()).ifPresent(foundedSubService::setDescription);
-        return subServiceRepository.save(foundedSubService);
+        subServiceRepository.updateDescriptionAndBasePrice(foundedSubService.getId(), subService.getDescription()
+                , subService.getBasePrice());
+        return foundedSubService;
     }
     public SubService findByName(SubService subService) {
         return subServiceRepository.findByName(subService.getName()).orElseThrow(

@@ -11,7 +11,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T09:38:58+0330",
+    date = "2024-06-27T12:24:45+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class SubServiceMapperImpl implements SubServiceMapper {
@@ -60,7 +60,9 @@ public class SubServiceMapperImpl implements SubServiceMapper {
 
         SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
 
-        subService.name( request.name() );
+        subService.id( request.id() );
+        subService.basePrice( request.basePrice() );
+        subService.description( request.description() );
 
         return subService.build();
     }
@@ -71,11 +73,17 @@ public class SubServiceMapperImpl implements SubServiceMapper {
             return null;
         }
 
+        Long id = null;
         String name = null;
+        Long basePrice = null;
+        String description = null;
 
+        id = subService.getId();
         name = subService.getName();
+        basePrice = subService.getBasePrice();
+        description = subService.getDescription();
 
-        SubServiceUpdateResponse subServiceUpdateResponse = new SubServiceUpdateResponse( name );
+        SubServiceUpdateResponse subServiceUpdateResponse = new SubServiceUpdateResponse( id, name, basePrice, description );
 
         return subServiceUpdateResponse;
     }
