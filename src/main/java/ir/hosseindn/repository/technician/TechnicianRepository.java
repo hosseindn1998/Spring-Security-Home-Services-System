@@ -24,6 +24,7 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
     @Modifying
     @Query("update Technician t set t.password=:password where t.email=:email")
     void updatePassword(@Param("email") String email, @Param("password") String password);
+    @Modifying
     @Query("UPDATE Technician t set t.technicianStatus=:technicianStatus where t.email=:email")
     void updateTechnicianStatus(@Param("technicianStatus") TechnicianStatus technicianStatus,@Param("email") String email);
 }

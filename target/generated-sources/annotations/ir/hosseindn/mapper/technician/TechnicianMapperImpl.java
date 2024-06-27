@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T13:45:19+0330",
+    date = "2024-06-27T14:59:28+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -74,6 +74,7 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
 
         technician.email( request.email() );
+        technician.password( request.password() );
 
         return technician.build();
     }

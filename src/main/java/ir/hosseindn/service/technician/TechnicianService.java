@@ -52,10 +52,10 @@ public class TechnicianService {
         );
     }
     public Technician changeStatusToVerify(Technician technician){
-        if(technicianRepository.findByEmail(technician.getEmail()).isEmpty())
-            throw new NotFoundException("Technician with email :" + technician.getEmail() + " Not found.");
+        Technician founded=technicianRepository.findByEmail(technician.getEmail()).orElseThrow(
+            ()-> new NotFoundException("Technician with email :" + technician.getEmail() + " Not found."));
         technicianRepository.updateTechnicianStatus(TechnicianStatus.VERIFIED,technician.getEmail());
-        return technician;
+        return founded;
     }
     public Technician findById(Long id){
         return technicianRepository.findById(id).orElseThrow(

@@ -37,7 +37,7 @@ public class Technician extends Person {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
     List<Offer> offers;
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "technician", cascade ={CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "technician", cascade ={CascadeType.REMOVE})
     @ToString.Exclude
     List<TechnicianSubService>technicianSubServices;
 

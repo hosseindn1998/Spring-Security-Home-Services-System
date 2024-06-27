@@ -34,14 +34,14 @@ public class TechnicianController {
     }
     @PatchMapping("/technician-changePassword")
     public ResponseEntity<TechnicianChangePasswordResponse> technicianChangePassword(@Valid @RequestBody TechnicianChangePasswordRequest request) {
-        if (!request.newPassword().equals(request.confirmPassword()))
+        if (!request.password().equals(request.confirmPassword()))
             throw new NotValidInformation("new password must be match by confirm");
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianChangePasswordRequestToModel(request);
         Technician savedTechnician = technicianService.changePassword(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.OK);
     }
     @GetMapping("/technician-login")
-    public ResponseEntity<TechnicianLoginResponse> customerLogin(@Valid @RequestBody TechnicianLoginRequest request) {
+    public ResponseEntity<TechnicianLoginResponse> technicianLogin(@Valid @RequestBody TechnicianLoginRequest request) {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianLoginRequestToModel(request);
         Technician LoggedInTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(LoggedInTechnician), HttpStatus.FOUND);
