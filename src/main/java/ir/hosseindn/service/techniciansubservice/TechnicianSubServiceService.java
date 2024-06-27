@@ -4,8 +4,12 @@ import ir.hosseindn.exception.DuplicateInformationException;
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.model.TechnicianSubService;
 import ir.hosseindn.repository.techniciansubservice.TechnicianSubServiceRepository;
+import ir.hosseindn.service.subservice.SubServiceService;
+import ir.hosseindn.service.technician.TechnicianService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +24,8 @@ public class TechnicianSubServiceService {
     public void delete(TechnicianSubService technicianSubService) {
         if (technicianSubServiceRepository.findBySubServiceAndTechnician(technicianSubService.getTechnician(), technicianSubService.getSubService()).isEmpty())
             throw new NotFoundException("this technician already hasn't relation by subService");
-        technicianSubServiceRepository.delete(technicianSubService);
+        technicianSubServiceRepository.deleteById(technicianSubService.getTechnician().getId()
+                ,technicianSubService.getSubService().getId());
     }
 
 }

@@ -2,6 +2,7 @@ package ir.hosseindn.mapper.technician;
 
 import ir.hosseindn.dto.technician.TechnicianChangePasswordRequest;
 import ir.hosseindn.dto.technician.TechnicianChangePasswordResponse;
+import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.dto.technician.TechnicianLoginRequest;
 import ir.hosseindn.dto.technician.TechnicianLoginResponse;
 import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
@@ -16,7 +17,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T12:24:45+0330",
+    date = "2024-06-27T13:45:19+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -155,6 +156,19 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         TechnicianVerifyResponse technicianVerifyResponse = new TechnicianVerifyResponse( email, firstName, lastName );
 
         return technicianVerifyResponse;
+    }
+
+    @Override
+    public Technician technicianIdToModel(TechnicianId technicianId) {
+        if ( technicianId == null ) {
+            return null;
+        }
+
+        Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
+
+        technician.id( technicianId.id() );
+
+        return technician.build();
     }
 
     protected Wallet walletSaveRequestToWallet(WalletSaveRequest walletSaveRequest) {

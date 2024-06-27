@@ -2,6 +2,7 @@ package ir.hosseindn.mapper.subservice;
 
 import ir.hosseindn.dto.subservice.SubServiceFindAllRequest;
 import ir.hosseindn.dto.subservice.SubServiceFindAllResponse;
+import ir.hosseindn.dto.subservice.SubServiceId;
 import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
 import ir.hosseindn.dto.subservice.SubServiceUpdateRequest;
 import ir.hosseindn.dto.subservice.SubServiceUpdateResponse;
@@ -11,7 +12,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T12:24:45+0330",
+    date = "2024-06-27T13:45:19+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class SubServiceMapperImpl implements SubServiceMapper {
@@ -116,5 +117,18 @@ public class SubServiceMapperImpl implements SubServiceMapper {
         SubServiceFindAllResponse subServiceFindAllResponse = new SubServiceFindAllResponse( name, basePrice, description );
 
         return subServiceFindAllResponse;
+    }
+
+    @Override
+    public SubService subServiceIdToModel(SubServiceId subServiceId) {
+        if ( subServiceId == null ) {
+            return null;
+        }
+
+        SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
+
+        subService.id( subServiceId.id() );
+
+        return subService.build();
     }
 }

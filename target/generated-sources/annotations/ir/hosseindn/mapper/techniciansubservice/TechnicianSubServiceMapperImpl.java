@@ -1,6 +1,7 @@
 package ir.hosseindn.mapper.techniciansubservice;
 
-import ir.hosseindn.dto.subservice.SubServiceSaveRequest;
+import ir.hosseindn.dto.subservice.SubServiceId;
+import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.dto.technician.TechnicianSaveRequest;
 import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteRequest;
@@ -16,7 +17,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T12:24:46+0330",
+    date = "2024-06-27T13:45:20+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
@@ -28,9 +29,6 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         }
 
         TechnicianSubService.TechnicianSubServiceBuilder<?, ?> technicianSubService = TechnicianSubService.builder();
-
-        technicianSubService.technician( technicianSaveRequestToTechnician( request.technician() ) );
-        technicianSubService.subService( subServiceSaveRequestToSubService( request.subService() ) );
 
         return technicianSubService.build();
     }
@@ -58,8 +56,8 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
 
         TechnicianSubService.TechnicianSubServiceBuilder<?, ?> technicianSubService = TechnicianSubService.builder();
 
-        technicianSubService.technician( technicianSaveRequestToTechnician( request.technician() ) );
-        technicianSubService.subService( subServiceSaveRequestToSubService( request.subService() ) );
+        technicianSubService.technician( technicianIdToTechnician( request.technician() ) );
+        technicianSubService.subService( subServiceIdToSubService( request.subService() ) );
 
         return technicianSubService.build();
     }
@@ -73,26 +71,6 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         TechnicianSubServiceDeleteResponse technicianSubServiceDeleteResponse = new TechnicianSubServiceDeleteResponse();
 
         return technicianSubServiceDeleteResponse;
-    }
-
-    protected Technician technicianSaveRequestToTechnician(TechnicianSaveRequest technicianSaveRequest) {
-        if ( technicianSaveRequest == null ) {
-            return null;
-        }
-
-        Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
-
-        return technician.build();
-    }
-
-    protected SubService subServiceSaveRequestToSubService(SubServiceSaveRequest subServiceSaveRequest) {
-        if ( subServiceSaveRequest == null ) {
-            return null;
-        }
-
-        SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
-
-        return subService.build();
     }
 
     protected WalletSaveRequest walletToWalletSaveRequest(Wallet wallet) {
@@ -147,5 +125,29 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         TechnicianSaveRequest technicianSaveRequest = new TechnicianSaveRequest( technician1, imagePath );
 
         return technicianSaveRequest;
+    }
+
+    protected Technician technicianIdToTechnician(TechnicianId technicianId) {
+        if ( technicianId == null ) {
+            return null;
+        }
+
+        Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
+
+        technician.id( technicianId.id() );
+
+        return technician.build();
+    }
+
+    protected SubService subServiceIdToSubService(SubServiceId subServiceId) {
+        if ( subServiceId == null ) {
+            return null;
+        }
+
+        SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
+
+        subService.id( subServiceId.id() );
+
+        return subService.build();
     }
 }

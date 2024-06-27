@@ -57,4 +57,9 @@ public class TechnicianService {
         technicianRepository.updateTechnicianStatus(TechnicianStatus.VERIFIED,technician.getEmail());
         return technician;
     }
+    public Technician findById(Long id){
+        return technicianRepository.findById(id).orElseThrow(
+                ()->new NotFoundException(String.format("Technician with id %s Not Found",id))
+        );
+    }
 }

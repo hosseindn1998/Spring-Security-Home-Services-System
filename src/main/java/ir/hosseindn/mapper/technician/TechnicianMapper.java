@@ -23,4 +23,5 @@ public interface TechnicianMapper {
     TechnicianLoginResponse modelToTechnicianLoginResponse(Technician technician);
     Technician technicianVerifyRequestToModel(TechnicianVerifyRequest request);
     TechnicianVerifyResponse modelToTechnicianVerifyResponse(Technician technician);
+    Technician technicianIdToModel(TechnicianId technicianId);
 }

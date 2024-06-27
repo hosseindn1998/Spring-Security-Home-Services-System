@@ -16,4 +16,5 @@ public interface SubServiceMapper {
     SubServiceUpdateResponse modelToSubServiceUpdateResponse(SubService subService);
     SubService subServiceFindAllRequestToModel(SubServiceFindAllRequest request);
     SubServiceFindAllResponse modelToSubServiceFindAllResponse(SubService subService);
+    SubService subServiceIdToModel(SubServiceId subServiceId);
 }

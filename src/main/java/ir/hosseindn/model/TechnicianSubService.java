@@ -1,9 +1,6 @@
 package ir.hosseindn.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -18,8 +15,8 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Table(name = "TechnicianSubServiceManual")
 public class TechnicianSubService extends BaseEntity<Long> {
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
     Technician technician;
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
     SubService subService;
 }

@@ -4,6 +4,7 @@ import ir.hosseindn.dto.ExceptionDto;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -59,6 +60,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ExceptionDto>ConstraintViolationExceptionHandler(ConstraintViolationException e){
         log.warn(e.getMessage());
+        ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ExceptionDto>DataIntegrityViolationExceptionHandler(DataIntegrityViolationException e){
+        log.warn(e.getMostSpecificCause().toString());
         ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
     }
