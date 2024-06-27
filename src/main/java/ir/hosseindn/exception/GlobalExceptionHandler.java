@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
@@ -43,10 +44,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionDto,HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<ExceptionDto>IOExceptionHandler(MethodArgumentNotValidException e){
+    public ResponseEntity<ExceptionDto>IOExceptionHandler(IOException e){
         log.warn(e.getMessage());
         ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
-        return new ResponseEntity<>(exceptionDto,HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(NoSuchFileException.class)
+    public ResponseEntity<ExceptionDto>NoSuchFileExceptionHandler(NoSuchFileException e){
+        log.warn(String.format("file with path %s not found.",e.getMessage()));
+        ExceptionDto exceptionDto=new ExceptionDto(String.format("file with path %s not found.",e.getMessage()),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ExceptionDto>ConstraintViolationExceptionHandler(ConstraintViolationException e){
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto=new ExceptionDto(e.getMessage(),LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto,HttpStatus.NOT_FOUND);
+    }
 }
