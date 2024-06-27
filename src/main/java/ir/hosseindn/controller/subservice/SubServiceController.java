@@ -1,9 +1,8 @@
 package ir.hosseindn.controller.subservice;
 
-import ir.hosseindn.dto.subservice.SubServiceSaveRequest;
-import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
-import ir.hosseindn.dto.subservice.SubServiceUpdateRequest;
-import ir.hosseindn.dto.subservice.SubServiceUpdateResponse;
+import ir.hosseindn.dto.mainservice.MainServiceFindAllResponse;
+import ir.hosseindn.dto.subservice.*;
+import ir.hosseindn.mapper.mainservice.MainServiceMapper;
 import ir.hosseindn.mapper.subservice.SubServiceMapper;
 import ir.hosseindn.model.MainService;
 import ir.hosseindn.model.SubService;
@@ -15,9 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,5 +40,12 @@ public class SubServiceController {
         SubService mappedSubService= SubServiceMapper.INSTANCE.subServiceUpdateRequestToModel(request);
         SubService savedSubService=subServiceService.save(mappedSubService);
         return new ResponseEntity<>(SubServiceMapper.INSTANCE.modelToSubServiceUpdateResponse(savedSubService), HttpStatus.OK);
+    }
+    @GetMapping("/see-sub-services")
+    public ResponseEntity<List<SubServiceFindAllResponse>> seeSubServices() {
+        List<SubService> subServiceList = subServiceService.findAll();;
+        return new ResponseEntity<>(subServiceList.stream()
+                .map(SubServiceMapper.INSTANCE::modelToSubServiceFindAllResponse)
+                .toList(), HttpStatus.FOUND);
     }
 }

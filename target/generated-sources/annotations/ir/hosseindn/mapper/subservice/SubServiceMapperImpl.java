@@ -1,5 +1,7 @@
 package ir.hosseindn.mapper.subservice;
 
+import ir.hosseindn.dto.subservice.SubServiceFindAllRequest;
+import ir.hosseindn.dto.subservice.SubServiceFindAllResponse;
 import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
 import ir.hosseindn.dto.subservice.SubServiceUpdateRequest;
 import ir.hosseindn.dto.subservice.SubServiceUpdateResponse;
@@ -9,7 +11,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T08:48:05+0330",
+    date = "2024-06-27T09:38:58+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class SubServiceMapperImpl implements SubServiceMapper {
@@ -76,5 +78,35 @@ public class SubServiceMapperImpl implements SubServiceMapper {
         SubServiceUpdateResponse subServiceUpdateResponse = new SubServiceUpdateResponse( name );
 
         return subServiceUpdateResponse;
+    }
+
+    @Override
+    public SubService subServiceFindAllRequestToModel(SubServiceFindAllRequest request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
+
+        return subService.build();
+    }
+
+    @Override
+    public SubServiceFindAllResponse modelToSubServiceFindAllResponse(SubService subService) {
+        if ( subService == null ) {
+            return null;
+        }
+
+        String name = null;
+        Long basePrice = null;
+        String description = null;
+
+        name = subService.getName();
+        basePrice = subService.getBasePrice();
+        description = subService.getDescription();
+
+        SubServiceFindAllResponse subServiceFindAllResponse = new SubServiceFindAllResponse( name, basePrice, description );
+
+        return subServiceFindAllResponse;
     }
 }
