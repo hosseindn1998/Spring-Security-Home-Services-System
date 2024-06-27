@@ -9,6 +9,7 @@ import ir.hosseindn.service.mainservice.MainServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,13 @@ public class SubServiceService {
         return subServiceRepository.findByName(subService.getName()).orElseThrow(
                 () -> new NotFoundException("Sub-Service with this name Not found!")
         );
+    }
+    public List<SubService> findAll() {
+        List<SubService> subServiceList = subServiceRepository.findAll();
+        if(subServiceList.isEmpty())
+            throw new NotFoundException("Sub-Service with this name Not found!"
+        );
+        return subServiceList;
     }
 }
 
