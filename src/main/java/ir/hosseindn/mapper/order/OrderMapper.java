@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
-    Order orderSaveRequestToModel(OrderSaveRequest request);
+    Order orderSaveRequestWithoutFKsToModel(OrderSaveRequestWithoutFKs request);
 
     OrderSaveResponse modelToOrderSaveResponse(Order order);
     Order orderChooseOfferToModel(OrderChooseOfferRequest request);

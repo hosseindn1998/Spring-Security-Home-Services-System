@@ -32,9 +32,9 @@ public class SubServiceService {
                 , subService.getBasePrice());
         return foundedSubService;
     }
-    public SubService findByName(SubService subService) {
-        return subServiceRepository.findByName(subService.getName()).orElseThrow(
-                () -> new NotFoundException("Sub-Service with this name Not found!")
+    public SubService findById(SubService subService) {
+        return subServiceRepository.findById(subService.getId()).orElseThrow(
+                () -> new NotFoundException("Sub-Service with this id Not found!")
         );
     }
     public List<SubService> findAll() {

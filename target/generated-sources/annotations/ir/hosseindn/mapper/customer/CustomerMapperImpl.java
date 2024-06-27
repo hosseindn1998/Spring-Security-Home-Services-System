@@ -2,6 +2,7 @@ package ir.hosseindn.mapper.customer;
 
 import ir.hosseindn.dto.customer.CustomerChangePasswordRequest;
 import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
+import ir.hosseindn.dto.customer.CustomerId;
 import ir.hosseindn.dto.customer.CustomerLoginRequest;
 import ir.hosseindn.dto.customer.CustomerLoginResponse;
 import ir.hosseindn.dto.customer.CustomerSaveRequest;
@@ -14,7 +15,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T14:59:28+0330",
+    date = "2024-06-27T18:05:56+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CustomerMapperImpl implements CustomerMapper {
@@ -121,6 +122,19 @@ public class CustomerMapperImpl implements CustomerMapper {
         CustomerLoginResponse customerLoginResponse = new CustomerLoginResponse( firstName, lastName, email );
 
         return customerLoginResponse;
+    }
+
+    @Override
+    public Customer customerIdToModel(CustomerId customerId) {
+        if ( customerId == null ) {
+            return null;
+        }
+
+        Customer.CustomerBuilder<?, ?> customer = Customer.builder();
+
+        customer.id( customerId.id() );
+
+        return customer.build();
     }
 
     protected Wallet walletSaveRequestToWallet(WalletSaveRequest walletSaveRequest) {

@@ -1,3 +1,4 @@
+ir\hosseindn\dto\customer\CustomerId.class
 ir\hosseindn\dto\order\OrderSaveResponse.class
 ir\hosseindn\model\MainService$MainServiceBuilder.class
 ir\hosseindn\dto\subservice\SubServiceSaveResponse.class
@@ -19,6 +20,7 @@ ir\hosseindn\dto\techniciansubservice\TechnicianSubServiceSaveResponse.class
 ir\hosseindn\dto\order\OrderChooseOfferRequest.class
 ir\hosseindn\model\Admin$AdminBuilder.class
 ir\hosseindn\service\admin\AdminService.class
+ir\hosseindn\dto\order\OrderSaveRequestWithoutFKs.class
 ir\hosseindn\dto\technician\TechnicianLoginRequest.class
 ir\hosseindn\repository\offer\OfferRepository.class
 ir\hosseindn\dto\techniciansubservice\TechnicianSubServiceDeleteResponse.class

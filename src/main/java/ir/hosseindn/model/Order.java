@@ -21,9 +21,9 @@ import java.util.List;
 @ToString(callSuper = true)
 @Table(name = "odrer")
 public class Order extends BaseEntity<Long> {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     SubService subservice;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     Customer customer;
     @Min(0L)
     Long suggestedPrice;
@@ -39,7 +39,7 @@ public class Order extends BaseEntity<Long> {
     String address;
     @Enumerated
     OrderStatus orderStatus;
-    @OneToMany(mappedBy = "odrer", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "odrer", cascade = {CascadeType.REMOVE},fetch = FetchType.LAZY)
     @ToString.Exclude
     List<Offer> offers;
     @OneToOne

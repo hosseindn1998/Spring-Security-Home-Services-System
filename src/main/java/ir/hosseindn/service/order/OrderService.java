@@ -23,11 +23,7 @@ public class OrderService {
 
 
     public Order save(Order order) {
-        SubService foundedSubService = Optional.ofNullable(subServiceService.findByName(order.getSubservice())).orElseThrow(
-                () -> new NotFoundException("SubService not found")
-        );
         order.setOrderStatus(OrderStatus.WAIT_FOR_TECHNICIAN_OFFER);
-        order.setSubservice(foundedSubService);
         return orderRepository.save(order);
     }
 

@@ -15,4 +15,5 @@ public interface CustomerMapper {
     CustomerChangePasswordResponse modelToCustomerChangePasswordResponse(Customer customer);
     Customer customerLoginRequestToModel(CustomerLoginRequest request);
     CustomerLoginResponse modelToCustomerLoginResponse(Customer customer);
+    Customer customerIdToModel(CustomerId customerId);
 }

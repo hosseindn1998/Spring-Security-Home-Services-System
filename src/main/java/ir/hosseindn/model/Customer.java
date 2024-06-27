@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "customer")
 public class Customer extends Person {
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
     List<Order> orders;
 

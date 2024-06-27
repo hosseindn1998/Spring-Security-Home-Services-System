@@ -1,8 +1,12 @@
 package ir.hosseindn.controller.order;
 
 import ir.hosseindn.dto.order.*;
+import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.mapper.order.OrderMapper;
+import ir.hosseindn.mapper.subservice.SubServiceMapper;
+import ir.hosseindn.model.Customer;
 import ir.hosseindn.model.Order;
+import ir.hosseindn.model.SubService;
 import ir.hosseindn.service.order.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +27,11 @@ public class OrderController {
     private final OrderService orderService;
     @PostMapping("/add-order")
     public ResponseEntity<OrderSaveResponse> addOrder (@Valid @RequestBody OrderSaveRequest request){
-        Order mappedOrder= OrderMapper.INSTANCE.orderSaveRequestToModel(request);
+        Customer customer= CustomerMapper.INSTANCE.customerIdToModel(request.customerId());
+        SubService subService= SubServiceMapper.INSTANCE.subServiceIdToModel(request.subserviceId());
+        Order mappedOrder= OrderMapper.INSTANCE.orderSaveRequestWithoutFKsToModel(request.order());
+        mappedOrder.setCustomer(customer);
+        mappedOrder.setSubservice(subService);
         Order savedOrder=orderService.save(mappedOrder);
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderSaveResponse(savedOrder), HttpStatus.CREATED);
     }
