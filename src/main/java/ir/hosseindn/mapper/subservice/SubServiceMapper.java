@@ -1,9 +1,6 @@
 package ir.hosseindn.mapper.subservice;
 
-import ir.hosseindn.dto.subservice.SubServiceSaveRequest;
-import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
-import ir.hosseindn.dto.subservice.SubServiceUpdateRequest;
-import ir.hosseindn.dto.subservice.SubServiceUpdateResponse;
+import ir.hosseindn.dto.subservice.*;
 import ir.hosseindn.model.SubService;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -12,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface SubServiceMapper {
     SubServiceMapper INSTANCE = Mappers.getMapper(SubServiceMapper.class);
 
-    SubService subServiceSaveRequestToModel(SubServiceSaveRequest request);
+    SubService subServiceWithoutMainServiceSaveRequestToModel(SubServiceWithoutMainService request);
 
     SubServiceSaveResponse modelToSubServiceSaveResponse(SubService subService);
     SubService subServiceUpdateRequestToModel(SubServiceUpdateRequest request);

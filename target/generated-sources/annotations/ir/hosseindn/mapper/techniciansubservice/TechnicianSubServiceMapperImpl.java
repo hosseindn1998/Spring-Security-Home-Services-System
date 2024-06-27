@@ -1,6 +1,5 @@
 package ir.hosseindn.mapper.techniciansubservice;
 
-import ir.hosseindn.dto.mainservice.MainServiceSaveRequest;
 import ir.hosseindn.dto.subservice.SubServiceSaveRequest;
 import ir.hosseindn.dto.technician.TechnicianSaveRequest;
 import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
@@ -9,7 +8,6 @@ import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteResponse;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveRequest;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveResponse;
 import ir.hosseindn.dto.wallet.WalletSaveRequest;
-import ir.hosseindn.model.MainService;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianSubService;
@@ -18,7 +16,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T05:25:28+0330",
+    date = "2024-06-27T08:45:34+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
@@ -87,29 +85,12 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         return technician.build();
     }
 
-    protected MainService mainServiceSaveRequestToMainService(MainServiceSaveRequest mainServiceSaveRequest) {
-        if ( mainServiceSaveRequest == null ) {
-            return null;
-        }
-
-        MainService.MainServiceBuilder<?, ?> mainService = MainService.builder();
-
-        mainService.name( mainServiceSaveRequest.name() );
-
-        return mainService.build();
-    }
-
     protected SubService subServiceSaveRequestToSubService(SubServiceSaveRequest subServiceSaveRequest) {
         if ( subServiceSaveRequest == null ) {
             return null;
         }
 
         SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
-
-        subService.name( subServiceSaveRequest.name() );
-        subService.basePrice( subServiceSaveRequest.basePrice() );
-        subService.description( subServiceSaveRequest.description() );
-        subService.mainService( mainServiceSaveRequestToMainService( subServiceSaveRequest.mainService() ) );
 
         return subService.build();
     }

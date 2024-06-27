@@ -83,6 +83,7 @@ D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\controller\
 D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\dto\techniciansubservice\TechnicianSubServiceSaveResponse.java
 D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\dto\order\OrderChooseOfferResponse.java
 D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\repository\technician\TechnicianRepository.java
+D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\dto\subservice\SubServiceWithoutMainService.java
 D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\dto\offer\OfferSaveResponse.java
 D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\dto\customer\CustomerLoginResponse.java
 D:\01-bootcamp java\final-project\phase 3\src\main\java\ir\hosseindn\dto\subservice\SubServiceUpdateRequest.java

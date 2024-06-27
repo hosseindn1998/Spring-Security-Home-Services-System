@@ -7,6 +7,7 @@ import ir.hosseindn.dto.subservice.SubServiceUpdateResponse;
 import ir.hosseindn.mapper.subservice.SubServiceMapper;
 import ir.hosseindn.model.MainService;
 import ir.hosseindn.model.SubService;
+import ir.hosseindn.service.mainservice.MainServiceService;
 import ir.hosseindn.service.subservice.SubServiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class SubServiceController {
     private final SubServiceService subServiceService;
+    private final MainServiceService mainServiceService;
     @PostMapping("/add-SubService")
     public ResponseEntity<SubServiceSaveResponse>addSubService(@Valid @RequestBody SubServiceSaveRequest request){
-        SubService mappedSubService= SubServiceMapper.INSTANCE.subServiceSaveRequestToModel(request);
+        SubService mappedSubService= SubServiceMapper.INSTANCE.subServiceWithoutMainServiceSaveRequestToModel(request.subService());
+        mappedSubService.setMainService(mainServiceService.findById(request.mainServiceId()));
         SubService savedSubService=subServiceService.save(mappedSubService);
         return new ResponseEntity<>(SubServiceMapper.INSTANCE.modelToSubServiceSaveResponse(savedSubService), HttpStatus.CREATED);
     }

@@ -45,6 +45,7 @@ ir\hosseindn\dto\ExceptionDto.class
 ir\hosseindn\repository\wallet\WalletRepository.class
 ir\hosseindn\model\OrderStatus.class
 ir\hosseindn\dto\subservice\SubServiceUpdateResponse.class
+ir\hosseindn\dto\subservice\SubServiceWithoutMainService.class
 ir\hosseindn\controller\order\OrderController.class
 ir\hosseindn\dto\order\OrderSaveRequest.class
 ir\hosseindn\controller\customer\CustomerController.class

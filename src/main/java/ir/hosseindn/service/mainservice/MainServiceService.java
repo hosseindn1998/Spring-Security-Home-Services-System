@@ -24,5 +24,9 @@ public class MainServiceService {
             throw new NotFoundException("No Main-Service Found!");
         return mainServiceRepository.findAll();
     }
-
+    public MainService findById(Long id){
+        return mainServiceRepository.findById(id).orElseThrow(
+                ()->new NotFoundException("Main service not found")
+        );
+    }
 }

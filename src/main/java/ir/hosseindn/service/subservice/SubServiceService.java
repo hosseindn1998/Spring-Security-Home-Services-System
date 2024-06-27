@@ -2,8 +2,10 @@ package ir.hosseindn.service.subservice;
 
 import ir.hosseindn.exception.DuplicateInformationException;
 import ir.hosseindn.exception.NotFoundException;
+import ir.hosseindn.model.MainService;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.repository.subservice.SubServiceRepository;
+import ir.hosseindn.service.mainservice.MainServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubServiceService {
     private final SubServiceRepository subServiceRepository;
+    private final MainServiceService mainServiceService;
     public SubService save(SubService subService){
         if(subServiceRepository.findByName(subService.getName()).isPresent())
             throw new DuplicateInformationException("A Sub-Service with this name is Already exists!");
