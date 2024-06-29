@@ -1,6 +1,7 @@
 package ir.hosseindn.controller.order;
 
 import ir.hosseindn.dto.order.*;
+import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.mapper.offer.OfferMapper;
 import ir.hosseindn.mapper.order.OrderMapper;
@@ -45,7 +46,14 @@ public class OrderController {
     public ResponseEntity<OrderChooseOfferResponse> chooseOffer(@Valid @RequestBody OrderChooseOfferRequest request) {
         Order mappedOrder = OrderMapper.INSTANCE.orderIdToModel(request.order());
         Offer mappedOffer = OfferMapper.INSTANCE.offerIdToModel(request.offer());
-        Order updatedOrder = orderService.chooseOffer(mappedOrder, mappedOffer);
+        Offer foundedOffer = offerService.findById(mappedOffer.getId());
+        Order foundedOrder=orderService.findById(mappedOrder.getId());
+        if(foundedOffer.getDateOfOfferToStart().isAfter(foundedOffer.getDateOfOfferToDone()))
+            throw new NotValidInformation("Start date can't after done date");
+        if(foundedOrder.getDateForDo().isBefore(foundedOffer.getDateOfOfferToDone()))
+            throw new NotValidInformation("deadline for this Order was in "+foundedOrder.getDateForDo()
+                    +"and your offer's done date is "+foundedOffer.getDateOfOfferToDone());
+        Order updatedOrder = orderService.chooseOffer(foundedOrder, foundedOffer);
         offerService.nowIsAccepted(request.offer().id());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChooseOffer(updatedOrder, offerService.findById(request.offer().id())), HttpStatus.OK);
     }

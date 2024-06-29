@@ -36,12 +36,9 @@ public class OrderService {
         return orderRepository.isOpenToGetOffer(id).isPresent();
     }
     public Order chooseOffer(Order order, Offer offer){
-        Order foundOrder=findById(order.getId());
-        if(foundOrder.getChoosedOffer()!=null)
-            throw new NotValidInformation("choose offer already exists for this order");
-        orderRepository.chooseOffer(foundOrder.getId(), offer.getId());
-        orderRepository.changeOrderStatus(foundOrder.getId(),OrderStatus.WAIT_FOR_COME_TECHNICIAN);
-        return foundOrder;
+        orderRepository.chooseOffer(order.getId(), offer.getId());
+        orderRepository.changeOrderStatus(order.getId(),OrderStatus.WAIT_FOR_COME_TECHNICIAN);
+        return order;
     }
     public Order changeOrderStatusToStarted(Order order){
         Order foundedOrder=findById(order.getId());
