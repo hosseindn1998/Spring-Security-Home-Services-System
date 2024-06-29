@@ -1,6 +1,6 @@
 package ir.hosseindn.dto.order;
 
 public record OrderChangeStatusRequest(
-        OrderSaveRequest order
+        OrderId order
 ) {
 }

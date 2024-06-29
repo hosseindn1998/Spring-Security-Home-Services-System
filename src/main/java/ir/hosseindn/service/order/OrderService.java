@@ -40,17 +40,17 @@ public class OrderService {
         if(foundOrder.getChoosedOffer()!=null)
             throw new NotValidInformation("choose offer already exists for this order");
         orderRepository.chooseOffer(foundOrder.getId(), offer.getId());
-        orderRepository.changeOrderStatus(foundOrder.getId(),OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
+        orderRepository.changeOrderStatus(foundOrder.getId(),OrderStatus.WAIT_FOR_COME_TECHNICIAN);
         return foundOrder;
     }
-    public Order changeOrderStatusToStarted(Long id,Offer offer){
-        if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
+    public Order changeOrderStatusToStarted(Order order){
+        Order foundedOrder=findById(order.getId());
+        if(foundedOrder.getChoosedOffer()==null)
+            throw new NotFoundException(String.format("for order %s,offer choose not found",order.getId()));
+        if(LocalDate.now().isBefore(foundedOrder.getChoosedOffer().getDateOfOfferToStart()))
             throw new NotValidInformation("start time can't be before in offer's start ");
-        Order order= orderRepository.findById(id).orElseThrow(
-                ()->new NotFoundException("Order Not found")
-        );
-        orderRepository.changeOrderStatus(id,OrderStatus.STARTED);
-        return order;
+        orderRepository.changeOrderStatus(order.getId(),OrderStatus.STARTED);
+        return foundedOrder;
     }
     public Order changeOrderStatusToDone(Long id,Offer offer){
         if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
