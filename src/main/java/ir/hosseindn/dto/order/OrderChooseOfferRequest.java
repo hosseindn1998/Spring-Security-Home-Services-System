@@ -1,9 +1,9 @@
 package ir.hosseindn.dto.order;
 
-import ir.hosseindn.dto.offer.OfferSaveRequest;
+import ir.hosseindn.dto.offer.OfferId;
 
 public record OrderChooseOfferRequest(
-        Long id,
-        OfferSaveRequest offer
+        OrderId order,
+        OfferId offer
 ) {
 }

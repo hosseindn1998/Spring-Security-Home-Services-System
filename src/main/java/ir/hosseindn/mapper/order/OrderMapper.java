@@ -1,6 +1,7 @@
 package ir.hosseindn.mapper.order;
 
 import ir.hosseindn.dto.order.*;
+import ir.hosseindn.model.Offer;
 import ir.hosseindn.model.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -12,7 +13,7 @@ public interface OrderMapper {
 
     OrderSaveResponse modelToOrderSaveResponse(Order order);
     Order orderChooseOfferToModel(OrderChooseOfferRequest request);
-    OrderChooseOfferResponse modelToOrderChooseOffer(Order order);
+    OrderChooseOfferResponse modelToOrderChooseOffer(Order order, Offer offer);
     Order orderChangeStatusRequestToModel(OrderChangeStatusRequest request);
     OrderChangeStatusResponse modelToOrderChangeStatusResponse(Order oder);
     Order orderIdToModel(OrderId orderId);

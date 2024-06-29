@@ -7,12 +7,6 @@ import ir.hosseindn.model.Order;
 import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.repository.offer.OfferRepository;
 import ir.hosseindn.service.order.OrderService;
-import ir.hosseindn.service.subservice.SubServiceService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +37,14 @@ public class OfferService {
         if(offerList.isEmpty())
             throw new NotFoundException(String.format("No offers for order id=%s found",order));
         return offerList;
+    }
+    public Offer findById(Long id){
+        return offerRepository.findById(id).orElseThrow(
+                ()->new NotFoundException(String.format("Offer with id %s not found",id))
+        );
+    }
+    public void nowIsAccepted(Long id){
+        offerRepository.changeOfferStatus(id);
     }
 
 }

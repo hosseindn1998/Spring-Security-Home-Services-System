@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Transactional
@@ -18,4 +19,5 @@ public interface OfferRepository extends JpaRepository<Offer,Long> {
     @Modifying
     @Query("update Offer o set o.isAccepted=true where o.id=:id")
     void changeOfferStatus(@Param("id") Long id);
+    Optional<Offer> findById(Long id);
 }

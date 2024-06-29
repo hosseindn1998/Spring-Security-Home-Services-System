@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final SubServiceService subServiceService;
+
 
 
     public Order save(Order order) {
@@ -35,15 +35,13 @@ public class OrderService {
     public Boolean isOpenToGetOffer(Long id){
         return orderRepository.isOpenToGetOffer(id).isPresent();
     }
-    public Order chooseOffer(Long id, Offer offer){
-        Order order=orderRepository.findById(id).orElseThrow(
-                ()->new NotFoundException(String.format("Not found order id %s",id))
-        );
-        if(order.getChoosedOffer()!=null)
+    public Order chooseOffer(Order order, Offer offer){
+        Order foundOrder=findById(order.getId());
+        if(foundOrder.getChoosedOffer()!=null)
             throw new NotValidInformation("choose offer already exists for this order");
-        orderRepository.chooseOffer(id,offer);
-        orderRepository.changeOrderStatus(id,OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
-        return order;
+        orderRepository.chooseOffer(foundOrder.getId(), offer.getId());
+        orderRepository.changeOrderStatus(foundOrder.getId(),OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
+        return foundOrder;
     }
     public Order changeOrderStatusToStarted(Long id,Offer offer){
         if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
