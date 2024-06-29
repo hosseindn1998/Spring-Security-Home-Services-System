@@ -52,13 +52,11 @@ public class OrderService {
         orderRepository.changeOrderStatus(order.getId(),OrderStatus.STARTED);
         return foundedOrder;
     }
-    public Order changeOrderStatusToDone(Long id,Offer offer){
-        if(LocalDate.now().isBefore(offer.getDateOfOfferToStart()))
-            throw new NotValidInformation("start time can't be before in offer's start ");
-        Order order= orderRepository.findById(id).orElseThrow(
-                ()->new NotFoundException("Order Not found")
-        );
-        orderRepository.changeOrderStatus(id,OrderStatus.DONE);
-        return order;
+    public Order changeOrderStatusToDone(Order order){
+        Order foundedOrder=findById(order.getId());
+        if(foundedOrder.getChoosedOffer()==null)
+            throw new NotFoundException(String.format("for order %s,offer choose not found",order.getId()));
+        orderRepository.changeOrderStatus(foundedOrder.getId(),OrderStatus.DONE);
+        return foundedOrder;
     }
 }
