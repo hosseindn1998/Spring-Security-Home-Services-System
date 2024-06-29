@@ -1,5 +1,7 @@
 package ir.hosseindn.dto.offer;
 
+import ir.hosseindn.dto.order.OrderId;
+import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.model.Technician;
 import jakarta.persistence.ManyToOne;
@@ -10,14 +12,14 @@ import java.time.LocalDate;
 
 public record OfferSaveResponse(
         Long id,
-        Order odrer,
+        OrderId odrer,
         LocalDate dateOfOfferToStart,
         @Min(0)
         @NotNull
         Long suggestPrice,
         LocalDate dateOfOfferToDone,
         @ManyToOne
-        Technician technician,
+        TechnicianId technician,
         Boolean isAccepted
 ) {
 }

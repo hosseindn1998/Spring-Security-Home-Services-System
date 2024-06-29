@@ -28,7 +28,7 @@ public class SubService extends BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     MainService mainService;
     @ToString.Exclude
-    @OneToMany(mappedBy = "subservice", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "subservice", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
     List<Order> orders;
     @OneToMany(mappedBy = "subService",cascade = {CascadeType.REMOVE})
     @ToString.Exclude

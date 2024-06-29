@@ -24,12 +24,12 @@ public class OfferService {
     private final OfferRepository offerRepository;
     private final OrderService orderService;
     public Offer save(Offer offer){
-        Order foundedOrder = orderService.findById(offer.getId());
+        Order foundedOrder = orderService.findById(offer.getOdrer().getId());
         if(!orderService.isOpenToGetOffer(offer.getOdrer().getId()))
             throw new NotValidInformation("this order is close to get offer");
-        if(offer.getSuggestPrice()<offer.getOdrer().getSubservice().getBasePrice())
+        if(offer.getSuggestPrice()<foundedOrder.getSubservice().getBasePrice())
             throw new NotValidInformation("Technician suggest-price can't be lower than base-price");
-        if(foundedOrder.getOffers().isEmpty()){
+        if(foundedOrder.getOffers()==null){
             foundedOrder.setOrderStatus(OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
             offer.setOdrer(foundedOrder);
             orderService.save(foundedOrder);

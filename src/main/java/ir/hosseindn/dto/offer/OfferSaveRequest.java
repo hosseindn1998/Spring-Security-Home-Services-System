@@ -1,22 +1,12 @@
 package ir.hosseindn.dto.offer;
 
-import ir.hosseindn.model.Order;
-import ir.hosseindn.model.Technician;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDate;
+import ir.hosseindn.dto.order.OrderId;
+import ir.hosseindn.dto.technician.TechnicianId;
 
 public record OfferSaveRequest(
-        Order odrer,
-        LocalDate dateOfOfferToStart,
-        @Min(0)
-        @NotNull
-        Long suggestPrice,
-        LocalDate dateOfOfferToDone,
-        @ManyToOne
-        Technician technician,
-        Boolean isAccepted
+        OrderId odrer,
+
+        OfferSaveRequestWithoutFKs offer,
+        TechnicianId technician
 ) {
 }

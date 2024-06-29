@@ -15,4 +15,5 @@ public interface OrderMapper {
     OrderChooseOfferResponse modelToOrderChooseOffer(Order order);
     Order orderChangeStatusRequestToModel(OrderChangeStatusRequest request);
     OrderChangeStatusResponse modelToOrderChangeStatusResponse(Order oder);
+    Order orderIdToModel(OrderId orderId);
 }

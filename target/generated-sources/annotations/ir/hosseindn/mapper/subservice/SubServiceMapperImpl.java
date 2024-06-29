@@ -12,7 +12,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-27T18:05:56+0330",
+    date = "2024-06-29T08:25:30+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class SubServiceMapperImpl implements SubServiceMapper {
@@ -130,5 +130,20 @@ public class SubServiceMapperImpl implements SubServiceMapper {
         subService.id( subServiceId.id() );
 
         return subService.build();
+    }
+
+    @Override
+    public SubServiceId modelToSubServiceId(SubService subService) {
+        if ( subService == null ) {
+            return null;
+        }
+
+        Long id = null;
+
+        id = subService.getId();
+
+        SubServiceId subServiceId = new SubServiceId( id );
+
+        return subServiceId;
     }
 }
