@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-29T08:25:30+0330",
+    date = "2024-06-29T10:24:53+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -52,6 +52,7 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         String nationalCode = null;
         String email = null;
         LocalDate registeredDate = null;
+        Double rate = null;
 
         id = technician.getId();
         firstName = technician.getFirstName();
@@ -59,8 +60,9 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         nationalCode = technician.getNationalCode();
         email = technician.getEmail();
         registeredDate = technician.getRegisteredDate();
+        rate = technician.getRate();
 
-        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate );
+        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate );
 
         return technicianSaveResponse;
     }

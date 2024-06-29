@@ -8,6 +8,7 @@ public record TechnicianSaveResponse(
         String lastName,
         String nationalCode,
         String email,
-        LocalDate registeredDate
+        LocalDate registeredDate,
+        Double rate
 ) {
 }

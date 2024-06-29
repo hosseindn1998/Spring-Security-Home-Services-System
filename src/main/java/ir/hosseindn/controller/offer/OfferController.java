@@ -1,6 +1,7 @@
 package ir.hosseindn.controller.offer;
 
 import ir.hosseindn.dto.offer.OfferFindByOrderRequest;
+import ir.hosseindn.dto.offer.OfferFindByOrderResponse;
 import ir.hosseindn.dto.offer.OfferSaveRequest;
 import ir.hosseindn.dto.offer.OfferSaveResponse;
 import ir.hosseindn.dto.order.OrderId;
@@ -41,10 +42,11 @@ public class OfferController {
         Offer savedOffer=offerService.save(mappedOffer);
         return new ResponseEntity<>(OfferMapper.INSTANCE.modelToOfferSaveResponse(savedOffer), HttpStatus.CREATED);
     }
-    @GetMapping("/getofferoforder")
-    public ResponseEntity<List<Offer>>getOfferOfOrder(@Valid @RequestBody OfferFindByOrderRequest request){
-        Offer mappedOffer=OfferMapper.INSTANCE.offerFindByOrderRequestToModel(request);
-        List<Offer> offerList=offerService.findAllByOrder(mappedOffer);
-        return new ResponseEntity<>(offerList,HttpStatus.FOUND);
+    @GetMapping("/get-offers-of-order")
+    public ResponseEntity<List<OfferFindByOrderResponse>>getOfferOfOrder(@Valid @RequestBody OfferFindByOrderRequest request){
+        Order mappedOrder = OrderMapper.INSTANCE.orderIdToModel(request.odrer());
+        List<Offer> offerList=offerService.findAllByOrder(mappedOrder.getId());
+        List<OfferFindByOrderResponse> list = offerList.stream().map(OfferMapper.INSTANCE::modelToOfferFindByOrderResponse).toList();
+        return new ResponseEntity<>(list,HttpStatus.FOUND);
     }
 }

@@ -37,11 +37,11 @@ public class OfferService {
         offer.setIsAccepted(false);
         return offerRepository.save(offer);
     }
-    public List<Offer>findAllByOrder(Offer offer){
-        Order order = offer.getOdrer();
-        List<Offer> offerList = offerRepository.findAllByOdrer(order);
+    public List<Offer>findAllByOrder(Long order){
+        Order foundOrder=orderService.findById(order);
+        List<Offer> offerList = offerRepository.customQuery(foundOrder.getId());
         if(offerList.isEmpty())
-            throw new NotFoundException(String.format("No offers for order id=%s found",order.getId()));
+            throw new NotFoundException(String.format("No offers for order id=%s found",order));
         return offerList;
     }
 

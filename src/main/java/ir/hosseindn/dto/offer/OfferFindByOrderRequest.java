@@ -1,8 +1,8 @@
 package ir.hosseindn.dto.offer;
 
-import ir.hosseindn.dto.order.OrderSaveRequest;
+import ir.hosseindn.dto.order.OrderId;
 
 public record OfferFindByOrderRequest(
-        OrderSaveRequest order
+        OrderId odrer
 ) {
 }

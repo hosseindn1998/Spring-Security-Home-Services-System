@@ -16,7 +16,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubServiceService {
     private final SubServiceRepository subServiceRepository;
-    private final MainServiceService mainServiceService;
     public SubService save(SubService subService){
         if(subServiceRepository.findByName(subService.getName()).isPresent())
             throw new DuplicateInformationException("A Sub-Service with this name is Already exists!");

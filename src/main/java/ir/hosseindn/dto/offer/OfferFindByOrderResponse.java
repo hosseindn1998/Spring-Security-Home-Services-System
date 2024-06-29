@@ -1,6 +1,7 @@
 package ir.hosseindn.dto.offer;
 
-import ir.hosseindn.model.Technician;
+import ir.hosseindn.dto.technician.TechnicianId;
+import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 
 import java.time.LocalDate;
 
@@ -8,7 +9,7 @@ public record OfferFindByOrderResponse(
         LocalDate dateOfOfferToStart,
         Long suggestPrice,
         LocalDate dateOfOfferToDone,
-        Technician technician,
+        TechnicianSaveResponse technician,
         Boolean isAccepted
 ) {
 }
