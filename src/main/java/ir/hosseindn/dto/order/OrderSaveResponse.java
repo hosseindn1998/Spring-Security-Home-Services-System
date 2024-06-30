@@ -8,6 +8,8 @@ import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
 import ir.hosseindn.model.SubService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public record OrderSaveResponse(
         SubServiceId subservice,
@@ -18,7 +20,7 @@ public record OrderSaveResponse(
 
         String description,
 
-        LocalDate dateForDo,
+        LocalDateTime dateForDo,
 
         String address
 ) {

@@ -9,16 +9,15 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public record OfferSaveResponse(
         Long id,
         OrderId odrer,
-        LocalDate dateOfOfferToStart,
-        @Min(0)
-        @NotNull
+        LocalDateTime dateOfOfferToStart,
         Long suggestPrice,
-        LocalDate dateOfOfferToDone,
-        @ManyToOne
+        LocalDateTime dateOfOfferToDone,
         TechnicianId technician,
         Boolean isAccepted
 ) {

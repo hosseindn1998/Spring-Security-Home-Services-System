@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class CustomerService {
     public Customer register(Customer customer) {
         if (customerRepository.findByEmailOrNationalCode(customer.getEmail(), customer.getNationalCode()).isPresent())
             throw new DuplicateInformationException("A Customer with this Email/National Code exist.");
-        customer.setRegisteredDate(LocalDate.now());
+        customer.setRegisteredDate(LocalDateTime.now());
         return customerRepository.save(customer);
     }
 

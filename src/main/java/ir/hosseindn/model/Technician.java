@@ -27,9 +27,8 @@ public class Technician extends Person {
     @Min(0)
     @Max(5)
     double rate;
-    @Min(0)
-    Long TotalScores;
-    Long countScores;
+    int totalScores;
+    long countScores;
     boolean isActive;
     @Lob
     @ToString.Exclude

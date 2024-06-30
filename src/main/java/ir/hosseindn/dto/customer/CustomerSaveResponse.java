@@ -1,6 +1,7 @@
 package ir.hosseindn.dto.customer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record CustomerSaveResponse(
         Long id,
@@ -8,6 +9,6 @@ public record CustomerSaveResponse(
         String lastName,
         String nationalCode,
         String email,
-        LocalDate registeredDate
+        LocalDateTime registeredDate
 ) {
 }

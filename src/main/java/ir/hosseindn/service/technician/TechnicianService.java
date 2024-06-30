@@ -14,28 +14,28 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
 public class TechnicianService {
     private final TechnicianRepository technicianRepository;
 
-    public Technician register(Technician technician,String fileAddressAndName) throws IOException {
+    public Technician register(Technician technician, String fileAddressAndName) throws IOException {
         if (CustomValidations.isNotValidIranianNationalCode(technician.getNationalCode()))
             throw new NotValidInformation("National Code is Not valid");
         if (technicianRepository.findByEmailOrNationalCode(technician.getEmail(), technician.getNationalCode()).isPresent()) {
             throw new DuplicateInformationException("A Technician with this Email/National Code exist.");
         }
-        if(!CustomValidations.isValidPathFile(fileAddressAndName))
+        if (!CustomValidations.isValidPathFile(fileAddressAndName))
             throw new NotValidInformation("file address not valid ");
         Path path = Paths.get(fileAddressAndName);
         if (Files.size(path) > (300 * 1024))
             throw new NotValidInformation("File must be les than 300 KB");
         technician.setAvatar(Files.readAllBytes(path));
-        technician.setRegisteredDate(LocalDate.now());
+        technician.setRegisteredDate(LocalDateTime.now());
         technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
-        technician.setTotalScores(0L);
+        technician.setTotalScores(0);
         technician.setCountScores(0L);
         technician.setActive(Boolean.TRUE);
         return technicianRepository.save(technician);
@@ -48,10 +48,17 @@ public class TechnicianService {
         technicianRepository.updatePassword(email, newPassword);
         return technician;
     }
-    public void update(Technician technician){
-        if(technician.getId() == null)
-            throw new NotValidInformation("id for updating technician can't be null");
-        technicianRepository.save(technician);
+
+    public void update(Long id, Long minusScore) {
+        Technician technician = findById(id);
+        if(technician.getTotalScores()+minusScore<0){
+            technician.setActive(Boolean.FALSE);
+            technician.setTotalScores(0);
+            technicianRepository.save(technician);
+        }else {
+            technicianRepository.updateScores(technician.getId(),
+                    technician.getTotalScores() + minusScore);
+        }
     }
 
     public Technician login(String email, String Password) {
@@ -59,15 +66,17 @@ public class TechnicianService {
                 () -> new NotValidInformation("Email or Password is Incorrect")
         );
     }
-    public Technician changeStatusToVerify(Technician technician){
-        Technician founded=technicianRepository.findByEmail(technician.getEmail()).orElseThrow(
-            ()-> new NotFoundException("Technician with email :" + technician.getEmail() + " Not found."));
-        technicianRepository.updateTechnicianStatus(TechnicianStatus.VERIFIED,technician.getEmail());
+
+    public Technician changeStatusToVerify(Technician technician) {
+        Technician founded = technicianRepository.findByEmail(technician.getEmail()).orElseThrow(
+                () -> new NotFoundException("Technician with email :" + technician.getEmail() + " Not found."));
+        technicianRepository.updateTechnicianStatus(TechnicianStatus.VERIFIED, technician.getEmail());
         return founded;
     }
-    public Technician findById(Long id){
+
+    public Technician findById(Long id) {
         return technicianRepository.findById(id).orElseThrow(
-                ()->new NotFoundException(String.format("Technician with id %s Not Found",id))
+                () -> new NotFoundException(String.format("Technician with id %s Not Found", id))
         );
     }
 }

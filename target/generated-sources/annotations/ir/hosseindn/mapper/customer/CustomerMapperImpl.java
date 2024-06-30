@@ -10,12 +10,12 @@ import ir.hosseindn.dto.customer.CustomerSaveResponse;
 import ir.hosseindn.dto.wallet.WalletSaveRequest;
 import ir.hosseindn.model.Customer;
 import ir.hosseindn.model.Wallet;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-30T07:31:04+0330",
+    date = "2024-06-30T12:16:28+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CustomerMapperImpl implements CustomerMapper {
@@ -49,7 +49,7 @@ public class CustomerMapperImpl implements CustomerMapper {
         String lastName = null;
         String nationalCode = null;
         String email = null;
-        LocalDate registeredDate = null;
+        LocalDateTime registeredDate = null;
 
         id = customer.getId();
         firstName = customer.getFirstName();

@@ -12,12 +12,12 @@ import ir.hosseindn.dto.technician.TechnicianVerifyResponse;
 import ir.hosseindn.dto.wallet.WalletSaveRequest;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.Wallet;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-29T19:58:39+0330",
+    date = "2024-06-30T12:16:43+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -51,8 +51,9 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         String lastName = null;
         String nationalCode = null;
         String email = null;
-        LocalDate registeredDate = null;
+        LocalDateTime registeredDate = null;
         Double rate = null;
+        Long countScores = null;
 
         id = technician.getId();
         firstName = technician.getFirstName();
@@ -61,8 +62,12 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         email = technician.getEmail();
         registeredDate = technician.getRegisteredDate();
         rate = technician.getRate();
+        countScores = technician.getCountScores();
 
-        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate );
+        Integer totalScores = null;
+        boolean isActive = false;
+
+        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate, totalScores, countScores, isActive );
 
         return technicianSaveResponse;
     }

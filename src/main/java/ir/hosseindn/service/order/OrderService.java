@@ -47,6 +47,7 @@ public class OrderService {
         if(LocalDateTime.now().isBefore(foundedOrder.getChoosedOffer().getDateOfOfferToStart()))
             throw new NotValidInformation("start time can't be before in offer's start ");
         orderRepository.changeOrderStatus(order.getId(),OrderStatus.STARTED);
+        foundedOrder.setOrderStatus(OrderStatus.STARTED);
         return foundedOrder;
     }
     public Order changeOrderStatusToDone(Order order){

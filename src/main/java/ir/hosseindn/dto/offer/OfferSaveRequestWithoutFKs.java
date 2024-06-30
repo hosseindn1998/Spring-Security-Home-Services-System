@@ -4,14 +4,16 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public record OfferSaveRequestWithoutFKs(
-        LocalDate dateOfOfferToStart,
+        LocalDateTime dateOfOfferToStart,
         @Min(0)
         @NotNull
         Long suggestPrice,
 
-        LocalDate dateOfOfferToDone,
+        LocalDateTime dateOfOfferToDone,
 
         Boolean isAccepted
         ) {

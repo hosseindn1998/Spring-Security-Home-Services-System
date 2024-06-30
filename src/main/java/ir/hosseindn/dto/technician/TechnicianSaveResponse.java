@@ -1,6 +1,7 @@
 package ir.hosseindn.dto.technician;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record TechnicianSaveResponse(
         Long id,
@@ -8,8 +9,10 @@ public record TechnicianSaveResponse(
         String lastName,
         String nationalCode,
         String email,
-        LocalDate registeredDate,
+        LocalDateTime registeredDate,
         Double rate,
-        Integer score
+        int TotalScores,
+        long countScores,
+        boolean isActive
 ) {
 }

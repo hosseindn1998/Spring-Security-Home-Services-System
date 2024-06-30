@@ -27,4 +27,7 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
     @Modifying
     @Query("UPDATE Technician t set t.technicianStatus=:technicianStatus where t.email=:email")
     void updateTechnicianStatus(@Param("technicianStatus") TechnicianStatus technicianStatus,@Param("email") String email);
+    @Modifying
+    @Query("UPDATE Technician t set t.totalScores=:totalScores where t.id=:id")
+    void updateScores(@Param("id")Long id,@Param("totalScores")Long totalScores);
 }

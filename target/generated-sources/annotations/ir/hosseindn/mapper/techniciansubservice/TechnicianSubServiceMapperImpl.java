@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-29T19:58:39+0330",
+    date = "2024-06-30T12:16:28+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
