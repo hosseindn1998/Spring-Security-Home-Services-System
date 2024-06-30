@@ -35,6 +35,8 @@ public class TechnicianService {
         technician.setAvatar(Files.readAllBytes(path));
         technician.setRegisteredDate(LocalDate.now());
         technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
+        technician.setTotalScores(0);
+        technician.setCountScores(0);
         return technicianRepository.save(technician);
     }
 

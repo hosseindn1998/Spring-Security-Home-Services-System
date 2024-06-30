@@ -27,6 +27,9 @@ public class Technician extends Person {
     @Min(0)
     @Max(5)
     double rate;
+    @Min(0)
+    Integer TotalScores;
+    Integer countScores;
     @Lob
     @ToString.Exclude
     @Lazy

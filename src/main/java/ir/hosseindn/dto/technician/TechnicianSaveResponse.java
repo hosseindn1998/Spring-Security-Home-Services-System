@@ -9,6 +9,7 @@ public record TechnicianSaveResponse(
         String nationalCode,
         String email,
         LocalDate registeredDate,
-        Double rate
+        Double rate,
+        Integer score
 ) {
 }
