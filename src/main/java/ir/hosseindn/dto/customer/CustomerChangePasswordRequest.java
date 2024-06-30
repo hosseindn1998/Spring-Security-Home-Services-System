@@ -7,7 +7,7 @@ public record CustomerChangePasswordRequest(
         @Email(message = "Email must be valid")
         String email,
         @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8}$",message ="Password Not valid ")
-        String newPassword,
+        String password,
         String confirmPassword
 ) {
 }

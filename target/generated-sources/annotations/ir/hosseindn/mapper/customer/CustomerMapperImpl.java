@@ -15,7 +15,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-29T19:58:39+0330",
+    date = "2024-06-30T07:31:04+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CustomerMapperImpl implements CustomerMapper {
@@ -72,6 +72,7 @@ public class CustomerMapperImpl implements CustomerMapper {
         Customer.CustomerBuilder<?, ?> customer = Customer.builder();
 
         customer.email( request.email() );
+        customer.password( request.password() );
 
         return customer.build();
     }

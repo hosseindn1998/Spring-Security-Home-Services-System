@@ -32,9 +32,9 @@ public class CustomerController {
 
     @PatchMapping("/customer-changePassword")
     public ResponseEntity<CustomerChangePasswordResponse> customerChangePassword(@Valid @RequestBody CustomerChangePasswordRequest request) {
-        if (!request.newPassword().equals(request.confirmPassword()))
+        if (!request.password().equals(request.confirmPassword()))
             throw new NotValidInformation("new password must be match by confirm");
-        Customer mappedCustomer = CustomerMapper.INSTANCE.INSTANCE.customerChangePasswordRequestToModel(request);
+        Customer mappedCustomer = CustomerMapper.INSTANCE.customerChangePasswordRequestToModel(request);
         Customer savedCustomer = customerService.changePassword(mappedCustomer.getEmail(), mappedCustomer.getPassword());
         return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerChangePasswordResponse(savedCustomer), HttpStatus.OK);
     }

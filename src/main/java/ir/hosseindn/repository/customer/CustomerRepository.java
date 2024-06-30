@@ -10,15 +10,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+@Transactional
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Optional<Customer> findByEmailAndPassword(String email, String password);
     Optional<Customer>findByEmailOrNationalCode(String email,String nationalCode);
     Optional<Customer>findByEmail(String email);
     @Modifying
-    @Transactional
-    @Query("update Customer c set c.password=:password where c.email=:email")
-    void updatePassword(@Param("email") String email, @Param("password") String password);
+    @Query("update Customer c set c.password=:newPassword where c.email=:email")
+    void updatePassword(@Param("email") String email, @Param("newPassword") String newPassword);
 
 }
