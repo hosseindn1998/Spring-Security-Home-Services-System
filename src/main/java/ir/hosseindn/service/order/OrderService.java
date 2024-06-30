@@ -51,6 +51,8 @@ public class OrderService {
     }
     public Order changeOrderStatusToDone(Order order){
         Order foundedOrder=findById(order.getId());
+        if(foundedOrder.getOrderStatus()!=(OrderStatus.STARTED))
+            throw new NotValidInformation("OrderStatus of order that you choose must be started ");
         if(foundedOrder.getChoosedOffer()==null)
             throw new NotFoundException(String.format("for order %s,offer choose not found",order.getId()));
         orderRepository.changeOrderStatus(foundedOrder.getId(),OrderStatus.DONE);
