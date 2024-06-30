@@ -2,17 +2,17 @@ package ir.hosseindn.service.order;
 
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
-import ir.hosseindn.model.Offer;
-import ir.hosseindn.model.Order;
-import ir.hosseindn.model.OrderStatus;
-import ir.hosseindn.model.SubService;
+import ir.hosseindn.model.*;
 import ir.hosseindn.repository.order.OrderRepository;
 import ir.hosseindn.service.offer.OfferService;
 import ir.hosseindn.service.subservice.SubServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
@@ -44,7 +44,7 @@ public class OrderService {
         Order foundedOrder=findById(order.getId());
         if(foundedOrder.getChoosedOffer()==null)
             throw new NotFoundException(String.format("for order %s,offer choose not found",order.getId()));
-        if(LocalDate.now().isBefore(foundedOrder.getChoosedOffer().getDateOfOfferToStart()))
+        if(LocalDateTime.now().isBefore(foundedOrder.getChoosedOffer().getDateOfOfferToStart()))
             throw new NotValidInformation("start time can't be before in offer's start ");
         orderRepository.changeOrderStatus(order.getId(),OrderStatus.STARTED);
         return foundedOrder;

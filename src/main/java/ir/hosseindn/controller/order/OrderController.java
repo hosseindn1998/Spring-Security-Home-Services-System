@@ -6,12 +6,10 @@ import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.mapper.offer.OfferMapper;
 import ir.hosseindn.mapper.order.OrderMapper;
 import ir.hosseindn.mapper.subservice.SubServiceMapper;
-import ir.hosseindn.model.Customer;
-import ir.hosseindn.model.Offer;
-import ir.hosseindn.model.Order;
-import ir.hosseindn.model.SubService;
+import ir.hosseindn.model.*;
 import ir.hosseindn.service.offer.OfferService;
 import ir.hosseindn.service.order.OrderService;
+import ir.hosseindn.service.technician.TechnicianService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @RestController
 @RequiredArgsConstructor
 @Validated
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final OrderService orderService;
     private final OfferService offerService;
+    private final TechnicianService technicianService;
 
     @PostMapping("/add-order")
     public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request) {
@@ -47,12 +50,12 @@ public class OrderController {
         Order mappedOrder = OrderMapper.INSTANCE.orderIdToModel(request.order());
         Offer mappedOffer = OfferMapper.INSTANCE.offerIdToModel(request.offer());
         Offer foundedOffer = offerService.findById(mappedOffer.getId());
-        Order foundedOrder=orderService.findById(mappedOrder.getId());
-        if(foundedOffer.getDateOfOfferToStart().isAfter(foundedOffer.getDateOfOfferToDone()))
+        Order foundedOrder = orderService.findById(mappedOrder.getId());
+        if (foundedOffer.getDateOfOfferToStart().isAfter(foundedOffer.getDateOfOfferToDone()))
             throw new NotValidInformation("Start date can't after done date");
-        if(foundedOrder.getDateForDo().isBefore(foundedOffer.getDateOfOfferToDone()))
-            throw new NotValidInformation("deadline for this Order was in "+foundedOrder.getDateForDo()
-                    +"and your offer's done date is "+foundedOffer.getDateOfOfferToDone());
+        if (foundedOrder.getDateForDo().isBefore(foundedOffer.getDateOfOfferToDone()))
+            throw new NotValidInformation("deadline for this Order was in " + foundedOrder.getDateForDo()
+                    + "and your offer's done date is " + foundedOffer.getDateOfOfferToDone());
         Order updatedOrder = orderService.chooseOffer(foundedOrder, foundedOffer);
         offerService.nowIsAccepted(request.offer().id());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChooseOffer(updatedOrder, offerService.findById(request.offer().id())), HttpStatus.OK);
@@ -69,6 +72,16 @@ public class OrderController {
     public ResponseEntity<OrderChangeStatusResponse> orderStatusToDone(@Valid @RequestBody OrderChangeStatusRequest request) {
         Order mappedOrder = OrderMapper.INSTANCE.orderIdToModel(request.order());
         Order updatedOrder = orderService.changeOrderStatusToDone(mappedOrder);
+        if (LocalDateTime.now().isAfter(updatedOrder.getChoosedOffer().getDateOfOfferToDone())){
+            long hours = Duration.between(LocalDateTime.now(), updatedOrder.getChoosedOffer().getDateOfOfferToDone())
+                    .get(ChronoUnit.HOURS);
+            Technician technician = updatedOrder.getChoosedOffer().getTechnician();
+            technician.setCountScores(technician.getCountScores()+1);
+            technician.setTotalScores(technician.getTotalScores()-hours);
+            if(technician.getTotalScores()<0)
+                technician.setActive(Boolean.FALSE);
+            technicianService.update(technician);
+        }
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder), HttpStatus.OK);
     }
 }

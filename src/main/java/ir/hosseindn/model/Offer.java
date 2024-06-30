@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,11 +26,11 @@ public class Offer extends BaseEntity<Long> {
     @ManyToOne
     @ToString.Exclude
     Order odrer;
-    LocalDate dateOfOfferToStart;
+    LocalDateTime dateOfOfferToStart;
     @Min(0)
     @NotNull
     Long suggestPrice;
-    LocalDate dateOfOfferToDone;
+    LocalDateTime dateOfOfferToDone;
     @ManyToOne
     Technician technician;
     Boolean isAccepted;

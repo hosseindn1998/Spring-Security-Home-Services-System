@@ -35,8 +35,9 @@ public class TechnicianService {
         technician.setAvatar(Files.readAllBytes(path));
         technician.setRegisteredDate(LocalDate.now());
         technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
-        technician.setTotalScores(0);
-        technician.setCountScores(0);
+        technician.setTotalScores(0L);
+        technician.setCountScores(0L);
+        technician.setActive(Boolean.TRUE);
         return technicianRepository.save(technician);
     }
 
@@ -46,6 +47,11 @@ public class TechnicianService {
         );
         technicianRepository.updatePassword(email, newPassword);
         return technician;
+    }
+    public void update(Technician technician){
+        if(technician.getId() == null)
+            throw new NotValidInformation("id for updating technician can't be null");
+        technicianRepository.save(technician);
     }
 
     public Technician login(String email, String Password) {

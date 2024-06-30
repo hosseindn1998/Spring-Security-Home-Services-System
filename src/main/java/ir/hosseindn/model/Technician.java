@@ -28,8 +28,9 @@ public class Technician extends Person {
     @Max(5)
     double rate;
     @Min(0)
-    Integer TotalScores;
-    Integer countScores;
+    Long TotalScores;
+    Long countScores;
+    boolean isActive;
     @Lob
     @ToString.Exclude
     @Lazy
@@ -40,9 +41,9 @@ public class Technician extends Person {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
     List<Offer> offers;
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "technician", cascade ={CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
-    List<TechnicianSubService>technicianSubServices;
+    List<TechnicianSubService> technicianSubServices;
 
 
 }
