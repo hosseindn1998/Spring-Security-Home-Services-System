@@ -19,7 +19,10 @@ import java.util.List;
 public class Customer extends Person {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
+    @Transient
     List<Order> orders;
+    @Enumerated
+    Roll roll=Roll.CUSTOMER;
 
 
 }
