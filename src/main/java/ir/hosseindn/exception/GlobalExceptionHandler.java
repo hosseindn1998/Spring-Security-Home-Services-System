@@ -26,6 +26,13 @@ public class GlobalExceptionHandler {
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(NotEnoughAccountBalanceException.class)
+    public ResponseEntity<ExceptionDto> notEnoughAccountBalanceExceptionHandler(NotEnoughAccountBalanceException e) {
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(NotValidInformation.class)
     public ResponseEntity<ExceptionDto> NotValidInformationHandler(NotValidInformation e) {
         log.warn(e.getMessage());
