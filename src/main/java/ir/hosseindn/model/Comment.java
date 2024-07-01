@@ -26,9 +26,6 @@ public class Comment extends BaseEntity<Long> {
     @Min(1)
     @Max(5)
     Integer rate;
-    @NotNull
-    String title;
-    @NotNull
     String description;
     @OneToOne
     Order order;
