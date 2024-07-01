@@ -36,8 +36,11 @@ public class TechnicianService {
         technician.setRegisteredDate(LocalDateTime.now());
         technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
         technician.setTotalScores(0);
-        technician.setCountScores(0L);
+        technician.setCountScores(0);
         technician.setActive(Boolean.TRUE);
+        return technicianRepository.save(technician);
+    }
+    public Technician update(Technician technician){
         return technicianRepository.save(technician);
     }
 

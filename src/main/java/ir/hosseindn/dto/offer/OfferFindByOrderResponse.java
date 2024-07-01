@@ -4,11 +4,12 @@ import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record OfferFindByOrderResponse(
-        LocalDate dateOfOfferToStart,
+        LocalDateTime dateOfOfferToStart,
         Long suggestPrice,
-        LocalDate dateOfOfferToDone,
+        LocalDateTime dateOfOfferToDone,
         TechnicianSaveResponse technician,
         Boolean isAccepted
 ) {
