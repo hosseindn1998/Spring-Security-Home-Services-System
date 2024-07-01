@@ -1,6 +1,7 @@
 package ir.hosseindn.controller.order;
 
 import ir.hosseindn.dto.order.*;
+import ir.hosseindn.dto.wallet.WalletPayResponse;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.mapper.offer.OfferMapper;
@@ -10,6 +11,7 @@ import ir.hosseindn.model.*;
 import ir.hosseindn.service.offer.OfferService;
 import ir.hosseindn.service.order.OrderService;
 import ir.hosseindn.service.technician.TechnicianService;
+import ir.hosseindn.service.wallet.WalletService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +34,7 @@ public class OrderController {
     private final OrderService orderService;
     private final OfferService offerService;
     private final TechnicianService technicianService;
+    private final WalletService walletService;
 
     @PostMapping("/add-order")
     public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request) {
@@ -79,5 +81,16 @@ public class OrderController {
             technicianService.update(technician.getId(),hours);
         }
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder), HttpStatus.OK);
+    }
+    @PatchMapping("/pay-order-from-wallet")
+    public ResponseEntity<PayOrderFromWalletResponse> payOrderFromWallet(@Valid @RequestBody PayOrderFromWalletRequest request){
+        Order order=orderService.findById(request.order().id());
+        if(order.getOrderStatus()!=OrderStatus.DONE)
+            throw new NotValidInformation("Only orders that status = 'done' access to pay");
+        walletService.payFromWallet(order.getCustomer().getWallet(), order.getChoosedOffer().getTechnician().getWallet()
+                , order.getChoosedOffer().getSuggestPrice());
+        orderService.changeOrderStatusToPaid(order);
+        order.setOrderStatus(OrderStatus.Paid);
+        return new ResponseEntity<>(OrderMapper.INSTANCE.modelToPayOrderFromWalletResponse(order), HttpStatus.OK);
     }
 }

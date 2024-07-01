@@ -19,8 +19,6 @@ public record OrderSaveRequestWithoutFKs(
         @Min(0L)
         Long suggestedPrice,
         @NotNull
-        Boolean isPaid,
-        @NotNull
         @Pattern(regexp = "^[A-Z](?=.{1,29}$)[A-Za-z]*(?:\\h+[A-Z][A-Za-z]*)*$")
         String description,
         @NotNull

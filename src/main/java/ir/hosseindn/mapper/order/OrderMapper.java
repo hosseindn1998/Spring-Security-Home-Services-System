@@ -17,4 +17,6 @@ public interface OrderMapper {
     Order orderChangeStatusRequestToModel(OrderChangeStatusRequest request);
     OrderChangeStatusResponse modelToOrderChangeStatusResponse(Order oder);
     Order orderIdToModel(OrderId orderId);
+    Order payOrderFromWalletRequestToModel(PayOrderFromWalletRequest request);
+    PayOrderFromWalletResponse modelToPayOrderFromWalletResponse (Order order);
 }

@@ -4,16 +4,10 @@ import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.*;
 import ir.hosseindn.repository.order.OrderRepository;
-import ir.hosseindn.service.offer.OfferService;
-import ir.hosseindn.service.subservice.SubServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,4 +53,8 @@ public class OrderService {
         orderRepository.changeOrderStatus(foundedOrder.getId(),OrderStatus.DONE);
         return foundedOrder;
     }
+    public void changeOrderStatusToPaid(Order order){
+        orderRepository.changeOrderStatus(order.getId(),OrderStatus.Paid);
+    }
+
 }

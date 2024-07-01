@@ -13,8 +13,6 @@ public record OrderChangeStatusResponse(
         CustomerId customer,
         Long suggestedPrice,
 
-        Boolean isPaid,
-
         String description,
 
         LocalDate dateForDo,
