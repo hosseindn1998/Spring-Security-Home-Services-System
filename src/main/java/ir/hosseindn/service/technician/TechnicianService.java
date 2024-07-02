@@ -122,13 +122,13 @@ public class TechnicianService {
             predicates.add(builder.equal(root.get("registeredDate"), userCriteriaItems.registeredDate()));
         if (userCriteriaItems.technicianStatus() != null)
             predicates.add(builder.equal(root.get("technicianStatus"), userCriteriaItems.technicianStatus()));
-        if (userCriteriaItems.rate() != 0)
+        if (userCriteriaItems.rate() != null)
             predicates.add(builder.equal(root.get("rate"), userCriteriaItems.rate()));
-        if (userCriteriaItems.totalScores() != 0)
+        if (userCriteriaItems.totalScores() != null)
             predicates.add(builder.equal(root.get("totalScores"), userCriteriaItems.totalScores()));
-        if (userCriteriaItems.countScores() != 0)
+        if (userCriteriaItems.countScores() != null)
             predicates.add(builder.equal(root.get("countScores"), userCriteriaItems.countScores()));
-        if (List.of(true,false).contains(userCriteriaItems.isActive()))
+        if (userCriteriaItems.isActive()!=null)
             predicates.add(builder.equal(root.get("isActive"), userCriteriaItems.isActive()));
 
 

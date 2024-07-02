@@ -25,8 +25,6 @@ public class Technician extends Person {
     TechnicianStatus technicianStatus;
     @Enumerated
     @NotNull
-    @Min(0)
-    @Max(2)
     Roles role;
     @Min(0)
     @Max(5)

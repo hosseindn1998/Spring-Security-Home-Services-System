@@ -23,7 +23,7 @@ public class TechnicianController {
     private final TechnicianService technicianService;
 
     @PostMapping("/technician-register")
-    public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Valid @RequestBody TechnicianSaveRequest request) throws IOException {
+    public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Validated @RequestBody TechnicianSaveRequest request) throws IOException {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianSaveRequestWithoutPathToModel(request.technician());
         Technician savedTechnician = technicianService.register(mappedTechnician, request.imagePath());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToUserSaveResponse(savedTechnician), HttpStatus.CREATED);

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -46,11 +47,15 @@ public class AdminController {
     public ResponseEntity<UserCriteriaItemsResponse> getUserList(@Validated @RequestBody UserCriteriaItems request) {
         List<CustomerSaveResponse> customerSaveResponseList = customerService.findByCriteria(request)
                 .stream()
-                .map(CustomerMapper.INSTANCE::modelToUserSaveResponse).
-                toList();
-        List<Technician> technicianList = technicianService.findByCriteria(request);
-        List<TechnicianSaveResponse> technicianSaveResponseList = technicianList.stream().map(TechnicianMapper.INSTANCE::modelToUserSaveResponse).toList();
-        UserCriteriaItemsResponse userCriteriaItemsResponse = new UserCriteriaItemsResponse( customerSaveResponseList, technicianSaveResponseList);
+                .map(CustomerMapper.INSTANCE::modelToUserSaveResponse)
+                .toList();
+        List<TechnicianSaveResponse> technicianSaveResponseList = technicianService.findByCriteria(request)
+                .stream()
+                .map(TechnicianMapper.INSTANCE::modelToUserSaveResponse)
+                .toList();
+        List<Object> userList = new ArrayList<>(customerSaveResponseList);
+        userList.addAll(technicianSaveResponseList);
+        UserCriteriaItemsResponse userCriteriaItemsResponse = new UserCriteriaItemsResponse(userList);
         return new ResponseEntity<>(userCriteriaItemsResponse, HttpStatus.FOUND);
     }
 }

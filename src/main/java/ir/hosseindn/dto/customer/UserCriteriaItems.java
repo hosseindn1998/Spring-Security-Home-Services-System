@@ -19,10 +19,10 @@ public record UserCriteriaItems(
         String password,
         LocalDateTime registeredDate,
         TechnicianStatus technicianStatus,
-        double rate,
-        int totalScores,
-        int countScores,
-        boolean isActive
+        Double rate,
+        Integer totalScores,
+        Integer countScores,
+        Boolean isActive
 
 ) {
 }
