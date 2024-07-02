@@ -15,8 +15,8 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Table(name = "TechnicianSubServiceManual")
 public class TechnicianSubService extends BaseEntity<Long> {
-    @ManyToOne(cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = { CascadeType.MERGE}, fetch = FetchType.LAZY)
     Technician technician;
-    @ManyToOne(cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     SubService subService;
 }

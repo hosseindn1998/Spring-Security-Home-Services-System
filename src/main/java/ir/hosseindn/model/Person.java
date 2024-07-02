@@ -1,5 +1,6 @@
 package ir.hosseindn.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -37,5 +37,6 @@ public class Person extends BaseEntity<Long> {
     String password;
     LocalDateTime registeredDate;
     @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Wallet wallet;
 }
