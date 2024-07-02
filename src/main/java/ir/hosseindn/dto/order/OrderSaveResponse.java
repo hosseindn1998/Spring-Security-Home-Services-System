@@ -16,8 +16,6 @@ public record OrderSaveResponse(
         CustomerId customer,
         Long suggestedPrice,
 
-        Boolean isPaid,
-
         String description,
 
         LocalDateTime dateForDo,

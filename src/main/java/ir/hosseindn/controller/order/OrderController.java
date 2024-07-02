@@ -78,7 +78,7 @@ public class OrderController {
             long hours = Duration.between(LocalDateTime.now(), updatedOrder.getChoosedOffer().getDateOfOfferToDone())
                     .toHours();
             Technician technician = updatedOrder.getChoosedOffer().getTechnician();
-            technicianService.update(technician.getId(),hours);
+            technicianService.updateScores(technician.getId(),hours);
         }
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderChangeStatusResponse(updatedOrder), HttpStatus.OK);
     }

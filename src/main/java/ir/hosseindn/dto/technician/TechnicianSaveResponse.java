@@ -1,6 +1,8 @@
 package ir.hosseindn.dto.technician;
 
-import java.time.LocalDate;
+import ir.hosseindn.model.Roles;
+import ir.hosseindn.model.TechnicianStatus;
+
 import java.time.LocalDateTime;
 
 public record TechnicianSaveResponse(
@@ -11,8 +13,10 @@ public record TechnicianSaveResponse(
         String email,
         LocalDateTime registeredDate,
         Double rate,
-        int TotalScores,
-        long countScores,
-        boolean isActive
+        Integer totalScores,
+        Long countScores,
+        TechnicianStatus technicianStatus,
+        Boolean isActive,
+        Roles role
 ) {
 }

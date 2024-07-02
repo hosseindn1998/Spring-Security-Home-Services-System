@@ -10,14 +10,16 @@ import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.technician.TechnicianVerifyRequest;
 import ir.hosseindn.dto.technician.TechnicianVerifyResponse;
 import ir.hosseindn.dto.wallet.WalletSaveRequest;
+import ir.hosseindn.model.Roles;
 import ir.hosseindn.model.Technician;
+import ir.hosseindn.model.TechnicianStatus;
 import ir.hosseindn.model.Wallet;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-01T03:11:21+0330",
+    date = "2024-07-02T04:29:43+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -53,7 +55,11 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         String email = null;
         LocalDateTime registeredDate = null;
         Double rate = null;
-        long countScores = 0L;
+        Integer totalScores = null;
+        Long countScores = null;
+        TechnicianStatus technicianStatus = null;
+        Boolean isActive = null;
+        Roles role = null;
 
         id = technician.getId();
         firstName = technician.getFirstName();
@@ -62,12 +68,15 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         email = technician.getEmail();
         registeredDate = technician.getRegisteredDate();
         rate = technician.getRate();
-        countScores = technician.getCountScores();
+        totalScores = technician.getTotalScores();
+        if ( technician.getCountScores() != null ) {
+            countScores = technician.getCountScores().longValue();
+        }
+        technicianStatus = technician.getTechnicianStatus();
+        isActive = technician.getIsActive();
+        role = technician.getRole();
 
-        int totalScores = 0;
-        boolean isActive = false;
-
-        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate, totalScores, countScores, isActive );
+        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate, totalScores, countScores, technicianStatus, isActive, role );
 
         return technicianSaveResponse;
     }

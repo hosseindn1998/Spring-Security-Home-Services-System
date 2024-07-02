@@ -1,9 +1,6 @@
 package ir.hosseindn.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -23,7 +20,7 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @Table(name = "offer")
 public class Offer extends BaseEntity<Long> {
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @ToString.Exclude
     Order odrer;
     LocalDateTime dateOfOfferToStart;
@@ -31,7 +28,7 @@ public class Offer extends BaseEntity<Long> {
     @NotNull
     Long suggestPrice;
     LocalDateTime dateOfOfferToDone;
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     Technician technician;
     Boolean isAccepted;
 

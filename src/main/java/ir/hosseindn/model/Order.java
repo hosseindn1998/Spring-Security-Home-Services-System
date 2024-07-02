@@ -43,7 +43,7 @@ public class Order extends BaseEntity<Long> {
     @OneToMany(mappedBy = "odrer", cascade = {CascadeType.REMOVE},fetch = FetchType.LAZY)
     @ToString.Exclude
     List<Offer> offers;
-    @OneToOne
+    @OneToOne(fetch=FetchType.LAZY)
     Offer choosedOffer;
     @OneToOne
     Comment comment;

@@ -1,14 +1,10 @@
 package ir.hosseindn.controller.technician;
 
-import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
-import ir.hosseindn.dto.customer.CustomerLoginResponse;
-import ir.hosseindn.dto.customer.CustomerSaveResponse;
 import ir.hosseindn.dto.technician.*;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.mapper.technician.TechnicianMapper;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.service.technician.TechnicianService;
-import ir.hosseindn.utility.CustomValidations;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
