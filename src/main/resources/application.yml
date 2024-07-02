@@ -3,6 +3,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username : postgres
     password : postgres
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
   jpa:
     show-sql: true
     hibernate:
@@ -10,4 +13,5 @@ spring:
 server:
   error:
     include-message: always
+
 
