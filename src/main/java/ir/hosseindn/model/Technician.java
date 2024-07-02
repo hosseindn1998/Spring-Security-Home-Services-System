@@ -21,18 +21,23 @@ import java.util.List;
 @ToString(callSuper = true)
 @Table(name = "Technician")
 public class Technician extends Person {
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated
     TechnicianStatus technicianStatus;
+    @Enumerated
     @NotNull
     @Min(0)
+    @Max(2)
+    Roles role;
+    @Min(0)
     @Max(5)
-    double rate;
-    int totalScores;
-    int countScores;
-    boolean isActive;
+    Double rate;
+    Integer totalScores;
+    Integer countScores;
+    Boolean isActive;
     @Lob
     @ToString.Exclude
     @Lazy
+    @Transient
     byte[] avatar;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
@@ -40,7 +45,7 @@ public class Technician extends Person {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
     List<Offer> offers;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @ToString.Exclude
     List<TechnicianSubService> technicianSubServices;
 
