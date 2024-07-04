@@ -22,9 +22,6 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "comment")
 
 public class Comment extends BaseEntity<Long> {
-    @NotNull
-    @Min(1)
-    @Max(5)
     Integer rate;
     String description;
     @OneToOne
