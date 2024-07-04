@@ -1,6 +1,8 @@
 package ir.hosseindn.model;
 
 import jakarta.persistence.*;
+
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -25,9 +27,6 @@ public class Customer extends Person {
     @Transient
     List<Order> orders;
     @Enumerated
-    @NotNull
-    @Min(0)
-    @Max(2)
     Roles role;
 
 
