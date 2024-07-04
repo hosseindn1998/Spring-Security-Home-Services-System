@@ -11,6 +11,6 @@ public record SubServiceSaveRequest(
         SubServiceWithoutMainService subService,
         @NotNull
         @Min(0L)
-        Long mainService
+        Long mainServiceId
 ) {
 }

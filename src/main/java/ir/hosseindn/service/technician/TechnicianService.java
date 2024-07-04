@@ -1,6 +1,6 @@
 package ir.hosseindn.service.technician;
 
-import ir.hosseindn.dto.customer.UserCriteriaItems;
+import ir.hosseindn.dto.user.UserCriteriaItems;
 import ir.hosseindn.exception.DuplicateInformationException;
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
