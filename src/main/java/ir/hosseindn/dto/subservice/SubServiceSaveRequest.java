@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotNull;
 public record SubServiceSaveRequest(
 
         SubServiceWithoutMainService subService,
-        Long mainServiceId
+        @NotNull
+        @Min(0L)
+        Long mainService
 ) {
 }
