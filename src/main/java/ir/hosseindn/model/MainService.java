@@ -2,6 +2,7 @@ package ir.hosseindn.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -19,7 +20,6 @@ import java.util.List;
 @Table(name = "service")
 public class MainService extends BaseEntity<Long> {
     @Column(unique = true)
-    @NotNull
     String name;
     @OneToMany(mappedBy = "mainService", cascade = {CascadeType.REMOVE},fetch = FetchType.LAZY)
     @ToString.Exclude
