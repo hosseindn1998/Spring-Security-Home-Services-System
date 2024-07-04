@@ -22,7 +22,6 @@ public class Technician extends Person {
     @Enumerated
     TechnicianStatus technicianStatus;
     @Enumerated
-    @NotNull
     Roles role;
     Double rate;
     Integer totalScores;

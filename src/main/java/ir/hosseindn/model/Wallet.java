@@ -1,5 +1,6 @@
 package ir.hosseindn.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -19,8 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "wallet")
 
 public class Wallet extends BaseEntity<Long> {
-    @NotNull
-    @Min(0)
-    Long amount;
+
+    Long amount=0L;
 
 }
