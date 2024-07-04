@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record TechnicianVerifyRequest(
         @NotNull
-        @Column(unique = true)
         @Email(message = "Email must be valid")
         String email
 ) {

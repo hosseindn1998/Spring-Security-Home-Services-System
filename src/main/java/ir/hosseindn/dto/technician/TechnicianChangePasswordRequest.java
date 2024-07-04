@@ -8,6 +8,7 @@ public record TechnicianChangePasswordRequest(
         String email,
         @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8}$",message ="Password Not valid ")
         String password,
+        @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8}$",message ="Password Not valid ")
         String confirmPassword
 ) {
 }
