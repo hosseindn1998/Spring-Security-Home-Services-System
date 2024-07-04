@@ -1,8 +1,6 @@
 package ir.hosseindn.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -26,8 +24,6 @@ public class Technician extends Person {
     @Enumerated
     @NotNull
     Roles role;
-    @Min(0)
-    @Max(5)
     Double rate;
     Integer totalScores;
     Integer countScores;

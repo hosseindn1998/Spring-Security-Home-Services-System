@@ -1,4 +1,4 @@
-package ir.hosseindn.dto.customer;
+package ir.hosseindn.dto.user;
 
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 
