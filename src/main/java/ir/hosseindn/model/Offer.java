@@ -24,8 +24,6 @@ public class Offer extends BaseEntity<Long> {
     @ToString.Exclude
     Order odrer;
     LocalDateTime dateOfOfferToStart;
-    @Min(0)
-    @NotNull
     Long suggestPrice;
     LocalDateTime dateOfOfferToDone;
     @ManyToOne(fetch=FetchType.LAZY)
