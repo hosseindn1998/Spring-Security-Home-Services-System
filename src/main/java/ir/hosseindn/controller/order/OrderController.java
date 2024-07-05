@@ -103,30 +103,4 @@ public class OrderController {
         order.setOrderStatus(OrderStatus.Paid);
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToPayOrderFromPaymentResponse(order), HttpStatus.OK);
     }
-
-//    @RequestMapping(value = "/payment",method = {RequestMethod.GET})
-//    public ModelAndView showForm() {
-//        return new ModelAndView("payment", "paymentTransaction", new PaymentTransaction());
-//    }
-//
-//    @RequestMapping(value = "/addPaymentTransaction",method = {RequestMethod.POST})
-//    public String submit(@Valid @ModelAttribute PaymentTransaction paymentTransaction,
-//                         BindingResult result, ModelMap model) {
-//        if (result.hasErrors()) {
-//            return "error";
-//        }
-//        model.addAttribute("id", paymentTransaction.getId());
-//        model.addAttribute("cardNumber", paymentTransaction.getCardNumber());
-//        model.addAttribute("cvv", paymentTransaction.getCvv());
-//        model.addAttribute("yy", paymentTransaction.getYy());
-//        model.addAttribute("mm", paymentTransaction.getMm());
-//        model.addAttribute("password", paymentTransaction.getPassword());
-//
-//        return "PaymentTransactionView";
-//    }
-//    @GetMapping("/example")
-//    public String exampleMethod(Model model) {
-//        model.addAttribute("exampleAttribute", "This is an example attribute");
-//        return "exampleView";
-//    }
 }
