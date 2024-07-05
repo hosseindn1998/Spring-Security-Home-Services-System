@@ -16,6 +16,11 @@ private final PaymentTransactionRepository paymentTransactionRepository;
     public void updateCaptchaAnswer(Long id,String newAnswer){
         paymentTransactionRepository.updateCaptchaAnswer(id,newAnswer);
     }
+    public PaymentTransaction findById(Long id){
+        return paymentTransactionRepository.findById(id).orElseThrow(
+                ()->new NotFoundException("transaction not found")
+        );
+    }
 
 
 }
