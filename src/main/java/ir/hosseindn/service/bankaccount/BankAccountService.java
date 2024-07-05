@@ -16,6 +16,9 @@ public class BankAccountService {
                 () -> new NotValidInformation("Card information Not valid")
         );
     }
+    public BankAccount save(BankAccount bankAccount){
+        return bankAccountRepository.save(bankAccount);
+    }
     public BankAccount findByCardNumber(String cardNumber){
         return bankAccountRepository.findByCardNumber(cardNumber).orElseThrow(
                 () -> new NotValidInformation(String.format("Card with Number %s Not found",cardNumber))
