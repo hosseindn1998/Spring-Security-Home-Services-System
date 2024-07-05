@@ -9,7 +9,6 @@ import ir.hosseindn.mapper.subservice.SubServiceMapper;
 import ir.hosseindn.model.*;
 import ir.hosseindn.service.offer.OfferService;
 import ir.hosseindn.service.order.OrderService;
-import ir.hosseindn.service.paymenttransaction.PaymentTransactionService;
 import ir.hosseindn.service.technician.TechnicianService;
 import ir.hosseindn.service.wallet.WalletService;
 import jakarta.validation.Valid;
@@ -17,12 +16,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -36,7 +31,7 @@ public class OrderController {
     private final OfferService offerService;
     private final TechnicianService technicianService;
     private final WalletService walletService;
-    private final PaymentTransactionService paymentTransactionService;
+
 
     @PostMapping("/add-order")
     public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request) {
@@ -97,10 +92,10 @@ public class OrderController {
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToPayOrderFromWalletResponse(order), HttpStatus.OK);
     }
 
-        @GetMapping("/pay-order-from-payment")
-    public ResponseEntity<PayOrderFromPaymentResponse> payOrderFromPayment(@Valid @RequestBody PayOrderFromPaymentRequest request){
-        Order order=orderService.findById(request.order().id());
-        if(order.getOrderStatus()!=OrderStatus.DONE)
+    @GetMapping("/pay-order-from-payment")
+    public ResponseEntity<PayOrderFromPaymentResponse> payOrderFromPayment(@Valid @RequestBody PayOrderFromPaymentRequest request) {
+        Order order = orderService.findById(request.order().id());
+        if (order.getOrderStatus() != OrderStatus.DONE)
             throw new NotValidInformation("Only orders that status = 'done' access to pay");
         Long paymentPrice = order.getChoosedOffer().getSuggestPrice();
 

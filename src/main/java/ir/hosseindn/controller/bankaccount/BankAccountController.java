@@ -19,7 +19,6 @@ public class BankAccountController {
     @PostMapping("add-bank-account")
     public BankAccount save(@Valid @RequestBody BankAccountSaveRequest request){
         BankAccount mappedBankAccount= BankAccountMapper.INSTANCE.bankAccountSaveRequestToModel(request);
-        BankAccount saved = bankAccountService.save(mappedBankAccount);
-        return saved;
+        return bankAccountService.save(mappedBankAccount);
     }
 }

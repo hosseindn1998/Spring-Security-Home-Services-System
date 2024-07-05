@@ -8,6 +8,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 
 public interface BankAccountMapper {
-    BankAccountMapper INSTANCE= Mappers.getMapper(BankAccountMapper.class);
+    BankAccountMapper INSTANCE = Mappers.getMapper(BankAccountMapper.class);
+
     BankAccount bankAccountSaveRequestToModel(BankAccountSaveRequest request);
 }

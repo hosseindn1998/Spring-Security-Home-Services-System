@@ -28,6 +28,7 @@ public class TechnicianController {
         Technician savedTechnician = technicianService.register(mappedTechnician, request.imagePath());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToUserSaveResponse(savedTechnician), HttpStatus.CREATED);
     }
+
     @PatchMapping("/technician-changePassword")
     public ResponseEntity<TechnicianChangePasswordResponse> technicianChangePassword(@Valid @RequestBody TechnicianChangePasswordRequest request) {
         if (!request.password().equals(request.confirmPassword()))
@@ -36,17 +37,19 @@ public class TechnicianController {
         Technician savedTechnician = technicianService.changePassword(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianChangePasswordResponse(savedTechnician), HttpStatus.OK);
     }
+
     @GetMapping("/technician-login")
     public ResponseEntity<TechnicianLoginResponse> technicianLogin(@Valid @RequestBody TechnicianLoginRequest request) {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.INSTANCE.technicianLoginRequestToModel(request);
         Technician LoggedInTechnician = technicianService.login(mappedTechnician.getEmail(), mappedTechnician.getPassword());
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(LoggedInTechnician), HttpStatus.FOUND);
     }
-    @PatchMapping ("/technician-verify")
-    public ResponseEntity<TechnicianVerifyResponse>technicianVerify(@Valid @RequestBody TechnicianVerifyRequest request){
-        Technician mappedTechnician=TechnicianMapper.INSTANCE.technicianVerifyRequestToModel(request);
+
+    @PatchMapping("/technician-verify")
+    public ResponseEntity<TechnicianVerifyResponse> technicianVerify(@Valid @RequestBody TechnicianVerifyRequest request) {
+        Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianVerifyRequestToModel(request);
         Technician changedStatusToVerify = technicianService.changeStatusToVerify(mappedTechnician);
-        return new ResponseEntity<>(TechnicianMapper.INSTANCE.INSTANCE.modelToTechnicianVerifyResponse(changedStatusToVerify),HttpStatus.OK );
+        return new ResponseEntity<>(TechnicianMapper.INSTANCE.INSTANCE.modelToTechnicianVerifyResponse(changedStatusToVerify), HttpStatus.OK);
     }
 
 }

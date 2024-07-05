@@ -17,7 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +31,8 @@ public class TechnicianSubServiceController {
 
     @PostMapping("/add-technician-to-subservice")
     public ResponseEntity<TechnicianSubServiceSaveResponse> addTechnicianToSubService(@Valid @RequestBody TechnicianSubServiceSaveRequest request) {
-        Technician technician= TechnicianMapper.INSTANCE.technicianIdToModel(request.technicianId());
-        SubService subService= SubServiceMapper.INSTANCE.subServiceIdToModel(request.subServiceId());
+        Technician technician = TechnicianMapper.INSTANCE.technicianIdToModel(request.technicianId());
+        SubService subService = SubServiceMapper.INSTANCE.subServiceIdToModel(request.subServiceId());
         TechnicianSubService mappedTechnicianSubService = TechnicianSubService.builder()
                 .subService(subService)
                 .technician(technician)
@@ -41,8 +44,8 @@ public class TechnicianSubServiceController {
 
     @DeleteMapping("/delete-technician-from-subservice")
     public ResponseEntity<TechnicianSubServiceDeleteResponse> deleteTechnicianFromSubService(@Valid @RequestBody TechnicianSubServiceDeleteRequest request) {
-        Technician technician= TechnicianMapper.INSTANCE.technicianIdToModel(request.technician());
-        SubService subService= SubServiceMapper.INSTANCE.subServiceIdToModel(request.subService());
+        Technician technician = TechnicianMapper.INSTANCE.technicianIdToModel(request.technician());
+        SubService subService = SubServiceMapper.INSTANCE.subServiceIdToModel(request.subService());
         TechnicianSubService mappedTechnicianSubService = TechnicianSubService.builder()
                 .subService(subService)
                 .technician(technician)

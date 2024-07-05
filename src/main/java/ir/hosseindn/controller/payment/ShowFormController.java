@@ -2,7 +2,6 @@ package ir.hosseindn.controller.payment;
 
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
-import ir.hosseindn.model.BankAccount;
 import ir.hosseindn.model.Captcha;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.model.PaymentTransaction;
@@ -12,7 +11,6 @@ import ir.hosseindn.service.order.OrderService;
 import ir.hosseindn.service.paymenttransaction.PaymentTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,10 +18,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 
 @Controller
@@ -43,7 +41,7 @@ public class ShowFormController {
         Long suggestPrice = order.getChoosedOffer().getSuggestPrice();
         PaymentTransaction paymentTransaction = paymentTransactionService.save(new PaymentTransaction());
         paymentTransaction.setSuggestPrice(suggestPrice);
-        model.addAttribute("paymentTransactionId","/payment/image?paymentTransactionId="+paymentTransaction.getId());
+        model.addAttribute("paymentTransactionId", "/payment/image?paymentTransactionId=" + paymentTransaction.getId());
         model.addAttribute("suggestPrice", suggestPrice);
 
 
@@ -52,7 +50,7 @@ public class ShowFormController {
 
     @GetMapping("/image")
     public ResponseEntity<byte[]> getImage(@RequestParam Long paymentTransactionId) {
-        ptId=paymentTransactionId;
+        ptId = paymentTransactionId;
         long randomLong = 1 + (long) (Math.random() * (4));
         Captcha captcha = captchaService.findById(randomLong);
         byte[] imageData = captcha.getPicture();
@@ -69,7 +67,7 @@ public class ShowFormController {
         return new ByteArrayResource(image);
     }
 
-    @GetMapping ("/pay-submit")
+    @GetMapping("/pay-submit")
     public String getCardInfoPage(
             @RequestParam String cardNumber,
             @RequestParam String cvv,
