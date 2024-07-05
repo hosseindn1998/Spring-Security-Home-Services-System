@@ -27,5 +27,6 @@ public class PaymentTransaction extends BaseEntity<Long> {
     String mm;
     String yy;
     String password;
+    String captchaAnswer;
     LocalDateTime time;
 }
