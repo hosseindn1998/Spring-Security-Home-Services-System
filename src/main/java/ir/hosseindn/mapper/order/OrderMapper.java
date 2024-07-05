@@ -19,4 +19,6 @@ public interface OrderMapper {
     Order orderIdToModel(OrderId orderId);
     Order payOrderFromWalletRequestToModel(PayOrderFromWalletRequest request);
     PayOrderFromWalletResponse modelToPayOrderFromWalletResponse (Order order);
+    Order payOrderFromPaymentRequestToModel(PayOrderFromPaymentRequest request);
+    PayOrderFromPaymentResponse modelToPayOrderFromPaymentResponse(Order order);
 }

@@ -7,6 +7,7 @@ import ir.hosseindn.model.Customer;
 import ir.hosseindn.service.customer.CustomerService;
 import ir.hosseindn.utility.CustomValidations;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

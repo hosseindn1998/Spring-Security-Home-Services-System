@@ -9,17 +9,15 @@ import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.technician.TechnicianVerifyRequest;
 import ir.hosseindn.dto.technician.TechnicianVerifyResponse;
-import ir.hosseindn.dto.wallet.WalletSaveRequest;
 import ir.hosseindn.model.Roles;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianStatus;
-import ir.hosseindn.model.Wallet;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-02T04:29:43+0330",
+    date = "2024-07-04T23:12:28+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -37,7 +35,6 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         technician.nationalCode( request.nationalCode() );
         technician.email( request.email() );
         technician.password( request.password() );
-        technician.wallet( walletSaveRequestToWallet( request.wallet() ) );
 
         return technician.build();
     }
@@ -186,17 +183,5 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         technician.id( technicianId.id() );
 
         return technician.build();
-    }
-
-    protected Wallet walletSaveRequestToWallet(WalletSaveRequest walletSaveRequest) {
-        if ( walletSaveRequest == null ) {
-            return null;
-        }
-
-        Wallet.WalletBuilder<?, ?> wallet = Wallet.builder();
-
-        wallet.amount( walletSaveRequest.amount() );
-
-        return wallet.build();
     }
 }

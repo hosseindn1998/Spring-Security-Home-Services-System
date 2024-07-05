@@ -8,16 +8,14 @@ import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteRequest;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteResponse;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveRequest;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveResponse;
-import ir.hosseindn.dto.wallet.WalletSaveRequest;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianSubService;
-import ir.hosseindn.model.Wallet;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-02T04:29:43+0330",
+    date = "2024-07-04T23:12:28+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
@@ -73,20 +71,6 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         return technicianSubServiceDeleteResponse;
     }
 
-    protected WalletSaveRequest walletToWalletSaveRequest(Wallet wallet) {
-        if ( wallet == null ) {
-            return null;
-        }
-
-        Long amount = null;
-
-        amount = wallet.getAmount();
-
-        WalletSaveRequest walletSaveRequest = new WalletSaveRequest( amount );
-
-        return walletSaveRequest;
-    }
-
     protected TechnicianSaveRequestWithoutPath technicianToTechnicianSaveRequestWithoutPath(Technician technician) {
         if ( technician == null ) {
             return null;
@@ -97,16 +81,14 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
         String nationalCode = null;
         String email = null;
         String password = null;
-        WalletSaveRequest wallet = null;
 
         firstName = technician.getFirstName();
         lastName = technician.getLastName();
         nationalCode = technician.getNationalCode();
         email = technician.getEmail();
         password = technician.getPassword();
-        wallet = walletToWalletSaveRequest( technician.getWallet() );
 
-        TechnicianSaveRequestWithoutPath technicianSaveRequestWithoutPath = new TechnicianSaveRequestWithoutPath( firstName, lastName, nationalCode, email, password, wallet );
+        TechnicianSaveRequestWithoutPath technicianSaveRequestWithoutPath = new TechnicianSaveRequestWithoutPath( firstName, lastName, nationalCode, email, password );
 
         return technicianSaveRequestWithoutPath;
     }

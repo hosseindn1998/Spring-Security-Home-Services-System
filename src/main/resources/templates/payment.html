@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/styles/style.css">
+</head>
+<body>
+
+<form name="form" action="/payment/pay-submit" method="get">
+    <div class="form-icon">
+
+
+    <label>
+        <input name="cardNumber" type="text" placeholder="Card Number">
+    </label>
+    <label>
+        <input name="cvv" type="text" placeholder="cvv">
+    </label>
+    <label>
+        <input name="mm" type="text" placeholder="mm">
+    </label>
+    <label>
+        <input name="yy" type="text" placeholder="YY">
+    </label>
+    <label>
+        <input name="password" type="text" placeholder="Password">
+    </label>
+        <label>
+            <input name="captchaAnswer" type="text" placeholder="Captcha Answer">
+        </label>
+    <div>
+        <label> *** captcha picture ***</label><br>
+        <a th:href="@{${paymentTransactionId}}" th:target="_block"> click here to show captcha picture</a>
+    </div>
+    <input type="submit" value="pay order">
+
+    </div>
+</form>
+
+
+</body>
+</html>
