@@ -9,6 +9,7 @@ import ir.hosseindn.dto.user.UserCriteriaItemsResponse;
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.mapper.admin.AdminMapper;
 import ir.hosseindn.mapper.captcha.CaptchaMapper;
+import ir.hosseindn.mapper.comment.CommentMapper;
 import ir.hosseindn.mapper.customer.CustomerMapper;
 import ir.hosseindn.mapper.technician.TechnicianMapper;
 import ir.hosseindn.model.Admin;
@@ -81,11 +82,12 @@ public class AdminController {
     public String getImageUploadPage(){
         return "image_upload";
     }
-    @PostMapping("/image-upload")
-    public String imageUpload(@Valid @RequestBody SaveCaptchaRequest request) {
-        Captcha captcha = CaptchaMapper.INSTANCE.saveCaptchaRequestToModel(request);
-
-        return "image_upload";
+    @GetMapping("/get-technician-image")
+    public ResponseEntity<String> getTechnicianImage(@RequestParam Long technicianId,
+                                                     @RequestParam String fileAddressForSave){
+    technicianService.fetchAvatarFile(technicianId,fileAddressForSave);
+        return new ResponseEntity<>("fetch successfully", HttpStatus.FOUND);
     }
+
 
 }

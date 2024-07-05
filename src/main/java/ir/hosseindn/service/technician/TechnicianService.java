@@ -15,9 +15,11 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,6 +30,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TechnicianService {
     private final TechnicianRepository technicianRepository;
     @Autowired
@@ -104,7 +107,7 @@ public class TechnicianService {
         Root<Technician> root = technicianQuery.from(Technician.class);
         List<Predicate> predicates = new ArrayList<>();
 
-        if (userCriteriaItems.role()!=null)
+        if (userCriteriaItems.role() != null)
             predicates.add(builder.equal(root.get("role"), userCriteriaItems.role()));
         if (userCriteriaItems.id() != null)
             predicates.add(builder.equal(root.get("id"), userCriteriaItems.id()));
@@ -128,12 +131,25 @@ public class TechnicianService {
             predicates.add(builder.equal(root.get("totalScores"), userCriteriaItems.totalScores()));
         if (userCriteriaItems.countScores() != null)
             predicates.add(builder.equal(root.get("countScores"), userCriteriaItems.countScores()));
-        if (userCriteriaItems.isActive()!=null)
+        if (userCriteriaItems.isActive() != null)
             predicates.add(builder.equal(root.get("isActive"), userCriteriaItems.isActive()));
 
 
         technicianQuery.where(builder.and(predicates.toArray(predicates.toArray(new Predicate[]{}))));
 
         return entityManager.createQuery(technicianQuery).getResultList();
+    }
+
+    public void fetchAvatarFile(Long technicianId, String fileAddressForSave) {
+        if (!CustomValidations.isValidPathFile(fileAddressForSave))
+            throw new NotValidInformation("File address Not valid");
+        Technician technician = findById(technicianId);
+        byte[] avatar = technician.getAvatar();
+        try (FileOutputStream fos = new FileOutputStream(fileAddressForSave)) {
+            fos.write(avatar);
+            log.info("file added successfully");
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
     }
 }
