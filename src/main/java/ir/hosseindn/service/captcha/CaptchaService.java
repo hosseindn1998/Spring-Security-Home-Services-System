@@ -14,12 +14,13 @@ import java.nio.file.Paths;
 @RequiredArgsConstructor
 public class CaptchaService {
 private final CaptchaRepository captchaRepository;
-    public Captcha addNewCaptcha(String answer,String filePath) throws IOException {
+    public void addNewCaptcha(String answer, String filePath) throws IOException {
         Captcha captcha = Captcha.builder()
                 .answer(answer)
+                .pathFile(filePath)
                 .picture(Files.readAllBytes(Paths.get(filePath)))
                 .build();
-        return captchaRepository.save(captcha);
+        captchaRepository.save(captcha);
     }
     public Captcha findById(Long id){
         return captchaRepository.findById(id).orElseThrow(
