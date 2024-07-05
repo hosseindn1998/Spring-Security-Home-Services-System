@@ -4,6 +4,7 @@ import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Captcha;
 import ir.hosseindn.model.Order;
+import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.model.PaymentTransaction;
 import ir.hosseindn.service.bankaccount.BankAccountService;
 import ir.hosseindn.service.captcha.CaptchaService;
@@ -60,12 +61,6 @@ public class ShowFormController {
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/images/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    Resource downloadImage(@RequestParam Long imageId) {
-        byte[] image = captchaService.findById(imageId).getPicture();
-
-        return new ByteArrayResource(image);
-    }
 
     @GetMapping("/pay-submit")
     public String getCardInfoPage(
@@ -94,6 +89,9 @@ public class ShowFormController {
         byId.setTime(LocalDateTime.now());
         bankAccountService.withdraw(cardNumber, byId.getSuggestPrice());
         paymentTransactionService.save(byId);
+        Order order = orderService.findById(1L);
+        orderService.changeOrderStatusToPaid(order);
+        order.setOrderStatus(OrderStatus.Paid);
         return "pay_successfully";
     }
 
