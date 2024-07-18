@@ -18,21 +18,25 @@ import java.util.List;
 @ToString(callSuper = true)
 @Table(name = "odrer")
 public class Order extends BaseEntity<Long> {
+    String mainServiceName;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     SubService subservice;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     Customer customer;
     Long suggestedPrice;
     String description;
+    LocalDateTime creationDate;
     LocalDateTime dateForDo;
     String address;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     OrderStatus orderStatus;
     @OneToMany(mappedBy = "odrer", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @ToString.Exclude
     List<Offer> offers;
     @OneToOne(fetch = FetchType.LAZY)
     Offer choosedOffer;
+   @ManyToOne( fetch = FetchType.LAZY)
+    Technician technician;
     @OneToOne
     Comment comment;
 }
