@@ -175,6 +175,15 @@ public class OrderService {
         return entityManager.createQuery(orderCriteriaQuery).getResultList();
     }
 
+    public Order payOrderFromWallet(Long orderId) {
+        Order order = findById(orderId);
+        if (order.getOrderStatus() != OrderStatus.DONE)
+            throw new NotValidInformation("Only orders that status = 'done' access to pay");
+        walletService.payFromWallet(order.getCustomer().getWallet(), order.getChoosedOffer().getTechnician().getWallet()
+                , order.getChoosedOffer().getSuggestPrice());
+        return changeOrderStatusToPaid(order);
+    }
+
 
 
 
