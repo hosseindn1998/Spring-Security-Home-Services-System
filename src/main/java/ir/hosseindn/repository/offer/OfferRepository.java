@@ -15,9 +15,11 @@ import java.util.Optional;
 @Transactional
 public interface OfferRepository extends JpaRepository<Offer,Long> {
     @Query("select o FROM Offer o where o.odrer.id=:orderId ORDER BY o.suggestPrice asc,o.technician.rate desc ")
-    List<Offer>customQuery(@Param("orderId")long orderId);
+    List<Offer> offerListSorted(@Param("orderId")long orderId);
+
     @Modifying
     @Query("update Offer o set o.isAccepted=true where o.id=:id")
     void changeOfferStatus(@Param("id") Long id);
     Optional<Offer> findById(Long id);
+
 }
