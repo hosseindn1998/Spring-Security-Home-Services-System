@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount,Long> {
 
-    Optional<BankAccount> findByCardNumberAndCvvAndMmAndYyAndPassword(String cardNumber, String cvv, String mm, String yy, String password);
+    Boolean existsByCardNumberAndCvvAndMmAndYyAndPassword(String cardNumber, String cvv, String mm, String yy, String password);
     @Modifying
     @Transactional
     @Query("update BankAccount b SET b.amount=(b.amount-:amount) where b.cardNumber=:cardNumber")
