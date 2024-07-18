@@ -1,8 +1,6 @@
 package ir.hosseindn.repository.techniciansubservice;
 
-import ir.hosseindn.model.Order;
 import ir.hosseindn.model.SubService;
-import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianSubService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
