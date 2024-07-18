@@ -17,17 +17,20 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
 
     Optional<Technician> findByEmailAndPassword(String email, String password);
 
-    Optional<Technician> findByEmailOrNationalCode(String email, String nationalCode);
+    @Override
+    boolean existsById(Long aLong);
 
     Optional<Technician> findByEmail(String email);
 
     @Modifying
     @Query("update Technician t set t.password=:password where t.email=:email")
     void updatePassword(@Param("email") String email, @Param("password") String password);
+
     @Modifying
     @Query("UPDATE Technician t set t.technicianStatus=:technicianStatus where t.email=:email")
-    void updateTechnicianStatus(@Param("technicianStatus") TechnicianStatus technicianStatus,@Param("email") String email);
+    void updateTechnicianStatus(@Param("technicianStatus") TechnicianStatus technicianStatus, @Param("email") String email);
+
     @Modifying
     @Query("UPDATE Technician t set t.totalScores=:totalScores where t.id=:id")
-    void updateScores(@Param("id")Long id,@Param("totalScores")Long totalScores);
+    void updateScores(@Param("id") Long id, @Param("totalScores") Long totalScores);
 }
