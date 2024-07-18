@@ -1,15 +1,14 @@
 package ir.hosseindn.model;
 
 import jakarta.persistence.*;
-
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor
@@ -20,14 +19,13 @@ import java.util.List;
 @ToString(callSuper = true)
 @SuperBuilder
 @AllArgsConstructor
-@Table(name = "customer")
-public class Customer extends Person {
+@Table(name = "Customer")
+public class Customer extends User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = {CascadeType.REMOVE})
     @ToString.Exclude
     @Transient
     List<Order> orders;
-    @Enumerated
-    Roles role;
-
+    @Id
+    private Long id;
 
 }
