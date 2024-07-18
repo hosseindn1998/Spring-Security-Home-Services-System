@@ -139,6 +139,42 @@ public class OrderService {
         return order;
     }
 
+    public List<Order> findByCriteria(OrderSearchItemsRequest orderSearchItems) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> orderCriteriaQuery = builder.createQuery(Order.class);
+        Root<Order> root = orderCriteriaQuery.from(Order.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (orderSearchItems.customerId() != null) {
+            Join<Order, Customer> orderCustomerJoin = root.join("customer", JoinType.INNER);
+            predicates.add(builder.equal(orderCustomerJoin.get("id"), orderSearchItems.customerId()));
+        }
+
+        if (orderSearchItems.technicianId() != null) {
+            Join<Order, Technician> orderTechnicianJoin = root.join("technician", JoinType.INNER);
+            predicates.add(builder.equal(orderTechnicianJoin.get("id"), orderSearchItems.technicianId()));
+        }
+
+        if (orderSearchItems.id() != null)
+            predicates.add(builder.equal(root.get("id"), orderSearchItems.id()));
+        if (orderSearchItems.dateForDo() != null)
+            predicates.add(builder.lessThanOrEqualTo(root.get("dateForDo"), orderSearchItems.dateForDo()));
+        if (orderSearchItems.orderStatus() != null)
+            predicates.add(builder.equal(root.get("orderStatus"), orderSearchItems.orderStatus()));
+
+        if (orderSearchItems.subService() != null) {
+            Join<Order, SubService> subServiceJoin = root.join("subservice", JoinType.INNER);
+            predicates.add(builder.equal(subServiceJoin.get("name"), orderSearchItems.subService()));
+        }
+
+        if (orderSearchItems.mainService() != null)
+            predicates.add(builder.equal(root.get("mainServiceName"), orderSearchItems.mainService()));
+
+        orderCriteriaQuery.where(builder.and(predicates.toArray(predicates.toArray(new Predicate[]{}))));
+
+        return entityManager.createQuery(orderCriteriaQuery).getResultList();
+    }
+
 
 
 
