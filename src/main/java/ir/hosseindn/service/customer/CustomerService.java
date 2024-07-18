@@ -148,4 +148,16 @@ public class CustomerService {
         return list1;
     }
 
+    public List<Order> ordersHistory(String email, String orderStatus) {
+        Customer customer = findByUsername(email);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> orderCriteriaQuery = builder.createQuery(Order.class);
+        Root<Order> root = orderCriteriaQuery.from(Order.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(root.get("customer"), customer));
+        predicates.add(builder.equal(root.get("orderStatus"), orderStatus));
+        orderCriteriaQuery.where(builder.and(predicates.toArray(predicates.toArray(new Predicate[]{}))));
+        return entityManager.createQuery(orderCriteriaQuery).getResultList();
+    }
+
 }
