@@ -35,7 +35,7 @@ public class Order extends BaseEntity<Long> {
     List<Offer> offers;
     @OneToOne(fetch = FetchType.LAZY)
     Offer choosedOffer;
-   @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     Technician technician;
     @OneToOne
     Comment comment;

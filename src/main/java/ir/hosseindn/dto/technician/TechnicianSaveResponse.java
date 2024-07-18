@@ -1,6 +1,6 @@
 package ir.hosseindn.dto.technician;
 
-import ir.hosseindn.model.Roles;
+import ir.hosseindn.model.Role;
 import ir.hosseindn.model.TechnicianStatus;
 
 import java.time.LocalDateTime;
@@ -17,6 +17,6 @@ public record TechnicianSaveResponse(
         Long countScores,
         TechnicianStatus technicianStatus,
         Boolean isActive,
-        Roles role
+        Role role
 ) {
 }

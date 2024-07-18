@@ -10,7 +10,7 @@ public record OfferFindByOrderResponse(
         LocalDateTime dateOfOfferToStart,
         Long suggestPrice,
         LocalDateTime dateOfOfferToDone,
-        TechnicianSaveResponse technician,
+        TechnicianId technician,
         Boolean isAccepted
 ) {
 }

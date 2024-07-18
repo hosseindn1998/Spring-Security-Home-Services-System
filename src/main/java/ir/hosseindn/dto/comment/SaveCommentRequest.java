@@ -12,7 +12,8 @@ public record SaveCommentRequest(
         @Max(5)
         Integer rate,
         String description,
-        @OneToOne
-        OrderId order
+        @NotNull
+        @Min(0)
+        Long orderId
         ) {
 }

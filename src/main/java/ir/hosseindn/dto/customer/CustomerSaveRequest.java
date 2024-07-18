@@ -23,7 +23,6 @@ public record CustomerSaveRequest(
         @Email(message = "Email must be valid")
         String email,
         @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8}$")
-        String password,
-        WalletSaveRequest wallet
+        String password
 ) {
 }

@@ -6,7 +6,6 @@ import ir.hosseindn.dto.technician.TechnicianId;
 public record SaveCommentResponse(
         Integer rate,
         String description,
-        OrderId order,
         TechnicianId technician
 ) {
 }
