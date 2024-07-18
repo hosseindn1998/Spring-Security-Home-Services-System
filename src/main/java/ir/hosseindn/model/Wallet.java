@@ -3,8 +3,6 @@ package ir.hosseindn.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -18,9 +16,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString(callSuper = true)
 @Table(name = "wallet")
-
 public class Wallet extends BaseEntity<Long> {
-
-    Long amount=0L;
+    @Column(columnDefinition = "BIGINT DEFAULT 0")
+    Long amount;
 
 }
