@@ -17,14 +17,14 @@ import java.util.Optional;
 @Repository
 
 public interface TechnicianSubServiceRepository extends JpaRepository<TechnicianSubService, Long> {
-    @Query("select ts.subService.orders from TechnicianSubService ts  where ts.technician.email=:subServiceName")
-    List<Order> findTechnicianSubServiceBySubService(@Param("subServiceName") String subServiceName);
     @Query("from TechnicianSubService ts where ts.technician.id=:technicianId And ts.subService.id=:subServiceId")
     Optional<TechnicianSubService>findBySubServiceAndTechnician(@Param("technicianId") Long technicianId,@Param("subServiceId") Long subServiceId);
+
     @Modifying
     @Transactional
     @Query("delete from TechnicianSubService ts where ts.technician.id=:technicianId And ts.subService.id=:subServiceId")
     void deleteById(@Param("technicianId") Long technicianId,@Param("subServiceId") Long subServiceId);
+
     @Query("select ts.subService from TechnicianSubService ts  where ts.technician.email=:email")
     List<SubService>findByTechnician(String email);
 }
