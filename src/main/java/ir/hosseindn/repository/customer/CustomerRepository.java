@@ -16,12 +16,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     Optional<Customer> findByEmailAndPassword(String email, String password);
 
-    Optional<Customer> findByEmailOrNationalCode(String email, String nationalCode);
-
     Optional<Customer> findByEmail(String email);
 
     @Modifying
     @Query("update Customer c set c.password=:newPassword where c.email=:email")
     void updatePassword(@Param("email") String email, @Param("newPassword") String newPassword);
-
 }
