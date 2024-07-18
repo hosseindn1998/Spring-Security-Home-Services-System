@@ -1,5 +1,6 @@
 package ir.hosseindn.repository.techniciansubservice;
 
+import ir.hosseindn.model.Order;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianSubService;
@@ -16,12 +17,14 @@ import java.util.Optional;
 @Repository
 
 public interface TechnicianSubServiceRepository extends JpaRepository<TechnicianSubService, Long> {
-    @Query("select ts.technician from TechnicianSubService ts  where ts.subService.name=:subServiceName")
-    List<Technician> findTechnicianSubServiceBySubService(@Param("subServiceName") String subServiceName);
-    @Query("from TechnicianSubService ts where ts.technician=:technician And ts.subService=:subService")
-    Optional<TechnicianSubService>findBySubServiceAndTechnician(@Param("technician") Technician technician,@Param("subService") SubService subService);
+    @Query("select ts.subService.orders from TechnicianSubService ts  where ts.technician.email=:subServiceName")
+    List<Order> findTechnicianSubServiceBySubService(@Param("subServiceName") String subServiceName);
+    @Query("from TechnicianSubService ts where ts.technician.id=:technicianId And ts.subService.id=:subServiceId")
+    Optional<TechnicianSubService>findBySubServiceAndTechnician(@Param("technicianId") Long technicianId,@Param("subServiceId") Long subServiceId);
     @Modifying
     @Transactional
     @Query("delete from TechnicianSubService ts where ts.technician.id=:technicianId And ts.subService.id=:subServiceId")
     void deleteById(@Param("technicianId") Long technicianId,@Param("subServiceId") Long subServiceId);
+    @Query("select ts.subService from TechnicianSubService ts  where ts.technician.email=:email")
+    List<SubService>findByTechnician(String email);
 }
