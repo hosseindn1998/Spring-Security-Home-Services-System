@@ -19,11 +19,14 @@ public class MainServiceService {
             throw new DuplicateInformationException("A Main-Service with this name Already Exists!");
         return mainServiceRepository.save(mainService);
     }
+
     public List<MainService> findAll() {
-        if (mainServiceRepository.findAll().isEmpty())
+        List<MainService> mainServiceList = mainServiceRepository.findAll();
+        if(mainServiceList.isEmpty())
             throw new NotFoundException("No Main-Service Found!");
-        return mainServiceRepository.findAll();
+        return mainServiceList;
     }
+
     public MainService findById(Long id){
         return mainServiceRepository.findById(id).orElseThrow(
                 ()->new NotFoundException("Main service not found")
