@@ -29,6 +29,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Modifying
     @Query("update Order o set o.orderStatus=:orderStatus where o.id=:id")
     void changeOrderStatus(@Param("id") Long id,@Param("orderStatus") OrderStatus orderStatus);
+    @Query("SELECT COUNT(o) FROM Order o where o.customer.email=:email")
+    Long countOfCustomerOrders(@Param("email") String email);
+
+    Optional<Order> findOrderById(Long id);
+    Boolean existsOrderByIdAndTechnician(Long id,Technician technician);
 
 }
 
