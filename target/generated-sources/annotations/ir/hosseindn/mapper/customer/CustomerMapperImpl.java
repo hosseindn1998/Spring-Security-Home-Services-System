@@ -2,21 +2,18 @@ package ir.hosseindn.mapper.customer;
 
 import ir.hosseindn.dto.customer.CustomerChangePasswordRequest;
 import ir.hosseindn.dto.customer.CustomerChangePasswordResponse;
-import ir.hosseindn.dto.customer.CustomerId;
 import ir.hosseindn.dto.customer.CustomerLoginRequest;
 import ir.hosseindn.dto.customer.CustomerLoginResponse;
 import ir.hosseindn.dto.customer.CustomerSaveRequest;
 import ir.hosseindn.dto.customer.CustomerSaveResponse;
-import ir.hosseindn.dto.wallet.WalletSaveRequest;
 import ir.hosseindn.model.Customer;
-import ir.hosseindn.model.Roles;
-import ir.hosseindn.model.Wallet;
+import ir.hosseindn.model.Role;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-08T06:38:51+0330",
+    date = "2024-07-19T10:06:38+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CustomerMapperImpl implements CustomerMapper {
@@ -34,7 +31,6 @@ public class CustomerMapperImpl implements CustomerMapper {
         customer.nationalCode( request.nationalCode() );
         customer.email( request.email() );
         customer.password( request.password() );
-        customer.wallet( walletSaveRequestToWallet( request.wallet() ) );
 
         return customer.build();
     }
@@ -51,7 +47,7 @@ public class CustomerMapperImpl implements CustomerMapper {
         String nationalCode = null;
         String email = null;
         LocalDateTime registeredDate = null;
-        Roles role = null;
+        Role role = null;
 
         id = customer.getId();
         firstName = customer.getFirstName();
@@ -129,27 +125,13 @@ public class CustomerMapperImpl implements CustomerMapper {
     }
 
     @Override
-    public Customer customerIdToModel(CustomerId customerId) {
+    public Customer customerIdToModel(Long customerId) {
         if ( customerId == null ) {
             return null;
         }
 
         Customer.CustomerBuilder<?, ?> customer = Customer.builder();
 
-        customer.id( customerId.id() );
-
         return customer.build();
-    }
-
-    protected Wallet walletSaveRequestToWallet(WalletSaveRequest walletSaveRequest) {
-        if ( walletSaveRequest == null ) {
-            return null;
-        }
-
-        Wallet.WalletBuilder<?, ?> wallet = Wallet.builder();
-
-        wallet.amount( walletSaveRequest.amount() );
-
-        return wallet.build();
     }
 }

@@ -16,8 +16,6 @@ public interface TechnicianSubServiceMapper {
     TechnicianSubService technicianSubServiceSaveRequestToModel(TechnicianSubServiceSaveRequest request);
 
     TechnicianSubServiceSaveResponse modelToTechnicianSubServiceSaveResponse(TechnicianSubService technicianSubService);
-    TechnicianSubService technicianSubServiceDeleteRequestToModel(TechnicianSubServiceDeleteRequest request);
 
-    TechnicianSubServiceDeleteResponse modelToTechnicianSubServiceDeleteResponse(TechnicianSubService technicianSubService);
 
 }

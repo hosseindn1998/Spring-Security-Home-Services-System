@@ -11,9 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,14 +24,15 @@ import java.util.List;
 @Slf4j
 public class OfferController {
     private final OfferService offerService;
-
+    @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
     @PostMapping("/add-offer")
-    public ResponseEntity<OfferSaveResponse> addOffer(@Valid @RequestBody OfferSaveRequest request) {
+    public ResponseEntity<OfferSaveResponse> addOffer(@Valid @RequestBody OfferSaveRequest request, Principal principal) {
         Offer mappedOffer = OfferMapper.INSTANCE.offerSaveRequestToModel(request);
-        Offer savedOffer = offerService.addOfferByTechnician(mappedOffer,request.technicianId(),request.odrerId());
+        Offer savedOffer = offerService.addOfferByTechnician(mappedOffer,principal.getName(),request.odrerId());
         return new ResponseEntity<>(OfferMapper.INSTANCE.modelToOfferSaveResponse(savedOffer), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @GetMapping("/get-offers-of-order")
     public ResponseEntity<List<OfferFindByOrderResponse>> getOfferOfOrder(@Valid @RequestParam Long orderId) {
         List<Offer> offerList = offerService.findAllByOrder(orderId);

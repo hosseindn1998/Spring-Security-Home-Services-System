@@ -49,7 +49,7 @@ public class TechnicianController {
         return new ResponseEntity<>(TechnicianMapper.INSTANCE.modelToTechnicianLoginResponse(LoggedInTechnician), HttpStatus.FOUND);
     }
 
-    @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/technician-verify")
     public ResponseEntity<TechnicianVerifyResponse> technicianVerify(@Valid @RequestBody TechnicianVerifyRequest request) {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianVerifyRequestToModel(request);

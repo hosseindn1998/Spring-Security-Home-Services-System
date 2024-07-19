@@ -1,21 +1,20 @@
 package ir.hosseindn.mapper.techniciansubservice;
 
-import ir.hosseindn.dto.subservice.SubServiceId;
-import ir.hosseindn.dto.technician.TechnicianId;
-import ir.hosseindn.dto.technician.TechnicianSaveRequest;
-import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
-import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteRequest;
-import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceDeleteResponse;
+import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
+import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveRequest;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveResponse;
+import ir.hosseindn.model.Role;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
+import ir.hosseindn.model.TechnicianStatus;
 import ir.hosseindn.model.TechnicianSubService;
+import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-08T06:38:51+0330",
+    date = "2024-07-19T10:06:38+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {
@@ -37,99 +36,72 @@ public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMappe
             return null;
         }
 
-        TechnicianSaveRequest technician = null;
+        TechnicianSaveResponse technician = null;
+        SubServiceSaveResponse subService = null;
 
-        technician = technicianToTechnicianSaveRequest( technicianSubService.getTechnician() );
+        technician = technicianToTechnicianSaveResponse( technicianSubService.getTechnician() );
+        subService = subServiceToSubServiceSaveResponse( technicianSubService.getSubService() );
 
-        TechnicianSubServiceSaveResponse technicianSubServiceSaveResponse = new TechnicianSubServiceSaveResponse( technician );
+        TechnicianSubServiceSaveResponse technicianSubServiceSaveResponse = new TechnicianSubServiceSaveResponse( technician, subService );
 
         return technicianSubServiceSaveResponse;
     }
 
-    @Override
-    public TechnicianSubService technicianSubServiceDeleteRequestToModel(TechnicianSubServiceDeleteRequest request) {
-        if ( request == null ) {
-            return null;
-        }
-
-        TechnicianSubService.TechnicianSubServiceBuilder<?, ?> technicianSubService = TechnicianSubService.builder();
-
-        technicianSubService.technician( technicianIdToTechnician( request.technician() ) );
-        technicianSubService.subService( subServiceIdToSubService( request.subService() ) );
-
-        return technicianSubService.build();
-    }
-
-    @Override
-    public TechnicianSubServiceDeleteResponse modelToTechnicianSubServiceDeleteResponse(TechnicianSubService technicianSubService) {
-        if ( technicianSubService == null ) {
-            return null;
-        }
-
-        TechnicianSubServiceDeleteResponse technicianSubServiceDeleteResponse = new TechnicianSubServiceDeleteResponse();
-
-        return technicianSubServiceDeleteResponse;
-    }
-
-    protected TechnicianSaveRequestWithoutPath technicianToTechnicianSaveRequestWithoutPath(Technician technician) {
+    protected TechnicianSaveResponse technicianToTechnicianSaveResponse(Technician technician) {
         if ( technician == null ) {
             return null;
         }
 
+        Long id = null;
         String firstName = null;
         String lastName = null;
         String nationalCode = null;
         String email = null;
-        String password = null;
+        LocalDateTime registeredDate = null;
+        Double rate = null;
+        Integer totalScores = null;
+        Long countScores = null;
+        TechnicianStatus technicianStatus = null;
+        Boolean isActive = null;
+        Role role = null;
 
+        id = technician.getId();
         firstName = technician.getFirstName();
         lastName = technician.getLastName();
         nationalCode = technician.getNationalCode();
         email = technician.getEmail();
-        password = technician.getPassword();
+        registeredDate = technician.getRegisteredDate();
+        rate = technician.getRate();
+        totalScores = technician.getTotalScores();
+        if ( technician.getCountScores() != null ) {
+            countScores = technician.getCountScores().longValue();
+        }
+        technicianStatus = technician.getTechnicianStatus();
+        isActive = technician.getIsActive();
+        role = technician.getRole();
 
-        TechnicianSaveRequestWithoutPath technicianSaveRequestWithoutPath = new TechnicianSaveRequestWithoutPath( firstName, lastName, nationalCode, email, password );
+        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate, totalScores, countScores, technicianStatus, isActive, role );
 
-        return technicianSaveRequestWithoutPath;
+        return technicianSaveResponse;
     }
 
-    protected TechnicianSaveRequest technicianToTechnicianSaveRequest(Technician technician) {
-        if ( technician == null ) {
+    protected SubServiceSaveResponse subServiceToSubServiceSaveResponse(SubService subService) {
+        if ( subService == null ) {
             return null;
         }
 
-        TechnicianSaveRequestWithoutPath technician1 = null;
+        Long id = null;
+        String name = null;
+        Long basePrice = null;
+        String description = null;
 
-        technician1 = technicianToTechnicianSaveRequestWithoutPath( technician );
+        id = subService.getId();
+        name = subService.getName();
+        basePrice = subService.getBasePrice();
+        description = subService.getDescription();
 
-        String imagePath = null;
+        SubServiceSaveResponse subServiceSaveResponse = new SubServiceSaveResponse( id, name, basePrice, description );
 
-        TechnicianSaveRequest technicianSaveRequest = new TechnicianSaveRequest( technician1, imagePath );
-
-        return technicianSaveRequest;
-    }
-
-    protected Technician technicianIdToTechnician(TechnicianId technicianId) {
-        if ( technicianId == null ) {
-            return null;
-        }
-
-        Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
-
-        technician.id( technicianId.id() );
-
-        return technician.build();
-    }
-
-    protected SubService subServiceIdToSubService(SubServiceId subServiceId) {
-        if ( subServiceId == null ) {
-            return null;
-        }
-
-        SubService.SubServiceBuilder<?, ?> subService = SubService.builder();
-
-        subService.id( subServiceId.id() );
-
-        return subService.build();
+        return subServiceSaveResponse;
     }
 }

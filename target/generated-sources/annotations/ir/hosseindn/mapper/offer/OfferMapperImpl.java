@@ -2,29 +2,27 @@ package ir.hosseindn.mapper.offer;
 
 import ir.hosseindn.dto.offer.OfferFindByOrderRequest;
 import ir.hosseindn.dto.offer.OfferFindByOrderResponse;
-import ir.hosseindn.dto.offer.OfferId;
-import ir.hosseindn.dto.offer.OfferSaveRequestWithoutFKs;
+import ir.hosseindn.dto.offer.OfferSaveRequest;
 import ir.hosseindn.dto.offer.OfferSaveResponse;
 import ir.hosseindn.dto.order.OrderId;
 import ir.hosseindn.dto.technician.TechnicianId;
-import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.model.Offer;
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.Roles;
 import ir.hosseindn.model.Technician;
-import ir.hosseindn.model.TechnicianStatus;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-08T06:38:52+0330",
+    date = "2024-07-19T10:06:38+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class OfferMapperImpl implements OfferMapper {
 
     @Override
-    public Offer offerSaveRequestToModel(OfferSaveRequestWithoutFKs request) {
+    public Offer offerSaveRequestToModel(OfferSaveRequest request) {
         if ( request == null ) {
             return null;
         }
@@ -34,7 +32,6 @@ public class OfferMapperImpl implements OfferMapper {
         offer.dateOfOfferToStart( request.dateOfOfferToStart() );
         offer.suggestPrice( request.suggestPrice() );
         offer.dateOfOfferToDone( request.dateOfOfferToDone() );
-        offer.isAccepted( request.isAccepted() );
 
         return offer.build();
     }
@@ -80,37 +77,26 @@ public class OfferMapperImpl implements OfferMapper {
     }
 
     @Override
-    public OfferFindByOrderResponse modelToOfferFindByOrderResponse(Offer offer) {
-        if ( offer == null ) {
+    public List<OfferFindByOrderResponse> modelListToOfferFindByOrderResponseList(List<Offer> offerList) {
+        if ( offerList == null ) {
             return null;
         }
 
-        LocalDateTime dateOfOfferToStart = null;
-        Long suggestPrice = null;
-        LocalDateTime dateOfOfferToDone = null;
-        TechnicianSaveResponse technician = null;
-        Boolean isAccepted = null;
+        List<OfferFindByOrderResponse> list = new ArrayList<OfferFindByOrderResponse>( offerList.size() );
+        for ( Offer offer : offerList ) {
+            list.add( offerToOfferFindByOrderResponse( offer ) );
+        }
 
-        dateOfOfferToStart = offer.getDateOfOfferToStart();
-        suggestPrice = offer.getSuggestPrice();
-        dateOfOfferToDone = offer.getDateOfOfferToDone();
-        technician = technicianToTechnicianSaveResponse( offer.getTechnician() );
-        isAccepted = offer.getIsAccepted();
-
-        OfferFindByOrderResponse offerFindByOrderResponse = new OfferFindByOrderResponse( dateOfOfferToStart, suggestPrice, dateOfOfferToDone, technician, isAccepted );
-
-        return offerFindByOrderResponse;
+        return list;
     }
 
     @Override
-    public Offer offerIdToModel(OfferId offerId) {
+    public Offer offerIdToModel(Long offerId) {
         if ( offerId == null ) {
             return null;
         }
 
         Offer.OfferBuilder<?, ?> offer = Offer.builder();
-
-        offer.id( offerId.id() );
 
         return offer.build();
     }
@@ -155,41 +141,25 @@ public class OfferMapperImpl implements OfferMapper {
         return order.build();
     }
 
-    protected TechnicianSaveResponse technicianToTechnicianSaveResponse(Technician technician) {
-        if ( technician == null ) {
+    protected OfferFindByOrderResponse offerToOfferFindByOrderResponse(Offer offer) {
+        if ( offer == null ) {
             return null;
         }
 
-        Long id = null;
-        String firstName = null;
-        String lastName = null;
-        String nationalCode = null;
-        String email = null;
-        LocalDateTime registeredDate = null;
-        Double rate = null;
-        Integer totalScores = null;
-        Long countScores = null;
-        TechnicianStatus technicianStatus = null;
-        Boolean isActive = null;
-        Roles role = null;
+        LocalDateTime dateOfOfferToStart = null;
+        Long suggestPrice = null;
+        LocalDateTime dateOfOfferToDone = null;
+        TechnicianId technician = null;
+        Boolean isAccepted = null;
 
-        id = technician.getId();
-        firstName = technician.getFirstName();
-        lastName = technician.getLastName();
-        nationalCode = technician.getNationalCode();
-        email = technician.getEmail();
-        registeredDate = technician.getRegisteredDate();
-        rate = technician.getRate();
-        totalScores = technician.getTotalScores();
-        if ( technician.getCountScores() != null ) {
-            countScores = technician.getCountScores().longValue();
-        }
-        technicianStatus = technician.getTechnicianStatus();
-        isActive = technician.getIsActive();
-        role = technician.getRole();
+        dateOfOfferToStart = offer.getDateOfOfferToStart();
+        suggestPrice = offer.getSuggestPrice();
+        dateOfOfferToDone = offer.getDateOfOfferToDone();
+        technician = technicianToTechnicianId( offer.getTechnician() );
+        isAccepted = offer.getIsAccepted();
 
-        TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate, totalScores, countScores, technicianStatus, isActive, role );
+        OfferFindByOrderResponse offerFindByOrderResponse = new OfferFindByOrderResponse( dateOfOfferToStart, suggestPrice, dateOfOfferToDone, technician, isAccepted );
 
-        return technicianSaveResponse;
+        return offerFindByOrderResponse;
     }
 }

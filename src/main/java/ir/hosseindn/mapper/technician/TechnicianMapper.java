@@ -10,7 +10,7 @@ public interface TechnicianMapper {
 
     TechnicianMapper INSTANCE = Mappers.getMapper(TechnicianMapper.class);
 
-    Technician technicianSaveRequestWithoutPathToModel(TechnicianSaveRequestWithoutPath request);
+    Technician technicianSaveRequestWithoutPathToModel(TechnicianSaveRequest request);
 
     TechnicianSaveResponse modelToUserSaveResponse(Technician technician);
 
@@ -23,5 +23,5 @@ public interface TechnicianMapper {
     TechnicianLoginResponse modelToTechnicianLoginResponse(Technician technician);
     Technician technicianVerifyRequestToModel(TechnicianVerifyRequest request);
     TechnicianVerifyResponse modelToTechnicianVerifyResponse(Technician technician);
-    Technician technicianIdToModel(TechnicianId technicianId);
+    Technician technicianIdToModel(Long technicianId);
 }

@@ -58,8 +58,8 @@ public class OrderService {
         return orderRepository.existsOrderByIdAndTechnician(id, technician);
     }
 
-    public Order addOrderByCustomer(Order order, Long customerId, Long subServiceId) {
-        order.setCustomer(customerService.findById(customerId));
+    public Order addOrderByCustomer(Order order, String email, Long subServiceId) {
+        order.setCustomer(customerService.findByUsername(email));
         order.setSubservice(subServiceService.findById(subServiceId));
         return save(order);
     }

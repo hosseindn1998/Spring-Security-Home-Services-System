@@ -30,9 +30,9 @@ public class OrderController {
 
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping("/add-order")
-    public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request) {
+    public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request,Principal principal) {
         Order mappedOrder = OrderMapper.INSTANCE.orderSaveRequestToModel(request);
-        Order savedOrder = orderService.addOrderByCustomer(mappedOrder,request.customerId(),request.subserviceId());
+        Order savedOrder = orderService.addOrderByCustomer(mappedOrder,principal.getName(),request.subserviceId());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderSaveResponse(savedOrder), HttpStatus.CREATED);
     }
 

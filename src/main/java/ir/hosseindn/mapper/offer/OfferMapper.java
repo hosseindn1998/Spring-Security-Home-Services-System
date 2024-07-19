@@ -5,16 +5,18 @@ import ir.hosseindn.model.Offer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface OfferMapper {
     OfferMapper INSTANCE = Mappers.getMapper(OfferMapper.class);
 
-    Offer offerSaveRequestToModel(OfferSaveRequestWithoutFKs request);
+    Offer offerSaveRequestToModel(OfferSaveRequest request);
 
     OfferSaveResponse modelToOfferSaveResponse(Offer offer);
 
     Offer offerFindByOrderRequestToModel(OfferFindByOrderRequest request);
 
-    OfferFindByOrderResponse modelToOfferFindByOrderResponse(Offer offer);
-    Offer offerIdToModel(OfferId offerId);
+    List<OfferFindByOrderResponse> modelListToOfferFindByOrderResponseList(List<Offer> offerList);
+    Offer offerIdToModel(Long offerId);
 }

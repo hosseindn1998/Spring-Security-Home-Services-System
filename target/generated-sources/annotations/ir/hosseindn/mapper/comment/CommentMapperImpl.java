@@ -2,16 +2,16 @@ package ir.hosseindn.mapper.comment;
 
 import ir.hosseindn.dto.comment.SaveCommentRequest;
 import ir.hosseindn.dto.comment.SaveCommentResponse;
-import ir.hosseindn.dto.order.OrderId;
 import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.model.Comment;
-import ir.hosseindn.model.Order;
 import ir.hosseindn.model.Technician;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-08T06:38:51+0330",
+    date = "2024-07-19T10:06:38+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CommentMapperImpl implements CommentMapper {
@@ -26,7 +26,6 @@ public class CommentMapperImpl implements CommentMapper {
 
         comment.rate( request.rate() );
         comment.description( request.description() );
-        comment.order( orderIdToOrder( request.order() ) );
 
         return comment.build();
     }
@@ -39,43 +38,29 @@ public class CommentMapperImpl implements CommentMapper {
 
         Integer rate = null;
         String description = null;
-        OrderId order = null;
         TechnicianId technician = null;
 
         rate = comment.getRate();
         description = comment.getDescription();
-        order = orderToOrderId( comment.getOrder() );
         technician = technicianToTechnicianId( comment.getTechnician() );
 
-        SaveCommentResponse saveCommentResponse = new SaveCommentResponse( rate, description, order, technician );
+        SaveCommentResponse saveCommentResponse = new SaveCommentResponse( rate, description, technician );
 
         return saveCommentResponse;
     }
 
-    protected Order orderIdToOrder(OrderId orderId) {
-        if ( orderId == null ) {
+    @Override
+    public List<SaveCommentResponse> modelListToSaveCommentResponseList(List<Comment> commentList) {
+        if ( commentList == null ) {
             return null;
         }
 
-        Order.OrderBuilder<?, ?> order = Order.builder();
-
-        order.id( orderId.id() );
-
-        return order.build();
-    }
-
-    protected OrderId orderToOrderId(Order order) {
-        if ( order == null ) {
-            return null;
+        List<SaveCommentResponse> list = new ArrayList<SaveCommentResponse>( commentList.size() );
+        for ( Comment comment : commentList ) {
+            list.add( modelToSaveCommentResponse( comment ) );
         }
 
-        Long id = null;
-
-        id = order.getId();
-
-        OrderId orderId = new OrderId( id );
-
-        return orderId;
+        return list;
     }
 
     protected TechnicianId technicianToTechnicianId(Technician technician) {

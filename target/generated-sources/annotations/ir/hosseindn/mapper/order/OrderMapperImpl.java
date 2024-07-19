@@ -8,12 +8,16 @@ import ir.hosseindn.dto.order.OrderChangeStatusResponse;
 import ir.hosseindn.dto.order.OrderChooseOfferRequest;
 import ir.hosseindn.dto.order.OrderChooseOfferResponse;
 import ir.hosseindn.dto.order.OrderId;
-import ir.hosseindn.dto.order.OrderSaveRequestWithoutFKs;
+import ir.hosseindn.dto.order.OrderSaveRequest;
 import ir.hosseindn.dto.order.OrderSaveResponse;
+import ir.hosseindn.dto.order.OrderSearchItemResponse;
+import ir.hosseindn.dto.order.OrderSearchItemsRequest;
 import ir.hosseindn.dto.order.PayOrderFromPaymentRequest;
 import ir.hosseindn.dto.order.PayOrderFromPaymentResponse;
 import ir.hosseindn.dto.order.PayOrderFromWalletRequest;
 import ir.hosseindn.dto.order.PayOrderFromWalletResponse;
+import ir.hosseindn.dto.order.SeeCustomerOrdersResponse;
+import ir.hosseindn.dto.order.SeeTechnicianOrdersResponse;
 import ir.hosseindn.dto.subservice.SubServiceId;
 import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.model.Customer;
@@ -25,6 +29,8 @@ import ir.hosseindn.model.Technician;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
@@ -33,7 +39,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-08T06:38:52+0330",
+    date = "2024-07-19T10:06:39+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class OrderMapperImpl implements OrderMapper {
@@ -50,7 +56,7 @@ public class OrderMapperImpl implements OrderMapper {
     }
 
     @Override
-    public Order orderSaveRequestWithoutFKsToModel(OrderSaveRequestWithoutFKs request) {
+    public Order orderSaveRequestToModel(OrderSaveRequest request) {
         if ( request == null ) {
             return null;
         }
@@ -102,17 +108,16 @@ public class OrderMapperImpl implements OrderMapper {
     }
 
     @Override
-    public OrderChooseOfferResponse modelToOrderChooseOffer(Order order, Offer offer) {
-        if ( order == null && offer == null ) {
+    public OrderChooseOfferResponse modelToOrderChooseOfferResponse(Order order) {
+        if ( order == null ) {
             return null;
         }
 
-        OrderSaveResponse order1 = null;
-        order1 = modelToOrderSaveResponse( order );
-        OfferSaveResponse offer1 = null;
-        offer1 = offerToOfferSaveResponse( offer );
+        OfferSaveResponse choosedOffer = null;
 
-        OrderChooseOfferResponse orderChooseOfferResponse = new OrderChooseOfferResponse( order1, offer1 );
+        choosedOffer = offerToOfferSaveResponse( order.getChoosedOffer() );
+
+        OrderChooseOfferResponse orderChooseOfferResponse = new OrderChooseOfferResponse( choosedOffer );
 
         return orderChooseOfferResponse;
     }
@@ -158,14 +163,12 @@ public class OrderMapperImpl implements OrderMapper {
     }
 
     @Override
-    public Order orderIdToModel(OrderId orderId) {
+    public Order orderIdToModel(Long orderId) {
         if ( orderId == null ) {
             return null;
         }
 
         Order.OrderBuilder<?, ?> order = Order.builder();
-
-        order.id( orderId.id() );
 
         return order.build();
     }
@@ -248,6 +251,77 @@ public class OrderMapperImpl implements OrderMapper {
         PayOrderFromPaymentResponse payOrderFromPaymentResponse = new PayOrderFromPaymentResponse( subservice, customer, suggestedPrice, description, dateForDo, orderStatus, address, choosedOffer );
 
         return payOrderFromPaymentResponse;
+    }
+
+    @Override
+    public List<SeeCustomerOrdersResponse> modelListToSeeCustomerOrdersResponse(List<Order> orderList) {
+        if ( orderList == null ) {
+            return null;
+        }
+
+        List<SeeCustomerOrdersResponse> list = new ArrayList<SeeCustomerOrdersResponse>( orderList.size() );
+        for ( Order order : orderList ) {
+            list.add( orderToSeeCustomerOrdersResponse( order ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<SeeTechnicianOrdersResponse> modelListToSeeTechnicianOrdersResponse(List<Order> orderList) {
+        if ( orderList == null ) {
+            return null;
+        }
+
+        List<SeeTechnicianOrdersResponse> list = new ArrayList<SeeTechnicianOrdersResponse>( orderList.size() );
+        for ( Order order : orderList ) {
+            list.add( orderToSeeTechnicianOrdersResponse( order ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<OrderSaveResponse> modelListToOrderSaveResponseList(List<Order> orderList) {
+        if ( orderList == null ) {
+            return null;
+        }
+
+        List<OrderSaveResponse> list = new ArrayList<OrderSaveResponse>( orderList.size() );
+        for ( Order order : orderList ) {
+            list.add( modelToOrderSaveResponse( order ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public Order orderSearchItemToModel(OrderSearchItemsRequest request) {
+        if ( request == null ) {
+            return null;
+        }
+
+        Order.OrderBuilder<?, ?> order = Order.builder();
+
+        order.id( request.id() );
+        order.dateForDo( request.dateForDo() );
+        order.orderStatus( request.orderStatus() );
+
+        return order.build();
+    }
+
+    @Override
+    public List<OrderSearchItemResponse> modelToOrderSearchItemResponse(List<Order> orderList) {
+        if ( orderList == null ) {
+            return null;
+        }
+
+        List<OrderSearchItemResponse> list = new ArrayList<OrderSearchItemResponse>( orderList.size() );
+        for ( Order order : orderList ) {
+            list.add( orderToOrderSearchItemResponse( order ) );
+        }
+
+        return list;
     }
 
     private XMLGregorianCalendar localDateTimeToXmlGregorianCalendar( LocalDateTime localDateTime ) {
@@ -368,5 +442,83 @@ public class OrderMapperImpl implements OrderMapper {
         OfferId offerId = new OfferId( id );
 
         return offerId;
+    }
+
+    protected SeeCustomerOrdersResponse orderToSeeCustomerOrdersResponse(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        SubServiceId subservice = null;
+        CustomerId customer = null;
+        Long suggestedPrice = null;
+        String description = null;
+        LocalDateTime dateForDo = null;
+        String address = null;
+
+        subservice = subServiceToSubServiceId( order.getSubservice() );
+        customer = customerToCustomerId( order.getCustomer() );
+        suggestedPrice = order.getSuggestedPrice();
+        description = order.getDescription();
+        dateForDo = order.getDateForDo();
+        address = order.getAddress();
+
+        SeeCustomerOrdersResponse seeCustomerOrdersResponse = new SeeCustomerOrdersResponse( subservice, customer, suggestedPrice, description, dateForDo, address );
+
+        return seeCustomerOrdersResponse;
+    }
+
+    protected SeeTechnicianOrdersResponse orderToSeeTechnicianOrdersResponse(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        SubServiceId subservice = null;
+        CustomerId customer = null;
+        Long suggestedPrice = null;
+        String description = null;
+        LocalDateTime dateForDo = null;
+        String address = null;
+
+        subservice = subServiceToSubServiceId( order.getSubservice() );
+        customer = customerToCustomerId( order.getCustomer() );
+        suggestedPrice = order.getSuggestedPrice();
+        description = order.getDescription();
+        dateForDo = order.getDateForDo();
+        address = order.getAddress();
+
+        SeeTechnicianOrdersResponse seeTechnicianOrdersResponse = new SeeTechnicianOrdersResponse( subservice, customer, suggestedPrice, description, dateForDo, address );
+
+        return seeTechnicianOrdersResponse;
+    }
+
+    protected OrderSearchItemResponse orderToOrderSearchItemResponse(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        Long id = null;
+        SubServiceId subservice = null;
+        CustomerId customer = null;
+        Long suggestedPrice = null;
+        String description = null;
+        LocalDateTime creationDate = null;
+        LocalDateTime dateForDo = null;
+        String address = null;
+        OrderStatus orderStatus = null;
+
+        id = order.getId();
+        subservice = subServiceToSubServiceId( order.getSubservice() );
+        customer = customerToCustomerId( order.getCustomer() );
+        suggestedPrice = order.getSuggestedPrice();
+        description = order.getDescription();
+        creationDate = order.getCreationDate();
+        dateForDo = order.getDateForDo();
+        address = order.getAddress();
+        orderStatus = order.getOrderStatus();
+
+        OrderSearchItemResponse orderSearchItemResponse = new OrderSearchItemResponse( id, subservice, customer, suggestedPrice, description, creationDate, dateForDo, address, orderStatus );
+
+        return orderSearchItemResponse;
     }
 }

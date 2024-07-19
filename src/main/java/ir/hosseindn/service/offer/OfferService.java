@@ -37,8 +37,8 @@ public class OfferService {
         offer.setIsAccepted(false);
         return offerRepository.save(offer);
     }
-    public Offer addOfferByTechnician(Offer mappedOffer,Long technicianId,Long orderId){
-        mappedOffer.setTechnician(technicianService.findById(technicianId));
+    public Offer addOfferByTechnician(Offer mappedOffer,String email,Long orderId){
+        mappedOffer.setTechnician(technicianService.findByEmail(email));
         mappedOffer.setOdrer(orderService.findById(orderId));
         return save(mappedOffer);
     }

@@ -2,14 +2,13 @@ package ir.hosseindn.mapper.technician;
 
 import ir.hosseindn.dto.technician.TechnicianChangePasswordRequest;
 import ir.hosseindn.dto.technician.TechnicianChangePasswordResponse;
-import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.dto.technician.TechnicianLoginRequest;
 import ir.hosseindn.dto.technician.TechnicianLoginResponse;
-import ir.hosseindn.dto.technician.TechnicianSaveRequestWithoutPath;
+import ir.hosseindn.dto.technician.TechnicianSaveRequest;
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.technician.TechnicianVerifyRequest;
 import ir.hosseindn.dto.technician.TechnicianVerifyResponse;
-import ir.hosseindn.model.Roles;
+import ir.hosseindn.model.Role;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianStatus;
 import java.time.LocalDateTime;
@@ -17,13 +16,13 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-08T06:38:51+0330",
+    date = "2024-07-19T10:06:39+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
 
     @Override
-    public Technician technicianSaveRequestWithoutPathToModel(TechnicianSaveRequestWithoutPath request) {
+    public Technician technicianSaveRequestWithoutPathToModel(TechnicianSaveRequest request) {
         if ( request == null ) {
             return null;
         }
@@ -56,7 +55,7 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         Long countScores = null;
         TechnicianStatus technicianStatus = null;
         Boolean isActive = null;
-        Roles role = null;
+        Role role = null;
 
         id = technician.getId();
         firstName = technician.getFirstName();
@@ -173,14 +172,12 @@ public class TechnicianMapperImpl implements TechnicianMapper {
     }
 
     @Override
-    public Technician technicianIdToModel(TechnicianId technicianId) {
+    public Technician technicianIdToModel(Long technicianId) {
         if ( technicianId == null ) {
             return null;
         }
 
         Technician.TechnicianBuilder<?, ?> technician = Technician.builder();
-
-        technician.id( technicianId.id() );
 
         return technician.build();
     }

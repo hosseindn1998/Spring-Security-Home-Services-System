@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -26,9 +25,6 @@ public class Technician extends User implements UserDetails {
     Integer countScores;
     Boolean isActive;
     @Lob
-    @ToString.Exclude
-    @Lazy
-    @Transient
     byte[] avatar;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @ToString.Exclude
