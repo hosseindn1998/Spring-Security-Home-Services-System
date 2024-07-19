@@ -1,5 +1,6 @@
 package ir.hosseindn.service.comment;
 
+import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Comment;
 import ir.hosseindn.model.Order;
@@ -42,5 +43,12 @@ public class CommentService {
         technician.setRate((double) technician.getTotalScores()/technician.getCountScores());
         technicianService.update(technician);
         return savedComment;
+    }
+
+    public List<Comment>findAllByTechnicianUsername(String email){
+        List<Comment> commentList = commentRepository.findAllByTechnicianEmail(email);
+        if(commentList.isEmpty())
+            throw new NotFoundException("No Comment Found");
+        return commentList;
     }
 }
