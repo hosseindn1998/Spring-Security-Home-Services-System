@@ -228,4 +228,28 @@ public class TechnicianService {
     }
 
 
+    public Double getTechnicianRate(String email) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Double> technicianQuery = builder.createQuery(Double.class);
+        Root<Technician> root = technicianQuery.from(Technician.class);
+        technicianQuery.select(root.get("rate")).where(builder.equal(root.get("email"), email));
+        return entityManager.createQuery(technicianQuery).getSingleResult();
+    }
+
+    public List<Order> ordersHistory(String email, String orderStatus) {
+        Technician technician = findByEmail(email);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> orderCriteriaQuery = builder.createQuery(Order.class);
+        Root<Order> root = orderCriteriaQuery.from(Order.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(builder.equal(root.get("technician"), technician));
+        predicates.add(builder.equal(root.get("orderStatus"), orderStatus));
+        orderCriteriaQuery.where(builder.and(predicates.toArray(predicates.toArray(new Predicate[]{}))));
+        return entityManager.createQuery(orderCriteriaQuery).getResultList();
+    }
+
+    public Long getWalletAmount(String customerEmail) {
+        return findByEmail(customerEmail).getWallet().getAmount();
+    }
+
 }
