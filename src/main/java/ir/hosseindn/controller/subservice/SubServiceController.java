@@ -39,7 +39,7 @@ public class SubServiceController {
         return new ResponseEntity<>(SubServiceMapper.INSTANCE.modelToSubServiceUpdateResponse(savedSubService), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TECHNICIAN','ROLE_CUSTOMER')")
     @GetMapping("/see-sub-services")
     public ResponseEntity<List<SubServiceFindAllResponse>> seeSubServices() {
         List<SubService> subServiceList = subServiceService.findAll();
