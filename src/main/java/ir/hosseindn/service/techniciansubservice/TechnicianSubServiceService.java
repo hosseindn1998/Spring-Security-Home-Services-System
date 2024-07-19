@@ -40,6 +40,12 @@ public class TechnicianSubServiceService {
         return String.format("relation between technician id %s Sub-service id %s deleted",technicianId,subServiceId);
     }
 
+    public List<SubService> findByTechnician(String email){
+        List<SubService> subServiceList = technicianSubServiceRepository.findByTechnician(email);
+        if(subServiceList.isEmpty())
+            throw new NotFoundException("Technician dosn't have any sub-service");
+        return subServiceList;
+    }
 
 
 }
