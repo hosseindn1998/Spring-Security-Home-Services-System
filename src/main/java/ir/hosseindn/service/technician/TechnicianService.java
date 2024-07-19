@@ -79,7 +79,7 @@ public class TechnicianService {
 
     public Technician changePassword(String email, String newPassword) {
         Technician technician = findByEmail(email);
-        technicianRepository.updatePassword(email, newPassword);
+        technicianRepository.updatePassword(email, passwordEncoder.encode(newPassword));
         return technician;
     }
 
