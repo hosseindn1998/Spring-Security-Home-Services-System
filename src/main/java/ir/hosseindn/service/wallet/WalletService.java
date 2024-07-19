@@ -23,4 +23,8 @@ public class WalletService {
         walletRepository.deposit(1L, amount - Math.round(amount * 0.7));
     }
 
+    public void deposit(Long walletId,Long amount){
+        walletRepository.deposit(walletId, amount);
+    }
+
 }
