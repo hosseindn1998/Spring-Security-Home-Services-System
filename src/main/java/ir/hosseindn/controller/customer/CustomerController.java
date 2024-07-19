@@ -26,6 +26,7 @@ import java.util.List;
 public class CustomerController {
     private final CustomerService customerService;
 
+
     @PostMapping("/customer-register")
     public ResponseEntity<CustomerSaveResponse> customerRegister(@Valid @RequestBody CustomerSaveRequest request) {
         Customer mappedCustomer = CustomerMapper.INSTANCE.customerSaveRequestToModel(request);
@@ -47,12 +48,15 @@ public class CustomerController {
         Customer loggedInCustomer = customerService.login(mappedCustomer.getEmail(), mappedCustomer.getPassword());
         return new ResponseEntity<>(CustomerMapper.INSTANCE.modelToCustomerLoginResponse(loggedInCustomer), HttpStatus.FOUND);
     }
+
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @GetMapping("/customer-order-history")
     public ResponseEntity<List<SeeCustomerOrdersResponse>> customerOrderHistory(@Valid @RequestParam String orderStatus, Principal principal) {
         List<Order> orderList = customerService.ordersHistory(principal.getName(), orderStatus);
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelListToSeeCustomerOrdersResponse(orderList), HttpStatus.FOUND);
     }
 
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @GetMapping("/customer-wallet")
     public ResponseEntity<Long> customerSeeWallet(Principal principal) {
         return new ResponseEntity<>(customerService.getWalletAmount(principal.getName()), HttpStatus.FOUND);
