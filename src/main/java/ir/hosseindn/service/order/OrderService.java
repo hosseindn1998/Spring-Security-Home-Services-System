@@ -184,7 +184,17 @@ public class OrderService {
         return changeOrderStatusToPaid(order);
     }
 
-
+    public PaymentTransaction payOrderFromPayment(Long orderId) {
+        Order order = findById(orderId);
+        if (order.getOrderStatus() != OrderStatus.DONE)
+            throw new NotValidInformation("Only orders that status = 'done' access to pay");
+        Long suggestPrice = order.getChoosedOffer().getSuggestPrice();
+        PaymentTransaction paymentTransaction1 = PaymentTransaction.builder()
+                .orderId(orderId)
+                .suggestPrice(suggestPrice)
+                .build();
+        return paymentTransactionService.save(paymentTransaction1);
+    }
 
 
 }
