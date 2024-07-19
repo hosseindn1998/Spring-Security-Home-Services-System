@@ -18,7 +18,7 @@ public class CustomValidations {
     }
     public static boolean isValidPathFile(String filaAddress) {
 
-        String regex = "^[^\\s]+:\\\\+[^\\s]+\\.(jpg|jpeg)$";
+        String regex = "^[^\\s]+:/+[^\\s]+\\.(jpg|jpeg)$";
 
         Pattern pattern = Pattern.compile(regex);
         if (filaAddress == null) {
