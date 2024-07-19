@@ -12,9 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,4 +32,13 @@ public class CommentController {
         Comment savedComment = commentService.addCommentByCustomer(mappedComment, request.orderId());
         return new ResponseEntity<>(CommentMapper.INSTANCE.modelToSaveCommentResponse(savedComment), HttpStatus.CREATED);
     }
+
+    @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
+    @GetMapping("/show-comments")
+    public ResponseEntity<List<SaveCommentResponse>> showComments(Principal principal) {
+        List<Comment> commentList = commentService.findAllByTechnicianUsername(principal.getName());
+        return new ResponseEntity<>(CommentMapper.INSTANCE.modelListToSaveCommentResponseList(commentList), HttpStatus.CREATED);
+    }
+
+
 }
