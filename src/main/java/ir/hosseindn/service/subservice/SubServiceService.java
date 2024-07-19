@@ -16,6 +16,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubServiceService {
     private final SubServiceRepository subServiceRepository;
+    private final MainServiceService mainServiceService;
+    public SubService saveRequest(SubService subService,Long mainServiceId){
+        subService.setMainService(mainServiceService.findById(mainServiceId));
+        return save(subService);
+    }
     public SubService save(SubService subService){
         if(subServiceRepository.findByName(subService.getName()).isPresent())
             throw new DuplicateInformationException("A Sub-Service with this name is Already exists!");
@@ -31,8 +36,8 @@ public class SubServiceService {
                 , subService.getBasePrice());
         return foundedSubService;
     }
-    public SubService findById(SubService subService) {
-        return subServiceRepository.findById(subService.getId()).orElseThrow(
+    public SubService findById(Long subServiceId) {
+        return subServiceRepository.findById(subServiceId).orElseThrow(
                 () -> new NotFoundException("Sub-Service with this id Not found!")
         );
     }
