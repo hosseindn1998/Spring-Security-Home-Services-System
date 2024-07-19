@@ -2,31 +2,30 @@ package ir.hosseindn.controller.admin;
 
 import ir.hosseindn.dto.admin.AdminLoginRequest;
 import ir.hosseindn.dto.admin.AdminLoginResponse;
-import ir.hosseindn.dto.customer.CustomerSaveResponse;
-import ir.hosseindn.dto.technician.TechnicianSaveResponse;
+import ir.hosseindn.dto.order.OrderSearchItemResponse;
+import ir.hosseindn.dto.order.OrderSearchItemsRequest;
 import ir.hosseindn.dto.user.UserCriteriaItems;
 import ir.hosseindn.dto.user.UserCriteriaItemsResponse;
 import ir.hosseindn.mapper.admin.AdminMapper;
-import ir.hosseindn.mapper.customer.CustomerMapper;
-import ir.hosseindn.mapper.technician.TechnicianMapper;
+import ir.hosseindn.mapper.order.OrderMapper;
 import ir.hosseindn.model.Admin;
+import ir.hosseindn.model.Order;
 import ir.hosseindn.service.admin.AdminService;
-import ir.hosseindn.service.captcha.CaptchaService;
-import ir.hosseindn.service.customer.CustomerService;
+import ir.hosseindn.service.order.OrderService;
 import ir.hosseindn.service.technician.TechnicianService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -35,55 +34,38 @@ import java.util.List;
 @Slf4j
 public class AdminController {
     private final AdminService adminService;
-    private final CustomerService customerService;
     private final TechnicianService technicianService;
-    private final CaptchaService captchaService;
+    private final OrderService orderService;
 
-    @GetMapping("/admin-login")
+
+    @GetMapping("/admin-logged-in")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<AdminLoginResponse> adminLogin(@Valid @RequestBody AdminLoginRequest request) {
         Admin mappedAdmin = AdminMapper.INSTANCE.adminLoginRequestToModel(request);
-        Admin loggedInAdmin = adminService.login(mappedAdmin.getEmail(), mappedAdmin.getPassword());
+        Admin loggedInAdmin = adminService.login(mappedAdmin);
         return new ResponseEntity<>(AdminMapper.INSTANCE.modelToAdminLoginResponse(loggedInAdmin), HttpStatus.FOUND);
     }
 
     @GetMapping("/get-users-list")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserCriteriaItemsResponse> getUserList(@Valid @RequestBody UserCriteriaItems request) {
-        List<CustomerSaveResponse> customerSaveResponseList = customerService.findByCriteria(request)
-                .stream()
-                .map(CustomerMapper.INSTANCE::modelToUserSaveResponse)
-                .toList();
-        List<TechnicianSaveResponse> technicianSaveResponseList = technicianService.findByCriteria(request)
-                .stream()
-                .map(TechnicianMapper.INSTANCE::modelToUserSaveResponse)
-                .toList();
-        List<Object> userList = new ArrayList<>(customerSaveResponseList);
-        userList.addAll(technicianSaveResponseList);
-        UserCriteriaItemsResponse userCriteriaItemsResponse = new UserCriteriaItemsResponse(userList);
-        return new ResponseEntity<>(userCriteriaItemsResponse, HttpStatus.FOUND);
+        List<Object> users = adminService.searchUsers(request);
+        return new ResponseEntity<>(new UserCriteriaItemsResponse(users), HttpStatus.FOUND);
     }
-    @GetMapping("/add-captcha")
-    public String getAddCaptchaPage(){
-        return "add_captcha";
+
+    @GetMapping("/get-orders-list")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<OrderSearchItemResponse>> getOrdersList(@Valid @RequestBody OrderSearchItemsRequest request) {
+        List<Order> foundedOrders = orderService.findByCriteria(request);
+        return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderSearchItemResponse(foundedOrders), HttpStatus.FOUND);
     }
-    @GetMapping("/captcha")
-    public ResponseEntity<String> addCaptcha(@Valid @RequestParam String answer,
-                             @Valid @RequestParam String filePath) {
-        try {
-            captchaService.addNewCaptcha(answer, filePath);
-        }catch (IOException e){
-            log.warn(e.getMessage());
-        }
-        return new ResponseEntity<>("added successfully",HttpStatus.CREATED);
-    }
-    @GetMapping("/upload")
-    public String getImageUploadPage(){
-        return "image_upload";
-    }
+
     @GetMapping("/get-technician-image")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> getTechnicianImage(@RequestParam Long technicianId,
-                                                     @RequestParam String fileAddressForSave){
-    technicianService.fetchAvatarFile(technicianId,fileAddressForSave);
-        return new ResponseEntity<>("fetch successfully", HttpStatus.FOUND);
+                                                     @RequestParam String fileAddressForSave) {
+        String result = technicianService.fetchAvatarFile(technicianId, fileAddressForSave);
+        return new ResponseEntity<>(result, HttpStatus.FOUND);
     }
 
 
