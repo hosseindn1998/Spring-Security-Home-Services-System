@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -39,7 +38,6 @@ public class AdminController {
 
 
     @GetMapping("/admin-logged-in")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<AdminLoginResponse> adminLogin(@Valid @RequestBody AdminLoginRequest request) {
         Admin mappedAdmin = AdminMapper.INSTANCE.adminLoginRequestToModel(request);
         Admin loggedInAdmin = adminService.login(mappedAdmin);
