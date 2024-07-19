@@ -46,6 +46,14 @@ public class TechnicianSubServiceService {
             throw new NotFoundException("Technician dosn't have any sub-service");
         return subServiceList;
     }
+    public List<Order> seeTechnicianOrderList(String email){
+        List<SubService> subServiceList = findByTechnician(email);
+        List<Order>orderList=new ArrayList<>();
+        subServiceList.forEach(s->orderList.addAll(orderService.seeAllBySubService(s.getName())));
+        if(orderList.isEmpty())
+            throw new NotFoundException("Any order Not found ");
+        return orderList;
+    }
 
 
 }
