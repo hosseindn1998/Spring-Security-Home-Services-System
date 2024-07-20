@@ -1,7 +1,8 @@
 package ir.hosseindn.model;
 
-import ir.hosseindn.model.enums.Role;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -16,8 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @ToString(callSuper = true)
 @Table(name = "admins")
 public class Admin extends User implements UserDetails {
-    @Enumerated(EnumType.STRING)
-    Role role;
     @Id
     private Long id;
 
