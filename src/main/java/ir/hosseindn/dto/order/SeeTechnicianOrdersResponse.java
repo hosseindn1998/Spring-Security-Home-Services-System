@@ -6,6 +6,7 @@ import ir.hosseindn.dto.subservice.SubServiceId;
 import java.time.LocalDateTime;
 
 public record SeeTechnicianOrdersResponse(
+        Long id,
         SubServiceId subservice,
         CustomerId customer,
         Long suggestedPrice,

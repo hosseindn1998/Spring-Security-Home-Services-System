@@ -2,6 +2,7 @@ package ir.hosseindn.mapper.comment;
 
 import ir.hosseindn.dto.comment.SaveCommentRequest;
 import ir.hosseindn.dto.comment.SaveCommentResponse;
+import ir.hosseindn.dto.comment.ShowCommentResponse;
 import ir.hosseindn.model.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -15,5 +16,5 @@ public interface CommentMapper {
     Comment commentSaveRequestToModel(SaveCommentRequest request);
 
     SaveCommentResponse modelToSaveCommentResponse(Comment comment);
-    List<SaveCommentResponse> modelListToSaveCommentResponseList(List<Comment> commentList);
+    List<ShowCommentResponse> modelListToShowCommentResponseList(List<Comment> commentList);
 }

@@ -2,6 +2,7 @@ package ir.hosseindn.mapper.comment;
 
 import ir.hosseindn.dto.comment.SaveCommentRequest;
 import ir.hosseindn.dto.comment.SaveCommentResponse;
+import ir.hosseindn.dto.comment.ShowCommentResponse;
 import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.model.Comment;
 import ir.hosseindn.model.Technician;
@@ -11,7 +12,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-20T01:04:43+0330",
+    date = "2024-07-20T17:48:56+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CommentMapperImpl implements CommentMapper {
@@ -50,14 +51,14 @@ public class CommentMapperImpl implements CommentMapper {
     }
 
     @Override
-    public List<SaveCommentResponse> modelListToSaveCommentResponseList(List<Comment> commentList) {
+    public List<ShowCommentResponse> modelListToShowCommentResponseList(List<Comment> commentList) {
         if ( commentList == null ) {
             return null;
         }
 
-        List<SaveCommentResponse> list = new ArrayList<SaveCommentResponse>( commentList.size() );
+        List<ShowCommentResponse> list = new ArrayList<ShowCommentResponse>( commentList.size() );
         for ( Comment comment : commentList ) {
-            list.add( modelToSaveCommentResponse( comment ) );
+            list.add( commentToShowCommentResponse( comment ) );
         }
 
         return list;
@@ -75,5 +76,23 @@ public class CommentMapperImpl implements CommentMapper {
         TechnicianId technicianId = new TechnicianId( id );
 
         return technicianId;
+    }
+
+    protected ShowCommentResponse commentToShowCommentResponse(Comment comment) {
+        if ( comment == null ) {
+            return null;
+        }
+
+        Long id = null;
+        Integer rate = null;
+        String description = null;
+
+        id = comment.getId();
+        rate = comment.getRate();
+        description = comment.getDescription();
+
+        ShowCommentResponse showCommentResponse = new ShowCommentResponse( id, rate, description );
+
+        return showCommentResponse;
     }
 }

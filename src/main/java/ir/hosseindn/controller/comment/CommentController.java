@@ -2,6 +2,7 @@ package ir.hosseindn.controller.comment;
 
 import ir.hosseindn.dto.comment.SaveCommentRequest;
 import ir.hosseindn.dto.comment.SaveCommentResponse;
+import ir.hosseindn.dto.comment.ShowCommentResponse;
 import ir.hosseindn.mapper.comment.CommentMapper;
 import ir.hosseindn.model.Comment;
 import ir.hosseindn.service.comment.CommentService;
@@ -38,9 +39,9 @@ public class CommentController {
 
     @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
     @GetMapping("/show-comments")
-    public ResponseEntity<List<SaveCommentResponse>> showComments(Principal principal) {
+    public ResponseEntity<List<ShowCommentResponse>> showComments(Principal principal) {
         List<Comment> commentList = commentService.findAllByTechnicianUsername(principal.getName());
-        return new ResponseEntity<>(CommentMapper.INSTANCE.modelListToSaveCommentResponseList(commentList), HttpStatus.CREATED);
+        return new ResponseEntity<>(CommentMapper.INSTANCE.modelListToShowCommentResponseList(commentList), HttpStatus.CREATED);
     }
 
 

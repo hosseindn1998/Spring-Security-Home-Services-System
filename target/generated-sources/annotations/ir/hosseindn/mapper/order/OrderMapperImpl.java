@@ -39,7 +39,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-20T01:04:43+0330",
+    date = "2024-07-20T17:42:05+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class OrderMapperImpl implements OrderMapper {
@@ -449,6 +449,7 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
+        Long id = null;
         SubServiceId subservice = null;
         CustomerId customer = null;
         Long suggestedPrice = null;
@@ -456,6 +457,7 @@ public class OrderMapperImpl implements OrderMapper {
         LocalDateTime dateForDo = null;
         String address = null;
 
+        id = order.getId();
         subservice = subServiceToSubServiceId( order.getSubservice() );
         customer = customerToCustomerId( order.getCustomer() );
         suggestedPrice = order.getSuggestedPrice();
@@ -463,7 +465,7 @@ public class OrderMapperImpl implements OrderMapper {
         dateForDo = order.getDateForDo();
         address = order.getAddress();
 
-        SeeCustomerOrdersResponse seeCustomerOrdersResponse = new SeeCustomerOrdersResponse( subservice, customer, suggestedPrice, description, dateForDo, address );
+        SeeCustomerOrdersResponse seeCustomerOrdersResponse = new SeeCustomerOrdersResponse( id, subservice, customer, suggestedPrice, description, dateForDo, address );
 
         return seeCustomerOrdersResponse;
     }
@@ -473,6 +475,7 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
+        Long id = null;
         SubServiceId subservice = null;
         CustomerId customer = null;
         Long suggestedPrice = null;
@@ -480,6 +483,7 @@ public class OrderMapperImpl implements OrderMapper {
         LocalDateTime dateForDo = null;
         String address = null;
 
+        id = order.getId();
         subservice = subServiceToSubServiceId( order.getSubservice() );
         customer = customerToCustomerId( order.getCustomer() );
         suggestedPrice = order.getSuggestedPrice();
@@ -487,7 +491,7 @@ public class OrderMapperImpl implements OrderMapper {
         dateForDo = order.getDateForDo();
         address = order.getAddress();
 
-        SeeTechnicianOrdersResponse seeTechnicianOrdersResponse = new SeeTechnicianOrdersResponse( subservice, customer, suggestedPrice, description, dateForDo, address );
+        SeeTechnicianOrdersResponse seeTechnicianOrdersResponse = new SeeTechnicianOrdersResponse( id, subservice, customer, suggestedPrice, description, dateForDo, address );
 
         return seeTechnicianOrdersResponse;
     }
