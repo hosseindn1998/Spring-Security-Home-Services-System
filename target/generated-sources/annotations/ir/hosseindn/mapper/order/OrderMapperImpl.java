@@ -23,9 +23,9 @@ import ir.hosseindn.dto.technician.TechnicianId;
 import ir.hosseindn.model.Customer;
 import ir.hosseindn.model.Offer;
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
+import ir.hosseindn.model.enums.OrderStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
@@ -39,7 +39,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-19T10:06:39+0330",
+    date = "2024-07-20T01:04:43+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class OrderMapperImpl implements OrderMapper {

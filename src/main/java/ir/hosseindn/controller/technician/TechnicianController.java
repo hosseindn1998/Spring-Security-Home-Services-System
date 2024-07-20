@@ -28,7 +28,7 @@ import java.util.List;
 public class TechnicianController {
     private final TechnicianService technicianService;
 
-    @PostMapping(value = "/technician-register" ,consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/technician-register", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<TechnicianSaveResponse> technicianRegister(@Validated TechnicianSaveRequest request) throws IOException {
         Technician mappedTechnician = TechnicianMapper.INSTANCE.technicianSaveRequestWithoutPathToModel(request);
         Technician savedTechnician = technicianService.register(mappedTechnician, request.imageFile());
@@ -60,7 +60,7 @@ public class TechnicianController {
     @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
     @GetMapping("/technician-order-history")
     public ResponseEntity<List<SeeTechnicianOrdersResponse>> technicianOrderHistory(@Valid @RequestParam String orderStatus,
-                                                                                  Principal principal) {
+                                                                                    Principal principal) {
         List<Order> orderList = technicianService.ordersHistory(principal.getName(), orderStatus);
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelListToSeeTechnicianOrdersResponse(orderList), HttpStatus.FOUND);
     }
@@ -73,8 +73,8 @@ public class TechnicianController {
 
     @GetMapping("/see-rate")
     @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
-    public ResponseEntity<Double> getRate(Principal principal){
-        return new ResponseEntity<>(technicianService.getTechnicianRate(principal.getName()),HttpStatus.FOUND);
+    public ResponseEntity<Double> getRate(Principal principal) {
+        return new ResponseEntity<>(technicianService.getTechnicianRate(principal.getName()), HttpStatus.FOUND);
     }
 
 }

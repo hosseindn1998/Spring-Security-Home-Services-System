@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class BankAccountController {
     private final BankAccountService bankAccountService;
+
     @PostMapping("/add-bank-account")
-    public BankAccount save(@Valid @RequestBody BankAccountSaveRequest request){
-        BankAccount mappedBankAccount= BankAccountMapper.INSTANCE.bankAccountSaveRequestToModel(request);
+    public BankAccount save(@Valid @RequestBody BankAccountSaveRequest request) {
+        BankAccount mappedBankAccount = BankAccountMapper.INSTANCE.bankAccountSaveRequestToModel(request);
         return bankAccountService.save(mappedBankAccount);
     }
 }

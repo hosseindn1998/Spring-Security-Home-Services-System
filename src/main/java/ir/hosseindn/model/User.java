@@ -1,6 +1,7 @@
 package ir.hosseindn.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ir.hosseindn.model.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -37,7 +38,7 @@ public abstract class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
     LocalDateTime registeredDate;
-    @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     Wallet wallet;
     private Boolean locked = false;
@@ -46,7 +47,7 @@ public abstract class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return  List.of(new SimpleGrantedAuthority(this.role.name()));
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override

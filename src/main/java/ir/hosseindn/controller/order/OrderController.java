@@ -30,9 +30,9 @@ public class OrderController {
 
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PostMapping("/add-order")
-    public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request,Principal principal) {
+    public ResponseEntity<OrderSaveResponse> addOrder(@Valid @RequestBody OrderSaveRequest request, Principal principal) {
         Order mappedOrder = OrderMapper.INSTANCE.orderSaveRequestToModel(request);
-        Order savedOrder = orderService.addOrderByCustomer(mappedOrder,principal.getName(),request.subserviceId());
+        Order savedOrder = orderService.addOrderByCustomer(mappedOrder, principal.getName(), request.subserviceId());
         return new ResponseEntity<>(OrderMapper.INSTANCE.modelToOrderSaveResponse(savedOrder), HttpStatus.CREATED);
     }
 
@@ -45,16 +45,16 @@ public class OrderController {
 
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @PatchMapping("/see-customers-orders-list")
-    public ResponseEntity<List<SeeCustomerOrdersResponse>> seeOrderListForCustomer(Principal principal){
+    public ResponseEntity<List<SeeCustomerOrdersResponse>> seeOrderListForCustomer(Principal principal) {
         List<Order> orderList = orderService.seeAllByCustomer(principal.getName());
-        return new ResponseEntity<>(OrderMapper.INSTANCE.modelListToSeeCustomerOrdersResponse(orderList),HttpStatus.FOUND);
+        return new ResponseEntity<>(OrderMapper.INSTANCE.modelListToSeeCustomerOrdersResponse(orderList), HttpStatus.FOUND);
     }
 
     @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
     @PatchMapping("/see-technicians-orders-list")
-    public ResponseEntity<List<SeeTechnicianOrdersResponse>> seeOrderListForGetTechnicianOffer(Principal principal){
-        List<Order>orderList=technicianSubServiceService.seeTechnicianOrderList(principal.getName());
-        return new ResponseEntity<>(OrderMapper.INSTANCE.modelListToSeeTechnicianOrdersResponse(orderList),HttpStatus.FOUND);
+    public ResponseEntity<List<SeeTechnicianOrdersResponse>> seeOrderListForGetTechnicianOffer(Principal principal) {
+        List<Order> orderList = technicianSubServiceService.seeTechnicianOrderList(principal.getName());
+        return new ResponseEntity<>(OrderMapper.INSTANCE.modelListToSeeTechnicianOrdersResponse(orderList), HttpStatus.FOUND);
     }
 
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")

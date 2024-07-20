@@ -7,13 +7,13 @@ import ir.hosseindn.dto.customer.CustomerLoginResponse;
 import ir.hosseindn.dto.customer.CustomerSaveRequest;
 import ir.hosseindn.dto.customer.CustomerSaveResponse;
 import ir.hosseindn.model.Customer;
-import ir.hosseindn.model.Role;
+import ir.hosseindn.model.enums.Role;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-19T10:06:38+0330",
+    date = "2024-07-20T01:04:42+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class CustomerMapperImpl implements CustomerMapper {

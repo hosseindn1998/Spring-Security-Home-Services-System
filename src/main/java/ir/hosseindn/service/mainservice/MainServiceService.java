@@ -22,14 +22,14 @@ public class MainServiceService {
 
     public List<MainService> findAll() {
         List<MainService> mainServiceList = mainServiceRepository.findAll();
-        if(mainServiceList.isEmpty())
+        if (mainServiceList.isEmpty())
             throw new NotFoundException("No Main-Service Found!");
         return mainServiceList;
     }
 
-    public MainService findById(Long id){
+    public MainService findById(Long id) {
         return mainServiceRepository.findById(id).orElseThrow(
-                ()->new NotFoundException("Main service not found")
+                () -> new NotFoundException("Main service not found")
         );
     }
 }

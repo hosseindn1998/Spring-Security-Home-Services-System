@@ -1,9 +1,10 @@
 package ir.hosseindn.repository.order;
 
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.model.Technician;
+import ir.hosseindn.model.enums.OrderStatus;
 import jakarta.transaction.Transactional;
+import org.eclipse.angus.mail.imap.protocol.ID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,21 +19,22 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("from Order o where o.id=:id and (o.orderStatus='WAIT_FOR_TECHNICIAN_OFFER' or o.orderStatus='WAIT_FOR_CHOOSE_TECHNICIAN')")
     Optional<Order> isOpenToGetOffer(@Param("id") Long id);
+
     @Query("FROM Order o where o.subservice.name=:subServiceName AND " +
             "(o.orderStatus='WAIT_FOR_TECHNICIAN_OFFER' or o.orderStatus='WAIT_FOR_CHOOSE_TECHNICIAN')")
     List<Order> seeAllBySubService(String subServiceName);
+
     @Query("FROM Order o where o.customer.email=:email")
     List<Order> seeAllByCustomerEmail(String email);
+
     @Modifying
     @Query("update Order o set o.choosedOffer.id=:offerId where o.id=:id")
-    void chooseOffer(@Param("id")Long id,@Param("offerId") Long OfferId);
+    void chooseOffer(@Param("id") Long id, @Param("offerId") Long OfferId);
+
     @Modifying
     @Query("update Order o set o.orderStatus=:orderStatus where o.id=:id")
-    void changeOrderStatus(@Param("id") Long id,@Param("orderStatus") OrderStatus orderStatus);
-    @Query("SELECT COUNT(o) FROM Order o where o.customer.email=:email")
-    Long countOfCustomerOrders(@Param("email") String email);
+    void changeOrderStatus(@Param("id") Long id, @Param("orderStatus") OrderStatus orderStatus);
 
-    Optional<Order> findOrderById(Long id);
     Boolean existsOrderByIdAndTechnician(Long id,Technician technician);
 
 }

@@ -17,9 +17,6 @@ public interface TechnicianRepository extends JpaRepository<Technician, Long> {
 
     Optional<Technician> findByEmailAndPassword(String email, String password);
 
-    @Override
-    boolean existsById(Long aLong);
-
     Optional<Technician> findByEmail(String email);
 
     @Modifying

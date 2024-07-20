@@ -1,6 +1,6 @@
 package ir.hosseindn.dto.order;
 
-import ir.hosseindn.model.OrderStatus;
+import ir.hosseindn.model.enums.OrderStatus;
 
 import java.time.LocalDateTime;
 

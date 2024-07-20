@@ -1,5 +1,6 @@
 package ir.hosseindn.model;
 
+import ir.hosseindn.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

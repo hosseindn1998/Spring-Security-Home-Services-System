@@ -6,8 +6,8 @@ import ir.hosseindn.dto.payment.PaymentSaveRequest;
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.model.PaymentTransaction;
+import ir.hosseindn.model.enums.OrderStatus;
 import ir.hosseindn.repository.paymenttransaction.PaymentTransactionRepository;
 import ir.hosseindn.service.bankaccount.BankAccountService;
 import ir.hosseindn.service.order.OrderService;
@@ -50,7 +50,7 @@ public class PaymentTransactionService {
     }
 
     public PaymentTransaction paymentTransactionBuilder(PaymentSaveRequest request, Long ptId) {
-        if(!bankAccountService.isValidCardInfo(request.cardNumber(), request.cvv(), request.mm(),
+        if (!bankAccountService.isValidCardInfo(request.cardNumber(), request.cvv(), request.mm(),
                 request.yy(), request.password()))
             throw new NotValidInformation("Card Information Not Valid");
         PaymentTransaction preparedTransaction = findById(ptId);

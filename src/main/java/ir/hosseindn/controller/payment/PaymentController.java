@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@RestController
+@Controller
 @RequestMapping("/payment")
 @RequiredArgsConstructor
 public class PaymentController {
@@ -28,7 +29,7 @@ public class PaymentController {
     private Long ptId;
 
 
-    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+        @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @GetMapping()
     public String cardFormPage(@Valid @RequestParam Long orderId, Model model) {
         PaymentTransaction paymentTransaction = orderService.payOrderFromPayment(orderId);
@@ -38,7 +39,6 @@ public class PaymentController {
         return "payment";
     }
 
-    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     @GetMapping("/image")
     public ResponseEntity<byte[]> getCaptchaImage() throws IOException {
         BufferedImage imageData = paymentTransactionService.updateCaptchaAnswer(ptId);
@@ -56,7 +56,7 @@ public class PaymentController {
         PaymentTransaction paymentTransaction = paymentTransactionService.paymentTransactionBuilder(request, ptId);
         model.addAttribute("id", paymentTransaction.getId());
         model.addAttribute("time", paymentTransaction.getTime());
-        return "pay_submit";
+        return "result";
     }
 
 }

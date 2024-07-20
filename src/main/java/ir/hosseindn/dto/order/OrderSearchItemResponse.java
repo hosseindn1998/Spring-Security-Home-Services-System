@@ -2,7 +2,7 @@ package ir.hosseindn.dto.order;
 
 import ir.hosseindn.dto.customer.CustomerId;
 import ir.hosseindn.dto.subservice.SubServiceId;
-import ir.hosseindn.model.OrderStatus;
+import ir.hosseindn.model.enums.OrderStatus;
 
 import java.time.LocalDateTime;
 

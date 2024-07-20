@@ -33,24 +33,26 @@ public class TechnicianSubServiceService {
                 .build();
         return technicianSubServiceRepository.save(technicianSubService);
     }
+
     public String delete(Long technicianId, Long subServiceId) {
         if (technicianSubServiceRepository.findBySubServiceAndTechnician(technicianId, subServiceId).isEmpty())
             throw new NotFoundException("this technician already hasn't relation by subService");
         technicianSubServiceRepository.deleteById(technicianId, subServiceId);
-        return String.format("relation between technician id %s Sub-service id %s deleted",technicianId,subServiceId);
+        return String.format("relation between technician id %s Sub-service id %s deleted", technicianId, subServiceId);
     }
 
-    public List<SubService> findByTechnician(String email){
+    public List<SubService> findByTechnician(String email) {
         List<SubService> subServiceList = technicianSubServiceRepository.findByTechnician(email);
-        if(subServiceList.isEmpty())
+        if (subServiceList.isEmpty())
             throw new NotFoundException("Technician dosn't have any sub-service");
         return subServiceList;
     }
-    public List<Order> seeTechnicianOrderList(String email){
+
+    public List<Order> seeTechnicianOrderList(String email) {
         List<SubService> subServiceList = findByTechnician(email);
-        List<Order>orderList=new ArrayList<>();
-        subServiceList.forEach(s->orderList.addAll(orderService.seeAllBySubService(s.getName())));
-        if(orderList.isEmpty())
+        List<Order> orderList = new ArrayList<>();
+        subServiceList.forEach(s -> orderList.addAll(orderService.seeAllBySubService(s.getName())));
+        if (orderList.isEmpty())
             throw new NotFoundException("Any order Not found ");
         return orderList;
     }

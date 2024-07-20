@@ -26,6 +26,7 @@ import java.util.List;
 @Slf4j
 public class MainServiceController {
     private final MainServiceService mainServiceService;
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add-MainService")
     public ResponseEntity<MainServiceSaveResponse> addMainService(@Valid @RequestBody MainServiceSaveRequest request) {
@@ -33,11 +34,12 @@ public class MainServiceController {
         MainService saveMainService = mainServiceService.save(mappedMainService);
         return new ResponseEntity<>(MainServiceMapper.INSTANCE.modelToMainServiceSaveResponse(saveMainService), HttpStatus.CREATED);
     }
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TECHNICIAN','ROLE_CUSTOMER')")
     @GetMapping("/see-MainServices")
     public ResponseEntity<List<MainServiceFindAllResponse>> seeMainServices() {
         List<MainService> mainServiceList = mainServiceService.findAll();
-        ;
+
         return new ResponseEntity<>(mainServiceList.stream()
                 .map(MainServiceMapper.INSTANCE::modelToMainServiceFindAllResponse)
                 .toList(), HttpStatus.FOUND);

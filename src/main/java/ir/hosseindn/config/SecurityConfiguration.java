@@ -1,7 +1,11 @@
 package ir.hosseindn.config;
 
-import ir.hosseindn.service.user.UserService;
+import ir.hosseindn.exception.NotFoundException;
+import ir.hosseindn.repository.admin.AdminRepository;
+import ir.hosseindn.repository.customer.CustomerRepository;
+import ir.hosseindn.repository.technician.TechnicianRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +24,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfiguration {
 
 
-    private final UserService userService;
+    private final AdminRepository adminRepository;
+    private final CustomerRepository customerRepository;
+    private final TechnicianRepository technicianRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Bean
@@ -40,9 +47,24 @@ public class SecurityConfiguration {
 
     @Autowired
     public void configureBuild(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService::findByEmail)
-                .passwordEncoder(passwordEncoder)
-        ;
+        auth.userDetailsService(username -> {
+
+            try {
+                return customerRepository.findByEmail(username)
+                        .orElseThrow(() -> new NotFoundException("Customer not found"));
+            } catch (NotFoundException ignored) {
+
+            }
+            try {
+                return technicianRepository.findByEmail(username)
+                        .orElseThrow(() -> new NotFoundException("Technician not found"));
+            } catch (NotFoundException ignored) {
+
+            }
+            return adminRepository.findByEmail(username)
+                    .orElseThrow(() -> new NotFoundException("User not found"));
+                })
+                .passwordEncoder(passwordEncoder);
     }
 
     @Bean

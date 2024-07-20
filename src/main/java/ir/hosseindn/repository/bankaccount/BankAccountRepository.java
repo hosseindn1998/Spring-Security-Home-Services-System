@@ -8,15 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface BankAccountRepository extends JpaRepository<BankAccount,Long> {
+public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
 
     Boolean existsByCardNumberAndCvvAndMmAndYyAndPassword(String cardNumber, String cvv, String mm, String yy, String password);
+
     @Modifying
     @Transactional
     @Query("update BankAccount b SET b.amount=(b.amount-:amount) where b.cardNumber=:cardNumber")
-    void withdraw(@Param("cardNumber") String cardNumber,@Param("amount") Long amount);
-    Optional<BankAccount>findByCardNumber(String cardNumber);
+    void withdraw(@Param("cardNumber") String cardNumber, @Param("amount") Long amount);
 }

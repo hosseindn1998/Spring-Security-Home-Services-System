@@ -5,6 +5,7 @@ import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Order;
 import ir.hosseindn.model.*;
+import ir.hosseindn.model.enums.OrderStatus;
 import ir.hosseindn.repository.order.OrderRepository;
 import ir.hosseindn.service.customer.CustomerService;
 import ir.hosseindn.service.offer.OfferService;
@@ -49,7 +50,7 @@ public class OrderService {
     }
 
     public Order findById(Long id) {
-        return orderRepository.findOrderById(id).orElseThrow(
+        return orderRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("Order with id %s not found", id)
                 ));
     }
@@ -95,10 +96,6 @@ public class OrderService {
         if (orderList.isEmpty())
             throw new NotFoundException("Any order not found");
         return orderList;
-    }
-
-    public Long countOfCustomerOrders(String email) {
-        return orderRepository.countOfCustomerOrders(email);
     }
 
     public Order changeOrderStatusToStarted(Long orderId) {

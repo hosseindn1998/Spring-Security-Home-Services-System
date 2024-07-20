@@ -4,8 +4,8 @@ import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
 import ir.hosseindn.model.Comment;
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.OrderStatus;
 import ir.hosseindn.model.Technician;
+import ir.hosseindn.model.enums.OrderStatus;
 import ir.hosseindn.repository.comment.CommentRepository;
 import ir.hosseindn.service.order.OrderService;
 import ir.hosseindn.service.technician.TechnicianService;
@@ -24,11 +24,12 @@ public class CommentService {
     public Comment save(Comment comment) {
         return commentRepository.save(comment);
     }
-    public Comment addCommentByCustomer(Comment comment,Long orderId){
+
+    public Comment addCommentByCustomer(Comment comment, Long orderId) {
         Order order = orderService.findById(orderId);
-        if(order.getComment()!=null)
+        if (order.getComment() != null)
             throw new NotValidInformation("this order exist already a comment");
-        if(!order.getOrderStatus().equals(OrderStatus.Paid))
+        if (!order.getOrderStatus().equals(OrderStatus.Paid))
             throw new NotValidInformation("this order must be paid an then can comment on it");
         Technician technician = order.getTechnician();
         technician.setTotalScores(technician.getTotalScores() + comment.getRate());
@@ -40,14 +41,14 @@ public class CommentService {
         List<Comment> comments = technician.getComments();
         comments.add(savedComment);
         technician.setComments(comments);
-        technician.setRate((double) technician.getTotalScores()/technician.getCountScores());
+        technician.setRate((double) technician.getTotalScores() / technician.getCountScores());
         technicianService.update(technician);
         return savedComment;
     }
 
-    public List<Comment>findAllByTechnicianUsername(String email){
+    public List<Comment> findAllByTechnicianUsername(String email) {
         List<Comment> commentList = commentRepository.findAllByTechnicianEmail(email);
-        if(commentList.isEmpty())
+        if (commentList.isEmpty())
             throw new NotFoundException("No Comment Found");
         return commentList;
     }

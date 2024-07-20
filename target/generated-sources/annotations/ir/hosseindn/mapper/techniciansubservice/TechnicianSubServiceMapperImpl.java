@@ -4,17 +4,17 @@ import ir.hosseindn.dto.subservice.SubServiceSaveResponse;
 import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveRequest;
 import ir.hosseindn.dto.techniciansubservice.TechnicianSubServiceSaveResponse;
-import ir.hosseindn.model.Role;
 import ir.hosseindn.model.SubService;
 import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.TechnicianStatus;
 import ir.hosseindn.model.TechnicianSubService;
+import ir.hosseindn.model.enums.Role;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-19T10:06:38+0330",
+    date = "2024-07-20T01:04:41+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianSubServiceMapperImpl implements TechnicianSubServiceMapper {

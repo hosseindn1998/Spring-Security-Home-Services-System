@@ -1,13 +1,13 @@
 package ir.hosseindn.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @Table(name = "offer")
 public class Offer extends BaseEntity<Long> {
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     Order odrer;
     LocalDateTime dateOfOfferToStart;
     Long suggestPrice;
     LocalDateTime dateOfOfferToDone;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     Technician technician;
     Boolean isAccepted;
 

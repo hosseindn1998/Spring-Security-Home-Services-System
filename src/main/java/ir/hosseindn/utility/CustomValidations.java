@@ -10,15 +10,15 @@ public class CustomValidations {
             return true;
         } else {
             int check = Integer.parseInt(input.substring(9, 10));
-            int sum = IntStream.range(0, 9).map((x) -> {
-                return Integer.parseInt(input.substring(x, x + 1)) * (10 - x);
-            }).sum() % 11;
+            int sum = IntStream.range(0, 9).map((x) ->
+                    Integer.parseInt(input.substring(x, x + 1)) * (10 - x)).sum() % 11;
             return sum < 2 ? check != sum : check + sum != 11;
         }
     }
+
     public static boolean isValidPathFile(String filaAddress) {
 
-        String regex = "^[^\\s]+:/+[^\\s]+\\.(jpg|jpeg)$";
+        String regex = "^[^ ]+:/+[^ ]+\\.(jpg|jpeg)$";
 
         Pattern pattern = Pattern.compile(regex);
         if (filaAddress == null) {

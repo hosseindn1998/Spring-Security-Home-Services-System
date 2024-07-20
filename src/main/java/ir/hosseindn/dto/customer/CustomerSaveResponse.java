@@ -1,6 +1,6 @@
 package ir.hosseindn.dto.customer;
 
-import ir.hosseindn.model.Role;
+import ir.hosseindn.model.enums.Role;
 
 import java.time.LocalDateTime;
 

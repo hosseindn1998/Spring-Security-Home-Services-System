@@ -1,9 +1,6 @@
 package ir.hosseindn.dto.user;
 
-import ir.hosseindn.model.Role;
-import ir.hosseindn.model.TechnicianStatus;
-import ir.hosseindn.model.Wallet;
-import jakarta.validation.constraints.*;
+import ir.hosseindn.model.enums.Role;
 
 import java.time.LocalDateTime;
 

@@ -17,18 +17,18 @@ public class SubServiceService {
     private final SubServiceRepository subServiceRepository;
     private final MainServiceService mainServiceService;
 
-    public SubService saveRequest(SubService subService,Long mainServiceId){
+    public SubService saveRequest(SubService subService, Long mainServiceId) {
         subService.setMainService(mainServiceService.findById(mainServiceId));
         return save(subService);
     }
 
-    public SubService save(SubService subService){
-        if(subServiceRepository.findByName(subService.getName()).isPresent())
+    public SubService save(SubService subService) {
+        if (subServiceRepository.findByName(subService.getName()).isPresent())
             throw new DuplicateInformationException("A Sub-Service with this name is Already exists!");
         return subServiceRepository.save(subService);
     }
 
-    public SubService update(SubService subService){
+    public SubService update(SubService subService) {
         SubService foundedSubService = subServiceRepository.findById(subService.getId()).orElseThrow(
                 () -> new NotFoundException("Sub-Service with this name Not found!")
         );
@@ -47,9 +47,9 @@ public class SubServiceService {
 
     public List<SubService> findAll() {
         List<SubService> subServiceList = subServiceRepository.findAll();
-        if(subServiceList.isEmpty())
+        if (subServiceList.isEmpty())
             throw new NotFoundException("Sub-Service with this name Not found!"
-        );
+            );
         return subServiceList;
     }
 

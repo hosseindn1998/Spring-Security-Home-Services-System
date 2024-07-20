@@ -1,6 +1,6 @@
 package ir.hosseindn.dto.technician;
 
-import ir.hosseindn.model.Role;
+import ir.hosseindn.model.enums.Role;
 import ir.hosseindn.model.TechnicianStatus;
 
 import java.time.LocalDateTime;

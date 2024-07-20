@@ -21,7 +21,8 @@ public class ConfirmationTokenService {
     public void saveConfirmationToken(ConfirmationToken token) {
         confirmationTokenRepository.save(token);
     }
-    public void generateConfirmationToken(User user){
+
+    public void generateConfirmationToken(User user) {
         String token = UUID.randomUUID().toString();
 
         ConfirmationToken confirmationToken = new ConfirmationToken(
@@ -40,7 +41,7 @@ public class ConfirmationTokenService {
 
     public ConfirmationToken getToken(String token) {
         return confirmationTokenRepository.findByToken(token).orElseThrow(
-                ()-> new NotFoundException("token not found")
+                () -> new NotFoundException("token not found")
         );
     }
 

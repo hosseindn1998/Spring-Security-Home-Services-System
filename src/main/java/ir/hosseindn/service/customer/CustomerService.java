@@ -4,8 +4,11 @@ import ir.hosseindn.dto.user.UserCriteriaItems;
 import ir.hosseindn.exception.DuplicateInformationException;
 import ir.hosseindn.exception.NotFoundException;
 import ir.hosseindn.exception.NotValidInformation;
+import ir.hosseindn.model.Customer;
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.*;
+import ir.hosseindn.model.Wallet;
+import ir.hosseindn.model.enums.OrderStatus;
+import ir.hosseindn.model.enums.Role;
 import ir.hosseindn.repository.customer.CustomerRepository;
 import ir.hosseindn.service.confirmationservice.ConfirmationTokenService;
 import ir.hosseindn.service.user.UserService;
@@ -54,14 +57,15 @@ public class CustomerService {
                 () -> new NotValidInformation("Email or Password is Incorrect")
         );
     }
+
     public Customer findById(Long id) {
         return customerRepository.findById(id).orElseThrow(
-                () -> new NotValidInformation(String.format("Customer by id %s not found",id))
+                () -> new NotValidInformation(String.format("Customer by id %s not found", id))
         );
     }
 
 
-    public Customer changePassword(String email, String newPassword,String confirmPassword) {
+    public Customer changePassword(String email, String newPassword, String confirmPassword) {
         if (!Objects.equals(newPassword, confirmPassword))
             throw new NotValidInformation("new password must be match by confirm");
         Customer customer = customerRepository.findByEmail(email).orElseThrow(
@@ -76,7 +80,8 @@ public class CustomerService {
                 () -> new NotValidInformation("Email or Password is Incorrect")
         );
     }
-    public Long getWalletAmount(String customerEmail){
+
+    public Long getWalletAmount(String customerEmail) {
         return findByUsername(customerEmail).getWallet().getAmount();
     }
 
@@ -106,18 +111,18 @@ public class CustomerService {
             predicates.add(builder.equal(customerWalletJoin.get("id"), userCriteriaItems.walletId()));
 
         customerQuery.where(builder.and(predicates.toArray(new Predicate[]{})));
-        List<Customer> list1=entityManager.createQuery(customerQuery).getResultList();
-        List<Customer>list2=new ArrayList<>();
-        if(userCriteriaItems.countRequests()!=null){
+        List<Customer> list1 = entityManager.createQuery(customerQuery).getResultList();
+        List<Customer> list2 = new ArrayList<>();
+        if (userCriteriaItems.countRequests() != null) {
             CriteriaQuery<Object[]> orderQuery = builder.createQuery(Object[].class);
-            Root<Order> rootOrder =orderQuery.from(Order.class);
+            Root<Order> rootOrder = orderQuery.from(Order.class);
             orderQuery.multiselect(
                     rootOrder.get("customer"),
                     builder.count(rootOrder)
             );
             orderQuery.groupBy(rootOrder.get("customer"));
             orderQuery.having(builder.gt(builder.count(rootOrder), userCriteriaItems.countRequests()));
-            List<Object[]> results =entityManager.createQuery(orderQuery).getResultList();
+            List<Object[]> results = entityManager.createQuery(orderQuery).getResultList();
             for (Object[] result : results) {
                 Customer customer = (Customer) result[0];
                 list2.add(customer);
@@ -125,9 +130,9 @@ public class CustomerService {
             list1.retainAll(list2);
             return list1;
         }
-        if(userCriteriaItems.countDoneOrders()!=null){
+        if (userCriteriaItems.countDoneOrders() != null) {
             CriteriaQuery<Object[]> orderQuery = builder.createQuery(Object[].class);
-            Root<Order> rootOrder =orderQuery.from(Order.class);
+            Root<Order> rootOrder = orderQuery.from(Order.class);
             Predicate orderStatusPredicate = builder.equal(rootOrder.get("orderStatus"), OrderStatus.DONE);
             orderQuery.where(orderStatusPredicate);
             orderQuery.multiselect(
@@ -136,7 +141,7 @@ public class CustomerService {
             );
             orderQuery.groupBy(rootOrder.get("customer"));
             orderQuery.having(builder.gt(builder.count(rootOrder), userCriteriaItems.countDoneOrders()));
-            List<Object[]> results =entityManager.createQuery(orderQuery).getResultList();
+            List<Object[]> results = entityManager.createQuery(orderQuery).getResultList();
             for (Object[] result : results) {
                 Customer customer = (Customer) result[0];
                 list2.add(customer);

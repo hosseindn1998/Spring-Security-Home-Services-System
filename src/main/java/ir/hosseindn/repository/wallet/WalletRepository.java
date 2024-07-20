@@ -13,8 +13,9 @@ import org.springframework.stereotype.Repository;
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
     @Modifying
     @Query("UPDATE Wallet w SET w.amount=w.amount - :amount WHERE w.id=:customerId")
-    void withdraw(@Param("customerId")Long customerId,@Param("amount")Long amount);
+    void withdraw(@Param("customerId") Long customerId, @Param("amount") Long amount);
+
     @Modifying
     @Query("UPDATE Wallet w SET w.amount=w.amount + :amount WHERE w.id=:technicianId")
-    void deposit(@Param("technicianId")Long technicianId,@Param("amount")Long amount);
+    void deposit(@Param("technicianId") Long technicianId, @Param("amount") Long amount);
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface MainServiceRepository extends JpaRepository<MainService, Long> {
 
-Optional<MainService>findByName(String name);
+    Optional<MainService> findByName(String name);
 }

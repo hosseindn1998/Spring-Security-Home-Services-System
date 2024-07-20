@@ -2,6 +2,8 @@ package ir.hosseindn.controller.admin;
 
 import ir.hosseindn.dto.admin.AdminLoginRequest;
 import ir.hosseindn.dto.admin.AdminLoginResponse;
+import ir.hosseindn.dto.admin.AdminSaveRequest;
+import ir.hosseindn.dto.admin.AdminSaveResponse;
 import ir.hosseindn.dto.order.OrderSearchItemResponse;
 import ir.hosseindn.dto.order.OrderSearchItemsRequest;
 import ir.hosseindn.dto.user.UserCriteriaItems;
@@ -22,6 +24,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -44,12 +47,20 @@ public class AdminController {
         return new ResponseEntity<>(AdminMapper.INSTANCE.modelToAdminLoginResponse(loggedInAdmin), HttpStatus.FOUND);
     }
 
+    @PostMapping("/admin-register")
+    public ResponseEntity<AdminSaveResponse> adminRegister(@Valid @RequestBody AdminSaveRequest request) {
+        Admin mappedAdmin = AdminMapper.INSTANCE.adminSaveRequestToModel(request);
+        Admin savedAdmin =adminService.save(mappedAdmin);
+        return new ResponseEntity<>(AdminMapper.INSTANCE.modelToAdminSaveResponse(savedAdmin), HttpStatus.CREATED);
+    }
+
     @GetMapping("/get-users-list")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserCriteriaItemsResponse> getUserList(@Valid @RequestBody UserCriteriaItems request) {
         List<Object> users = adminService.searchUsers(request);
         return new ResponseEntity<>(new UserCriteriaItemsResponse(users), HttpStatus.FOUND);
     }
+
 
     @GetMapping("/get-orders-list")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

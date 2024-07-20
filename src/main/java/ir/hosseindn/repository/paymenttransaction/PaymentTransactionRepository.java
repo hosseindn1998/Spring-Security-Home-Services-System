@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 public interface PaymentTransactionRepository extends JpaRepository<ir.hosseindn.model.PaymentTransaction, Long> {
     @Modifying
     @Query("UPDATE PaymentTransaction p SET p.captchaAnswer=:newAnswer where p.id=:id")
-    void updateCaptchaAnswer(@Param("id") Long id,@Param("newAnswer") String newAnswer);
+    void updateCaptchaAnswer(@Param("id") Long id, @Param("newAnswer") String newAnswer);
 }

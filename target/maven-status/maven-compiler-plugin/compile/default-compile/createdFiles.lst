@@ -46,7 +46,6 @@ ir\hosseindn\repository\bankaccount\BankAccountRepository.class
 ir\hosseindn\model\Wallet$WalletBuilderImpl.class
 ir\hosseindn\dto\order\PayOrderFromWalletRequest.class
 ir\hosseindn\dto\technician\TechnicianChangePasswordResponse.class
-ir\hosseindn\dto\mainservice\MainServiceId.class
 ir\hosseindn\service\order\OrderService.class
 ir\hosseindn\controller\techniciansubservice\TechnicianSubServiceController.class
 ir\hosseindn\repository\customer\CustomerRepository.class
@@ -72,13 +71,11 @@ ir\hosseindn\FinalProjectPhase4.class
 ir\hosseindn\dto\technician\TechnicianLoginResponse.class
 ir\hosseindn\mapper\technician\TechnicianMapper.class
 ir\hosseindn\dto\technician\TechnicianVerifyResponse.class
-ir\hosseindn\dto\subservice\SubServiceName.class
 ir\hosseindn\repository\user\UserRepository.class
 ir\hosseindn\dto\subservice\SubServiceSaveRequest.class
 ir\hosseindn\model\BaseEntity$BaseEntityBuilderImpl.class
 ir\hosseindn\mapper\wallet\WalletMapper.class
 ir\hosseindn\dto\subservice\SubServiceFindAllRequest.class
-ir\hosseindn\dto\mainservice\MainServiceName.class
 ir\hosseindn\model\TechnicianSubService$TechnicianSubServiceBuilder.class
 ir\hosseindn\config\PasswordConfiguration.class
 ir\hosseindn\dto\subservice\SubServiceId.class

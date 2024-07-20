@@ -24,11 +24,12 @@ import java.util.List;
 @Slf4j
 public class OfferController {
     private final OfferService offerService;
+
     @PreAuthorize("hasRole('ROLE_TECHNICIAN')")
     @PostMapping("/add-offer")
     public ResponseEntity<OfferSaveResponse> addOffer(@Valid @RequestBody OfferSaveRequest request, Principal principal) {
         Offer mappedOffer = OfferMapper.INSTANCE.offerSaveRequestToModel(request);
-        Offer savedOffer = offerService.addOfferByTechnician(mappedOffer,principal.getName(),request.odrerId());
+        Offer savedOffer = offerService.addOfferByTechnician(mappedOffer, principal.getName(), request.odrerId());
         return new ResponseEntity<>(OfferMapper.INSTANCE.modelToOfferSaveResponse(savedOffer), HttpStatus.CREATED);
     }
 
