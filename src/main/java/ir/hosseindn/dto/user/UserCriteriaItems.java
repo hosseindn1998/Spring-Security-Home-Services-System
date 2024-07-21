@@ -23,7 +23,7 @@ public record UserCriteriaItems(
         Integer countDoneOrders,
         Integer totalScores,
         Integer countScores,
-        Boolean isActive,
+        Boolean locked,
         Long walletId,
         String subServiceName
 

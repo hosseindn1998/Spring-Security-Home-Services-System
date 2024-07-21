@@ -9,14 +9,14 @@ import ir.hosseindn.dto.technician.TechnicianSaveResponse;
 import ir.hosseindn.dto.technician.TechnicianVerifyRequest;
 import ir.hosseindn.dto.technician.TechnicianVerifyResponse;
 import ir.hosseindn.model.Technician;
-import ir.hosseindn.model.TechnicianStatus;
 import ir.hosseindn.model.enums.Role;
+import ir.hosseindn.model.enums.TechnicianStatus;
 import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-20T17:42:04+0330",
+    date = "2024-07-21T15:20:12+0330",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Amazon.com Inc.)"
 )
 public class TechnicianMapperImpl implements TechnicianMapper {
@@ -54,7 +54,6 @@ public class TechnicianMapperImpl implements TechnicianMapper {
         Integer totalScores = null;
         Long countScores = null;
         TechnicianStatus technicianStatus = null;
-        Boolean isActive = null;
         Role role = null;
 
         id = technician.getId();
@@ -69,8 +68,9 @@ public class TechnicianMapperImpl implements TechnicianMapper {
             countScores = technician.getCountScores().longValue();
         }
         technicianStatus = technician.getTechnicianStatus();
-        isActive = technician.getIsActive();
         role = technician.getRole();
+
+        Boolean isActive = null;
 
         TechnicianSaveResponse technicianSaveResponse = new TechnicianSaveResponse( id, firstName, lastName, nationalCode, email, registeredDate, rate, totalScores, countScores, technicianStatus, isActive, role );
 

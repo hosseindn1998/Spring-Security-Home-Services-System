@@ -1,4 +1,4 @@
-package ir.hosseindn.model;
+package ir.hosseindn.model.enums;
 
 public enum TechnicianStatus {
     NEW_TECHNICIAN,

@@ -26,15 +26,6 @@ public class Admin extends User implements UserDetails {
         return getEmail();
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
     public void setId(Long id) {
         this.id = id;

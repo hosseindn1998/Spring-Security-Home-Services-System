@@ -1,5 +1,6 @@
 package ir.hosseindn.model;
 
+import ir.hosseindn.model.enums.TechnicianStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,7 +24,6 @@ public class Technician extends User implements UserDetails {
     Double rate;
     Integer totalScores;
     Integer countScores;
-    Boolean isActive;
     @Lob
     byte[] avatar;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "technician", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
@@ -46,17 +46,7 @@ public class Technician extends User implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
     public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
         return true;
     }
 

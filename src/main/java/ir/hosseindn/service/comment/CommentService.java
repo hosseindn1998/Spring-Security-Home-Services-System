@@ -31,13 +31,11 @@ public class CommentService {
             throw new NotValidInformation("this order exist already a comment");
         if (!order.getOrderStatus().equals(OrderStatus.Paid))
             throw new NotValidInformation("this order must be paid an then can comment on it");
-        Technician technician = order.getTechnician();
+        Technician technician = technicianService.findById(order.getTechnician().getId());
         technician.setTotalScores(technician.getTotalScores() + comment.getRate());
         technician.setCountScores(technician.getCountScores() + 1);
         comment.setTechnician(technician);
         Comment savedComment = save(comment);
-        order.setComment(savedComment);
-        orderService.save(order);
         List<Comment> comments = technician.getComments();
         comments.add(savedComment);
         technician.setComments(comments);

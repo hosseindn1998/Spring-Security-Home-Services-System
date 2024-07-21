@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.nio.file.NoSuchFileException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -34,59 +35,71 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotValidInformation.class)
-    public ResponseEntity<ExceptionDto> NotValidInformationHandler(NotValidInformation e) {
+    public ResponseEntity<ExceptionDto> notValidInformationHandler(NotValidInformation e) {
         log.warn(e.getMessage());
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionDto> NotFoundExceptionHandler(NotFoundException e) {
+    public ResponseEntity<ExceptionDto> notFoundExceptionHandler(NotFoundException e) {
         log.warn(e.getMessage());
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionDto> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+    public ResponseEntity<ExceptionDto> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         log.warn(Arrays.toString(e.getDetailMessageArguments()));
         ExceptionDto exceptionDto = new ExceptionDto(Arrays.toString(e.getDetailMessageArguments()), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NON_AUTHORITATIVE_INFORMATION);
     }
 
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<ExceptionDto> IOExceptionHandler(IOException e) {
+    public ResponseEntity<ExceptionDto> iOExceptionHandler(IOException e) {
         log.warn(e.getMessage());
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(NoSuchFileException.class)
-    public ResponseEntity<ExceptionDto> NoSuchFileExceptionHandler(NoSuchFileException e) {
+    public ResponseEntity<ExceptionDto> noSuchFileExceptionHandler(NoSuchFileException e) {
         log.warn(String.format("file with path %s not found.", e.getMessage()));
         ExceptionDto exceptionDto = new ExceptionDto(String.format("file with path %s not found.", e.getMessage()), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ExceptionDto> ConstraintViolationExceptionHandler(ConstraintViolationException e) {
+    public ResponseEntity<ExceptionDto> nonstraintViolationExceptionHandler(ConstraintViolationException e) {
         log.warn(e.getMessage());
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ExceptionDto> DataIntegrityViolationExceptionHandler(DataIntegrityViolationException e) {
+    public ResponseEntity<ExceptionDto> dataIntegrityViolationExceptionHandler(DataIntegrityViolationException e) {
         log.warn(e.getMostSpecificCause().toString());
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ExceptionDto> HttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseEntity<ExceptionDto> httpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.warn(e.getMostSpecificCause().toString());
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<ExceptionDto> connectExceptionHandler(ConnectException e) {
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto, HttpStatus.PRECONDITION_FAILED);
+    }
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ExceptionDto> illegalStateExceptionExceptionHandler(IllegalStateException e) {
+        log.warn(e.getMessage());
+        ExceptionDto exceptionDto = new ExceptionDto(e.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(exceptionDto, HttpStatus.PRECONDITION_FAILED);
     }
 
 }

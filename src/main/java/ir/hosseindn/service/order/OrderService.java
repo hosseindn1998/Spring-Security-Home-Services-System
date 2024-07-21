@@ -135,6 +135,9 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.Paid);
         return order;
     }
+    public void changeOrderStatusToWaitForChooseTechnician(Long orderId) {
+        orderRepository.changeOrderStatus(orderId, OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
+    }
 
     public List<Order> findByCriteria(OrderSearchItemsRequest orderSearchItems) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

@@ -109,6 +109,8 @@ public class CustomerService {
         Join<Customer, Wallet> customerWalletJoin = root.join("wallet", JoinType.INNER);
         if (userCriteriaItems.walletId() != null)
             predicates.add(builder.equal(customerWalletJoin.get("id"), userCriteriaItems.walletId()));
+        if (userCriteriaItems.locked() != null)
+            predicates.add(builder.equal(root.get("locked"), userCriteriaItems.locked()));
 
         customerQuery.where(builder.and(predicates.toArray(new Predicate[]{})));
         List<Customer> list1 = entityManager.createQuery(customerQuery).getResultList();

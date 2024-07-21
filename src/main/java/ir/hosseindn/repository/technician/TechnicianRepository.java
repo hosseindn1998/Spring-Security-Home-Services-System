@@ -1,7 +1,7 @@
 package ir.hosseindn.repository.technician;
 
 import ir.hosseindn.model.Technician;
-import ir.hosseindn.model.TechnicianStatus;
+import ir.hosseindn.model.enums.TechnicianStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

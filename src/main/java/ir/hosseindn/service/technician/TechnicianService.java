@@ -9,6 +9,7 @@ import ir.hosseindn.model.Order;
 import ir.hosseindn.model.*;
 import ir.hosseindn.model.enums.OrderStatus;
 import ir.hosseindn.model.enums.Role;
+import ir.hosseindn.model.enums.TechnicianStatus;
 import ir.hosseindn.repository.technician.TechnicianRepository;
 import ir.hosseindn.service.confirmationservice.ConfirmationTokenService;
 import ir.hosseindn.service.user.UserService;
@@ -58,9 +59,9 @@ public class TechnicianService {
         technician.setTechnicianStatus(TechnicianStatus.NEW_TECHNICIAN);
         technician.setTotalScores(0);
         technician.setCountScores(0);
-        technician.setIsActive(Boolean.TRUE);
         technician.setRate(0.0);
         technician.setEnabled(Boolean.FALSE);
+        technician.setLocked(false);
         technician.setPassword(passwordEncoder.encode(technician.getPassword()));
         technician.setRole(Role.ROLE_TECHNICIAN);
         technician.setWallet(new Wallet(0L));
@@ -88,7 +89,7 @@ public class TechnicianService {
     public void updateScores(Long id, Long minusScore) {
         Technician technician = findById(id);
         if (technician.getTotalScores() + minusScore < 0) {
-            technician.setIsActive(Boolean.FALSE);
+            technician.setLocked(true);
             technician.setTotalScores(0);
             technicianRepository.save(technician);
         } else {
@@ -156,8 +157,8 @@ public class TechnicianService {
             predicates.add(builder.equal(root.get("totalScores"), userCriteriaItems.totalScores()));
         if (userCriteriaItems.countScores() != null)
             predicates.add(builder.equal(root.get("countScores"), userCriteriaItems.countScores()));
-        if (userCriteriaItems.isActive() != null)
-            predicates.add(builder.equal(root.get("isActive"), userCriteriaItems.isActive()));
+        if (userCriteriaItems.locked() != null)
+            predicates.add(builder.equal(root.get("locked"), userCriteriaItems.locked()));
 
         if (userCriteriaItems.walletId() != null) {
             Join<Technician, Wallet> technicianWalletJoin = root.join("wallet", JoinType.INNER);

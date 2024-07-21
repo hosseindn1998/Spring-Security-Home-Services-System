@@ -29,11 +29,8 @@ public class OfferService {
             throw new NotValidInformation("Technician suggest-price can't be lower than base-price");
         if (offerRepository.findByOdrerAndTechnician(foundedOrder, offer.getTechnician()).isPresent())
             throw new DuplicateInformationException("A offer for this technician exists for order");
-        if (foundedOrder.getOffers() == null) {
-            foundedOrder.setOrderStatus(OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
-            offer.setOdrer(foundedOrder);
-            orderService.save(foundedOrder);
-        }
+        if (foundedOrder.getOrderStatus()==OrderStatus.WAIT_FOR_TECHNICIAN_OFFER)
+            orderService.changeOrderStatusToWaitForChooseTechnician(foundedOrder.getId());
         offer.setIsAccepted(false);
         return offerRepository.save(offer);
     }
