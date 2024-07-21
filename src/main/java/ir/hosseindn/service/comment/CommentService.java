@@ -27,7 +27,7 @@ public class CommentService {
 
     public Comment addCommentByCustomer(Comment comment, Long orderId) {
         Order order = orderService.findById(orderId);
-        if (order.getComment() != null)
+        if (order.getHasComment())
             throw new NotValidInformation("this order exist already a comment");
         if (!order.getOrderStatus().equals(OrderStatus.Paid))
             throw new NotValidInformation("this order must be paid an then can comment on it");
@@ -38,6 +38,7 @@ public class CommentService {
         Comment savedComment = save(comment);
         List<Comment> comments = technician.getComments();
         comments.add(savedComment);
+        orderService.hasComment(orderId);
         technician.setComments(comments);
         technician.setRate((double) technician.getTotalScores() / technician.getCountScores());
         technicianService.update(technician);

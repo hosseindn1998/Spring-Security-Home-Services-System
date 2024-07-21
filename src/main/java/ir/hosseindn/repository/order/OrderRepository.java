@@ -1,10 +1,8 @@
 package ir.hosseindn.repository.order;
 
 import ir.hosseindn.model.Order;
-import ir.hosseindn.model.Technician;
 import ir.hosseindn.model.enums.OrderStatus;
 import jakarta.transaction.Transactional;
-import org.eclipse.angus.mail.imap.protocol.ID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,14 +26,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> seeAllByCustomerEmail(String email);
 
     @Modifying
-    @Query("update Order o set o.choosedOffer.id=:offerId where o.id=:id")
-    void chooseOffer(@Param("id") Long id, @Param("offerId") Long OfferId);
-
-    @Modifying
     @Query("update Order o set o.orderStatus=:orderStatus where o.id=:id")
     void changeOrderStatus(@Param("id") Long id, @Param("orderStatus") OrderStatus orderStatus);
 
-    Boolean existsOrderByIdAndTechnician(Long id,Technician technician);
+    @Modifying
+    @Query("update Order o set o.hasComment=:true where o.id=:id")
+    void orderHasComment(@Param("id") Long id);
 
 }
 

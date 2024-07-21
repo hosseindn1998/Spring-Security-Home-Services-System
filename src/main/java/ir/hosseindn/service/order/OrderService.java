@@ -45,6 +45,7 @@ public class OrderService {
     public Order save(Order order) {
         order.setOrderStatus(OrderStatus.WAIT_FOR_TECHNICIAN_OFFER);
         order.setCreationDate(LocalDateTime.now());
+        order.setHasComment(false);
         order.setMainServiceName(order.getSubservice().getMainService().getName());
         return orderRepository.save(order);
     }
@@ -55,8 +56,8 @@ public class OrderService {
                 ));
     }
 
-    public Boolean isExistByIdAndTechnician(Long id, Technician technician) {
-        return orderRepository.existsOrderByIdAndTechnician(id, technician);
+    public void hasComment(Long id) {
+        orderRepository.orderHasComment(id);
     }
 
     public Order addOrderByCustomer(Order order, String email, Long subServiceId) {
@@ -135,6 +136,7 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.Paid);
         return order;
     }
+
     public void changeOrderStatusToWaitForChooseTechnician(Long orderId) {
         orderRepository.changeOrderStatus(orderId, OrderStatus.WAIT_FOR_CHOOSE_TECHNICIAN);
     }

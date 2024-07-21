@@ -38,6 +38,5 @@ public class Order extends BaseEntity<Long> {
     Offer choosedOffer;
     @ManyToOne(fetch = FetchType.LAZY)
     Technician technician;
-    @OneToOne
-    Comment comment;
+    Boolean hasComment;
 }
